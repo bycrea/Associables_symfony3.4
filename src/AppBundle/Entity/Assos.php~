@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Traits\CreatedAtTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Assos
 {
+    use CreatedAtTrait;
+
     /**
      * @var int
      *
@@ -36,19 +39,25 @@ class Assos
     private $description;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    private $createdAt;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="contact_info", type="string", length=255, nullable=true)
      */
     private $contactInfo;
 
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", mappedBy="assos")
+     * @ORM\JoinTable(name="assos_category")
+     */
+    private $categories;
+
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * Get id
@@ -109,27 +118,26 @@ class Assos
     }
 
     /**
-     * Set createdAt
+     * Set contactInfo
      *
-     * @param \DateTime $createdAt
+     * @param string $contactInfo
      *
      * @return Assos
      */
-    public function setCreatedAt($createdAt)
+    public function setContactInfo($contactInfo)
     {
-        $this->createdAt = $createdAt;
+        $this->contactInfo = $contactInfo;
 
         return $this;
     }
 
     /**
-     * Get createdAt
+     * Get contactInfo
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getCreatedAt()
+    public function getContactInfo()
     {
-        return $this->createdAt;
+        return $this->contactInfo;
     }
 }
-
