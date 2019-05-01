@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Traits\CreatedAtTrait;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,6 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
+    use CreatedAtTrait;
+
+    const GENDER_MAN = 0;
+    const GENDER_FEM = 1;
+    const GENDER_OTHER = 2;
+    const GENDERS = [self::GENDER_MAN => 'Homme', self::GENDER_FEM => 'Femme', self::GENDER_OTHER => 'Autre'];
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -36,13 +44,6 @@ class User extends BaseUser
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="birthday_at", type="date")
      */
     private $birthdayAt;
@@ -54,11 +55,113 @@ class User extends BaseUser
      */
     private $gender;
 
+    /**
+     * @var Review
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="user")
+     */
+    private $reviews;
+
 
     public function __construct()
     {
         parent::__construct();
-        // your own logic
+        $this->createdAt = new \DateTime();
     }
 
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     *
+     * @return User
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     *
+     * @return User
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Set birthdayAt
+     *
+     * @param \DateTime $birthdayAt
+     *
+     * @return User
+     */
+    public function setBirthdayAt($birthdayAt)
+    {
+        $this->birthdayAt = $birthdayAt;
+
+        return $this;
+    }
+
+    /**
+     * Get birthdayAt
+     *
+     * @return \DateTime
+     */
+    public function getBirthdayAt()
+    {
+        return $this->birthdayAt;
+    }
+
+    /**
+     * Set gender
+     *
+     * @param integer $gender
+     *
+     * @return User
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return integer
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
 }
