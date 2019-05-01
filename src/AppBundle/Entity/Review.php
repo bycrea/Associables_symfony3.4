@@ -46,6 +46,15 @@ class Review
      */
     private $user;
 
+    /**
+     * @var Assos
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Assos")
+     * @ORM\JoinColumn(name="assos_id", referencedColumnName="id", nullable=true)
+     */
+    private $assos;
+
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -131,5 +140,29 @@ class Review
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set assos
+     *
+     * @param \AppBundle\Entity\Assos $assos
+     *
+     * @return Review
+     */
+    public function setAssos(\AppBundle\Entity\Assos $assos = null)
+    {
+        $this->assos = $assos;
+
+        return $this;
+    }
+
+    /**
+     * Get assos
+     *
+     * @return \AppBundle\Entity\Assos
+     */
+    public function getAssos()
+    {
+        return $this->assos;
     }
 }
