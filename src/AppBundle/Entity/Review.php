@@ -49,7 +49,7 @@ class Review
     /**
      * @var Assos
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Assos")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Assos", inversedBy="reviews")
      * @ORM\JoinColumn(name="assos_id", referencedColumnName="id", nullable=true)
      */
     private $assos;

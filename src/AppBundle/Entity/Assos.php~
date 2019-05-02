@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Traits\CreatedAtTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,91 +54,34 @@ class Assos
      */
     private $categories;
 
+    /**
+     * @var Review
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="assos")
+     */
+    private $reviews;
+
+    /**
+     * @var Donation
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Donation", mappedBy="assos")
+     */
+    private $donations;
+
+    /**
+     * @var Payment
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Payment", mappedBy="association")
+     */
+    private $payments;
+
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->reviews = new ArrayCollection();
+        $this->donations = new ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Assos
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Assos
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set contactInfo
-     *
-     * @param string $contactInfo
-     *
-     * @return Assos
-     */
-    public function setContactInfo($contactInfo)
-    {
-        $this->contactInfo = $contactInfo;
-
-        return $this;
-    }
-
-    /**
-     * Get contactInfo
-     *
-     * @return string
-     */
-    public function getContactInfo()
-    {
-        return $this->contactInfo;
-    }
 }

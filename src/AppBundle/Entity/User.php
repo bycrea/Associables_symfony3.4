@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Traits\CreatedAtTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,12 +14,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
+    // On utilise le trait CreatedAtTrait simplifier notre code
     use CreatedAtTrait;
 
     const GENDER_MAN = 0;
     const GENDER_FEM = 1;
     const GENDER_OTHER = 2;
-    const GENDERS = [self::GENDER_MAN => 'Homme', self::GENDER_FEM => 'Femme', self::GENDER_OTHER => 'Autre'];
+    const GENDERS = [
+        self::GENDER_MAN => 'Homme',
+        self::GENDER_FEM => 'Femme',
+        self::GENDER_OTHER => 'Autre'
+    ];
 
     /**
      * @ORM\Id
@@ -62,11 +68,26 @@ class User extends BaseUser
      */
     private $reviews;
 
+    /**
+     * @var Donation
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Donation", mappedBy="user")
+     */
+    private $donations;
+
 
     public function __construct()
     {
         parent::__construct();
+
+        // On instancie un nouveau DateTime a chaque nouvelle creation d'un objet User
         $this->createdAt = new \DateTime();
+
+        // On instancie un tableau vide pour éviter un erreur PHP quand on veut boucler
+        // sur une collection d'objets tel que les 'reviews' ou 'donations'
+        // Si lutilisateur n'en possède pas, alors rien ne sera affiché.
+        $this->reviews = new ArrayCollection();
+        $this->donations = new ArrayCollection();
     }
 
     /**
@@ -197,5 +218,39 @@ class User extends BaseUser
     public function getReviews()
     {
         return $this->reviews;
+    }
+
+    /**
+     * Add donation
+     *
+     * @param \AppBundle\Entity\Donation $donation
+     *
+     * @return User
+     */
+    public function addDonation(\AppBundle\Entity\Donation $donation)
+    {
+        $this->donations[] = $donation;
+
+        return $this;
+    }
+
+    /**
+     * Remove donation
+     *
+     * @param \AppBundle\Entity\Donation $donation
+     */
+    public function removeDonation(\AppBundle\Entity\Donation $donation)
+    {
+        $this->donations->removeElement($donation);
+    }
+
+    /**
+     * Get donations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDonations()
+    {
+        return $this->donations;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,7 +41,8 @@ class Category
      */
     public function __construct()
     {
-        $this->assos = new \Doctrine\Common\Collections\ArrayCollection();
+        // On instancie un tableau vide pour éviter un erreur PHP lorsque l'on boucle sur une collection
+        $this->assos = new ArrayCollection();
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Traits\CreatedAtTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,16 +54,42 @@ class Assos
      */
     private $categories;
 
+    /**
+     * @var Review
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="assos")
+     */
+    private $reviews;
+
+    /**
+     * @var Donation
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Donation", mappedBy="assos")
+     */
+    private $donations;
+
+    /**
+     * @var Payment
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Payment", mappedBy="association")
+     */
+    private $payments;
+
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+
+        // On instancie un tableau vide pour éviter un erreur PHP lorsque l'on boucle sur une collection
+        $this->reviews = new ArrayCollection();
+        $this->donations = new ArrayCollection();
+        $this->payments = new ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -173,5 +200,107 @@ class Assos
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Add review
+     *
+     * @param \AppBundle\Entity\Review $review
+     *
+     * @return Assos
+     */
+    public function addReview(\AppBundle\Entity\Review $review)
+    {
+        $this->reviews[] = $review;
+
+        return $this;
+    }
+
+    /**
+     * Remove review
+     *
+     * @param \AppBundle\Entity\Review $review
+     */
+    public function removeReview(\AppBundle\Entity\Review $review)
+    {
+        $this->reviews->removeElement($review);
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * Add donation
+     *
+     * @param \AppBundle\Entity\Donation $donation
+     *
+     * @return Assos
+     */
+    public function addDonation(\AppBundle\Entity\Donation $donation)
+    {
+        $this->donations[] = $donation;
+
+        return $this;
+    }
+
+    /**
+     * Remove donation
+     *
+     * @param \AppBundle\Entity\Donation $donation
+     */
+    public function removeDonation(\AppBundle\Entity\Donation $donation)
+    {
+        $this->donations->removeElement($donation);
+    }
+
+    /**
+     * Get donations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDonations()
+    {
+        return $this->donations;
+    }
+
+    /**
+     * Add payment
+     *
+     * @param \AppBundle\Entity\Payment $payment
+     *
+     * @return Assos
+     */
+    public function addPayment(\AppBundle\Entity\Payment $payment)
+    {
+        $this->payments[] = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Remove payment
+     *
+     * @param \AppBundle\Entity\Payment $payment
+     */
+    public function removePayment(\AppBundle\Entity\Payment $payment)
+    {
+        $this->payments->removeElement($payment);
+    }
+
+    /**
+     * Get payments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPayments()
+    {
+        return $this->payments;
     }
 }
