@@ -38,6 +38,10 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
 
+    # On défini une global Twig pour les associations qui n'ont pas d'images en bdd
+    globals:
+        defaultAssos: 'assets/images/defaultAssos.jpeg'
+
 # Doctrine Configuration
 doctrine:
     dbal:

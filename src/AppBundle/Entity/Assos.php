@@ -42,6 +42,20 @@ class Assos
     /**
      * @var string
      *
+     * @ORM\Column(name="url_assos", type="string", length=255, nullable=true)
+     */
+    private $urlAssos;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="contact_info", type="string", length=255, nullable=true)
      */
     private $contactInfo;
@@ -302,5 +316,53 @@ class Assos
     public function getPayments()
     {
         return $this->payments;
+    }
+
+    /**
+     * Set urlAssos
+     *
+     * @param string $urlAssos
+     *
+     * @return Assos
+     */
+    public function setUrlAssos($urlAssos)
+    {
+        $this->urlAssos = $urlAssos;
+
+        return $this;
+    }
+
+    /**
+     * Get urlAssos
+     *
+     * @return string
+     */
+    public function getUrlAssos()
+    {
+        return $this->urlAssos;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Assos
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

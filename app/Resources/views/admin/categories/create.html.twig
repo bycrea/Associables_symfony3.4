@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+    <h1>Ajouter une categorie</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit">Valider</button>
+    {{ form_end(form) }}
+
+{% endblock %}
