@@ -9,13 +9,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="home")
      */
     public function indexAction(Request $request)
     {
 
-        return $this->render('default/index.html.twig', [
-            'title' => 'Bonjour les geeks'
+        return $this->render('index.html.twig', [
+            'title' => 'accueil'
+        ]);
+    }
+
+    /**
+     * @Route("/mentions", name="mentions")
+     */
+    public function mentionsAction(Request $request)
+    {
+
+        return $this->render('mentions.html.twig', [
+            'title' => 'mentions'
         ]);
     }
 }

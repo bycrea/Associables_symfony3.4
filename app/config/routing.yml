@@ -1,6 +1,12 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+    prefix: ''
+
+user:
+    resource: '@AppBundle/Controller/User/'
+    type: annotation
+    prefix: 'user'
 
 admin:
     resource: '@AppBundle/Controller/Admin/'

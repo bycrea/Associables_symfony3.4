@@ -5,8 +5,10 @@ namespace AppBundle\Controller\Admin;
 use AppBundle\Entity\Assos;
 use AppBundle\Form\AssociationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class AssociationsController extends Controller
 {
@@ -17,7 +19,18 @@ class AssociationsController extends Controller
     {
 
         return $this->render('admin/associations/index.html.twig', [
-            'title' => 'Bonjour les geeks'
+            'title' => 'Associations'
+        ]);
+    }
+
+    /**
+     * @Route("/associations/edit/{id}", name="admin_associations_edit")
+     */
+    public function editAction($id)
+    {
+
+        return $this->render('admin/associations/edit.html.twig', [
+            'title' => 'Associations'
         ]);
     }
 
@@ -29,8 +42,38 @@ class AssociationsController extends Controller
         $association = new Assos();
         $form = $this->createForm(AssociationType::class, $association);
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $image */
+            $image = $association->getImage();
+            if($image) {
+                $imageName = uniqid().'.'.$image->guessExtension();
+
+                try {
+                    $image->move(
+                        $this->getParameter('images_dir'),
+                        $imageName
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Erreur de téléchargement');
+                    return $this->redirectToRoute('admin_associations_create');
+                }
+
+                $association->setImage($imageName);
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($association);
+            $entityManager->flush();
+
+            $this->addFlash('success', $association->getName().' à bien été ajouté.');
+            return $this->redirectToRoute('admin_associations');
+        }
+
         return $this->render('admin/associations/create.html.twig', [
-            'title' => 'create asso',
+            'title' => 'Creation assos',
             'form' => $form->createView()
         ]);
     }

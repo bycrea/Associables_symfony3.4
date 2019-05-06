@@ -6,7 +6,9 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
+    images_dir: '%kernel.project_dir%/web/assets/images/assos/'
+    array_amount: [1,2,5,10,15,20,25,30,50,100,200]
 
 framework:
     #esi: ~
@@ -40,7 +42,9 @@ twig:
 
     # On défini une global Twig pour les associations qui n'ont pas d'images en bdd
     globals:
-        defaultAssos: 'assets/images/defaultAssos.jpeg'
+        ImgAssosDefault: '/assets/images/defaultAssos.jpeg'
+        ImgAssosFolder: '/assets/images/assos/'
+        array_amount: '%array_amount%'
 
 # Doctrine Configuration
 doctrine:

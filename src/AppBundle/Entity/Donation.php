@@ -23,6 +23,7 @@ class Donation
     // Constantes des status de paiement des dons et de paiement aux assos
     const PAY_IN_TRANSFER = 4;
     const PAY_PROCESSED = 5;
+    // Tableau des constantes
     const PAYEMENT_STATUS = [
         self::PAY_BASKET => 'Panier',
         self::PAY_ERROR => 'Erreur de paiement',
@@ -38,6 +39,7 @@ class Donation
     const PAY_CARD = 2;
     const PAY_WIRETRANS = 3;
     const PAY_CHECK = 4;
+    // Tableau des constantes
     const PAYEMENT_MODE = [
         self::PAY_STRIPE => 'Stripe',
         self::PAY_PAYPAL => 'PayPal',
@@ -72,21 +74,29 @@ class Donation
     /**
      * @var int
      *
-     * @ORM\Column(name="payment_mode", type="integer")
+     * @ORM\Column(name="payment_mode", type="integer", nullable=true)
      */
     private $paymentMode;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="recurrent", type="boolean")
+     * @ORM\Column(name="recurrent", type="boolean", nullable=true)
      */
     private $recurrent;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cookie_id", type="string", nullable=true)
+     */
+    private $cookieId;
 
     /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="donations")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 
@@ -108,7 +118,16 @@ class Donation
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+
+        // $reccurent permet de déterminer si un paiement est mensuel ou ponctuel
+        // Par défaut la variable sera false = ponctuel
         $this->recurrent = false;
+
+        // Status du paiement par défaut = PAY_BASKET soit 'Panier'
+        $this->paymentStatus = self::PAY_BASKET;
+
+        // Mode de paiement par défaut = null.
+        $this->paymentMode = null;
     }
 
     /**
@@ -212,7 +231,7 @@ class Donation
      *
      * @return boolean
      */
-    public function getRecurrent()
+    public function isRecurrent()
     {
         return $this->recurrent;
     }
@@ -287,5 +306,29 @@ class Donation
     public function getPayment()
     {
         return $this->payment;
+    }
+
+    /**
+     * Set cookieId
+     *
+     * @param string $cookieId
+     *
+     * @return Donation
+     */
+    public function setCookieId($cookieId)
+    {
+        $this->cookieId = $cookieId;
+
+        return $this;
+    }
+
+    /**
+     * Get cookieId
+     *
+     * @return string
+     */
+    public function getCookieId()
+    {
+        return $this->cookieId;
     }
 }

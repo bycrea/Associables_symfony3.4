@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use AppBundle\Entity\Traits\CreatedAtTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Assos
@@ -43,6 +45,9 @@ class Assos
      * @var string
      *
      * @ORM\Column(name="url_assos", type="string", length=255, nullable=true)
+     * @Assert\Url(
+     *     message="Ce lien n'est pas valide."
+     * )
      */
     private $urlAssos;
 
@@ -50,6 +55,10 @@ class Assos
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @Assert\Image(
+     *     maxSize = "2M",
+     *     maxSizeMessage="La taile de l'image ne peut pas dépasser {{ limit }} {{ suffix }}."
+     * )
      */
     private $image;
 
@@ -63,7 +72,7 @@ class Assos
     /**
      * @var Category
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", mappedBy="assos")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="assos")
      * @ORM\JoinTable(name="assos_category")
      */
     private $categories;

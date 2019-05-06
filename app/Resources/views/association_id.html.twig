@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <h1>Description de l'association public</h1>
+
+    <div>
+        <h2>{{ association.name }}</h2>
+
+        <div>
+            {% if association.image is null %}
+                <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
+            {% else %}
+                <img src="{{ asset(ImgAssosFolder ~ association.image) }}" alt="{{ association.name }}" style="width: 10%;">
+            {% endif %}
+        </div>
+
+        <p>{{ association.description }}</p><br>
+
+        <a href="{{ association.urlAssos }}" target="_blank">Visitez le site de l'assciation</a>
+
+        <select name="donation" id="donation">
+            {% for amount in array_amount %}
+                <option value="{{ amount }}">{{ amount }}</option>
+            {% endfor %}
+        </select>
+        <button>donner</button>
+
+        <div>
+            <p>
+                categories :
+                {% for category in association.categories %}
+                    {{ category.name }}
+                    {% if loop.index < association.categories | length %}
+                        /
+                    {% endif %}
+                {% endfor %}
+            </p>
+        </div>
+
+        <div>
+            <p>
+                reviews
+            </p>
+        </div>
+    </div>
+
+    {# Lien vers la page précédente grace au 'referer' de Twig #}
+    {% set referer = app.request.headers.get('referer') %}
+
+    {% if referer is not null %}
+        <a href="{{ referer }}">retour</a>
+    {% else %}
+        <a href="{{ path('associations') }}">retour</a>
+    {% endif %}
+
+{% endblock %}

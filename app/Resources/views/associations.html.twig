@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <h1>listes des associations public</h1>
+
+    <label for="categories">Catégories</label>
+    <select name="categories" id="categories" onchange="window.location.href = this.value">
+        <option value="{{ path('associations') }}">Toutes</option>
+        {% for category in categories %}
+            <option
+                {% if category.id == getCategory %}
+                    selected
+                {% endif %}
+                value="{{ path('associations', {getCategory: category.id}) }}">{{ category.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    {% for association in associations %}
+        <div>
+            <h2>{{ association.name }}</h2>
+
+            <div>
+            {% if association.image is null %}
+                <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
+            {% else %}
+                <img src="{{ asset(ImgAssosFolder ~ association.image) }}" alt="{{ association.name }}" style="width: 10%;">
+            {% endif %}
+            </div>
+
+            <a href="{{ path('association_id', {id: association.id}) }}">Voir l'association</a>
+
+            <div>
+                <select name="donation" class="donation">
+                    {% for amount in array_amount %}
+                        <option value="{{ amount }}">{{ amount }}</option>
+                    {% endfor %}
+                </select>
+                <button class="donation-button" data-association-id="{{ association.id }}">Donner</button>
+            </div>
+
+            <div>
+                <p>
+                    categories :
+                {% for category in association.categories %}
+                    {{ category.name }}
+                    {% if loop.index < association.categories | length %}
+                        /
+                    {% endif %}
+                {% endfor %}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(function () {
+            $('.donation-button').on('click', function (e) {
+                e.preventDefault()
+                // On recupère l'id de l'association passé en paramètre data-attribute
+                var id = $(this).data('association-id')
+                // On recherche le montant selectionné dans la div parente au 'button'
+                // Soit this (button) -> parent (div) -> cherche l'option selectionné et récupère sa valeur (val)
+                var amount = $(this).parent().find('option:selected').val()
+
+                $.ajax({
+                    type: "POST",
+                    url: '{{ path('_ajax_add_to_basket') }}',
+                    data: {
+                        id: id,
+                        amount: amount
+                    },
+                    success: function (response) {
+                        console.log(response)
+                    }
+                });
+            })
+        })
+    </script>
+{% endblock %}

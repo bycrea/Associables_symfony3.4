@@ -11,7 +11,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
- * @UniqueEntity("name")
+ * @UniqueEntity(
+ *     fields={"name"},
+ *     message="Cette catégorie existe déjà."
+ * )
  */
 class Category
 {
@@ -34,7 +37,7 @@ class Category
     /**
      * @var Assos
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Assos", inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Assos", mappedBy="categories")
      */
     private $assos;
 
@@ -44,6 +47,7 @@ class Category
     public function __construct()
     {
         // On instancie un tableau vide pour éviter un erreur PHP lorsque l'on boucle sur une collection
+        // Dans ce cas si une catégorie n'appartient à aucune association
         $this->assos = new ArrayCollection();
     }
 

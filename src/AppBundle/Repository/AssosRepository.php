@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class AssosRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getByCategory($id)
+    {
+        $queryBuilder = $this->createQueryBuilder('assos');
+
+        $queryBuilder
+            ->leftJoin('assos.categories', 'category')
+            ->where('category.id = :id')
+            ->setParameter('id', $id);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

@@ -10,8 +10,10 @@ namespace AppBundle\Form;
 
 
 use AppBundle\Entity\Assos;
+use AppBundle\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,11 +27,15 @@ class AssociationType extends AbstractType // On hérite des méthodes de la cla
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
             ->add('urlAssos', TextType::class)
-            //->add('image', FileType::class)
-            ->add('contactInfo', TextType::class)
+            ->add('image', FileType::class, ['required' => false])
+            ->add('contactInfo', TextType::class, array(
+                'required' => false
+            ))
             ->add('categories', EntityType::class, array(
-                'class' => 'AppBundle\Entity\Category',
-                'choice_label' => 'name'
+                'class' => Category::class,
+                'choice_label' => 'name',
+                'expanded' => true,
+                'multiple' => true
             ))
         ;
     }
