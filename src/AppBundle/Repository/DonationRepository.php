@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Donation;
+
 /**
  * DonationRepository
  *
@@ -10,5 +12,54 @@ namespace AppBundle\Repository;
  */
 class DonationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function existingBasketDonation($id_asso, $id_user = null, $id_cookie = null)
+    {
+        $queryBuilder = $this->createQueryBuilder('donation');
 
+        $queryBuilder
+            ->leftJoin('donation.assos', 'asso')
+            ->where('asso.id = :id_asso')
+            ->setParameter('id_asso', $id_asso)
+            ->andWhere('donation.paymentStatus = :status')
+            ->setParameter('status', Donation::PAY_BASKET);
+
+        if(!is_null($id_user))
+        {
+            $queryBuilder
+                ->leftJoin('donation.user', 'user')
+                ->andWhere('user.id = :id_user')
+                ->setParameter('id_user', $id_user);
+        } else {
+            $queryBuilder
+                ->andWhere('donation.cookieId = :id_cookie')
+                ->setParameter('id_cookie', $id_cookie);
+        }
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+
+    public function getBasketTotal($id_user = null, $id_cookie = null)
+    {
+        $queryBuilder = $this->createQueryBuilder('donation');
+
+        $queryBuilder
+            ->select('count(donation.id)')
+            ->where('donation.paymentStatus = :status')
+            ->setParameter('status', Donation::PAY_BASKET);
+
+        if(!is_null($id_user))
+        {
+            $queryBuilder
+                ->leftJoin('donation.user', 'user')
+                ->andWhere('user.id = :id_user')
+                ->setParameter('id_user', $id_user);
+        } else {
+            $queryBuilder
+                ->andWhere('donation.cookieId = :id_cookie')
+                ->setParameter('id_cookie', $id_cookie);
+        }
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
 }

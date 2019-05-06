@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Assos;
 use AppBundle\Entity\Donation;
+use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,17 +27,60 @@ class BasketController extends Controller
      */
     public function _ajaxAddToBasketAction(Request $request)
     {
-        $id_assciation = $request->request->get('id');
-        $amount_donation = $request->request->get('amount');
+        $id_asso = $request->request->get('id');
+        $amount = $request->request->get('amount');
+        $id_user = null;
+        $id_cookie = null;
 
-        $donation = $this->getDoctrine()->getRepository(Donation::class)
-            ->find($id);
+        $entityManager = $this->getDoctrine()->getManager();
 
+        try {
 
+            if ($this->getUser()) {
+                $id_user = $this->getUser()->getId();
+            } else {
+                $id_cookie = $request->cookies->get('associables_basket');
+            }
 
+            $donationExists = $this->getDoctrine()->getRepository(Donation::class)
+                ->existingBasketDonation($id_asso, $id_user, $id_cookie);
 
-        echo $id_assciation;
-        echo $amount_donation;
-        exit;
+            if ($donationExists)
+            {
+
+                $donationExists->setAmount($amount);
+                $donationExists->setCreatedAt(new \DateTime());
+                $entityManager->persist($donationExists);
+
+            } else {
+                $association = $this->getDoctrine()->getRepository(Assos::class)->find($id_asso);
+                // $user = $this->getDoctrine()->getRepository(User::class)->find($id_user);
+                // OU
+                $user = $this->getUser();
+
+                $newDonation = new Donation();
+                $newDonation->setAmount($amount)->setAssos($association);
+
+                if ($this->getUser()) {
+                    $newDonation->setUser($user);
+                } else {
+                    $newDonation->setCookieId($id_cookie);
+                }
+
+                $entityManager->persist($newDonation);
+            }
+
+            $entityManager->flush();
+
+        } catch (\Exception $e) {
+
+            return $this->json(['status' => false]);
+
+        }
+
+        $donationTotal = $this->getDoctrine()->getRepository(Donation::class)
+            ->getBasketTotal($id_user, $id_cookie);
+
+        return $this->json(['status' => true, 'total' => $donationTotal]);
     }
 }

@@ -111,6 +111,7 @@ class Donation
      * @var Payment
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Payment", inversedBy="donations")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $payment;
 
@@ -125,9 +126,6 @@ class Donation
 
         // Status du paiement par défaut = PAY_BASKET soit 'Panier'
         $this->paymentStatus = self::PAY_BASKET;
-
-        // Mode de paiement par défaut = null.
-        $this->paymentMode = null;
     }
 
     /**

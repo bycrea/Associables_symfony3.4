@@ -74,8 +74,12 @@
                         id: id,
                         amount: amount
                     },
-                    success: function (response) {
-                        console.log(response)
+                    success: function (response)
+                    {
+                        if(response.status == true)
+                        {
+                            $('#basket-link span').text(response.total)
+                        }
                     }
                 });
             })
