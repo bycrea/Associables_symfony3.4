@@ -5,35 +5,34 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ title }}</title>
+    <title>{{ (title is defined) ? title : 'Associables.org' }}</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('assets/dist/css/style_tempo.css') }}">
     {% block stylesheets %}
     {% endblock %}
 </head>
 <body>
-    {# Permet d'affciher les messages ajoutés avec la méthode addFlash() et contenu dans app.flashes
-    https://symfony.com/doc/3.4/controller.html#flash-messages #}
-    {% for key, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="flash-{{ key }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
     {% block header %}
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('home') }}">accueil <span class="sr-only">(current)</span></a>
+
+                    {#              exemple de condition ternaire twig            #}
+                    {# {{ ('argument' in 'test argument') ? 'success' : 'fail' }} #}
+
+                    {% set route = app.request.attributes.get('_route') %}
+
+                    <li class="nav-item {{ ('home' in route) ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ path('home') }}">accueil</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ ('mentions' in route) ? 'active' : '' }}">
                         <a class="nav-link" href="{{ path('mentions') }}">mentions</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ ('associations' in route) ? 'active' : '' }}">
                         <a class="nav-link" href="{{ path('associations') }}">associations</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ ('basket' in route) ? 'active' : '' }}">
                         <a class="nav-link" id="basket-link" href="{{ path('basket') }}">panier
                             <span>{{ basket_total( app.request ) }}</span>
                         </a>
@@ -42,6 +41,16 @@
             </div>
         </nav>
     {% endblock %}
+
+    {# Permet d'affciher les messages envoyé avec la méthode symfony 'addFlash()' et contenu dans app.flashes
+        doc : https://symfony.com/doc/3.4/controller.html#flash-messages #}
+    {% for key, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ key }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
 
     {% block content %}
     {% endblock %}

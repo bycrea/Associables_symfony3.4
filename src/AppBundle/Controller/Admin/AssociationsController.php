@@ -57,7 +57,7 @@ class AssociationsController extends Controller
                         $imageName
                     );
                 } catch (FileException $e) {
-                    $this->addFlash('error', 'Erreur de téléchargement');
+                    $this->addFlash('danger', 'Erreur de téléchargement');
                     return $this->redirectToRoute('admin_associations_create');
                 }
 

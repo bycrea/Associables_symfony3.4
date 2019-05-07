@@ -12,6 +12,7 @@ use Twig\TwigFunction;
 
 class AppExtension extends AbstractExtension
 {
+    // Creation d'un service Twig
 
     /**
      * @var RegistryInterface
@@ -22,19 +23,16 @@ class AppExtension extends AbstractExtension
      */
     private $tokenStorage;
 
-    // Quand on crée un service symfony, son constructeur est appelé automatiquement
-    // Et applique l'injection de dépendence.
-    // L'injection de dépendence c'est : Injecter les service dont on va avoir besoin dans le service
-    // que l'on vient de créer.
-    // On peut ensuite utiliser les méthodes du service injecté dans notre service (class) actuel
-    // Après avoir ajouté la dépendence souhaité en paramètre, on initialise le field en cliquant sur la variable
-    // puis ALT+ENTER
+    // Un service symfony appelle le constructeur automatiquement et applique l'injection de dépendance.
+    // Ici nous injectons RegistryInterface pour avoir access aux méthodes de $entityManager
+    // et TokenStorageInterface pour la méthodes $tonken ->getToken->getUser
     public function __construct(RegistryInterface $entityManager, TokenStorageInterface $tokenStorage)
     {
         $this->entityManager = $entityManager;
         $this->tokenStorage = $tokenStorage;
     }
 
+    // Méthode inhérente à Twig pour appeler les fonctions créés pour Twig
     public function getFunctions()
     {
         return [
@@ -42,6 +40,8 @@ class AppExtension extends AbstractExtension
         ];
     }
 
+    // Fonctions Twig personalisées
+    // Récupère le nombre de dons dans le panier
     public function getBasketTotal (Request $request)
     {
         $id_cookie = null;

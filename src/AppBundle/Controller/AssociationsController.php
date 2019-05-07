@@ -15,27 +15,37 @@ class AssociationsController extends Controller
      */
     public function associationsAction(Request $request, $getCategory = null)
     {
+        // Récupère toutes les catégories pour les afficher dans le menu déroulant
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
-        if($getCategory != null) {
-            // On verifie que la catégorie existe
-            $category = $this->getDoctrine()->getRepository(Category::class)
-                ->find($getCategory);
-            if($category) {
-                $associations = $this->getDoctrine()->getRepository(Assos::class)
-                    ->getByCategory($getCategory);
-            } else {
+        // Si une catégorie est entrée en paramètre $_GET de l'url
+        if($getCategory != null)
+        {
+            // Récupère les associations lié a la catégorie grâce à la méthode créé dans 'AssosRepository'
+            $associations = $this->getDoctrine()->getRepository(Assos::class)
+                ->getByCategory($getCategory);
+
+            // Si la catégorie n'existe pas ou qu'aucunes associations n'est lié à celle-ci
+            // la collection d'objet retourné sera vide
+            if(empty($associations))
+            {
+                // On redirige sur la page des associations sans le paramètre $getCategory (soit = null)
+                $this->addFlash('danger', 'Aucune association n\'est lié à cette catégorie.');
                 return $this->redirectToRoute('associations');
             }
+
         } else {
+
+            // Récupère toutes les associations, toutes catégories confondues
             $associations = $this->getDoctrine()->getRepository(Assos::class)->findAll();
         }
 
+        // Retourne la vue Twig à la quelle nous avons injecté les variables nécessaire à l'affichage
         return $this->render('associations.html.twig', [
             'title' => 'associations',
             'categories' => $categories,
-            // Comme $getCategory provient de l'url, elle est donc une string,
-            // il faut la convertir pour la tester avec category.id
+            // '$getCategory' provenant du $_GET de l'url
+            // il faut la convertir en 'int' pour la tester avec category.id
             'getCategory' => intval($getCategory),
             'associations' => $associations
         ]);

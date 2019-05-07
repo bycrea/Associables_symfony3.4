@@ -37,3 +37,8 @@ services:
     AppBundle\EventListener\RequestEventListener:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    app.form.registration:
+        class: AppBundle\Form\RegistrationFormType
+        tags:
+            - { name: form.type, alias: app_user_registration }

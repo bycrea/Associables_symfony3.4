@@ -1,12 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+<main>
+    {# message d'erreur et loading AJAX #}
+    <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <p></p>
+    </div>
+    <div id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <i class="fas fa-spinner fa-3x"></i>
+        {#<p>veuillez patienter</p>#}
+    </div>
 
-    <h1>Description de l'association public</h1>
+    <h1>Détail association public</h1>
 
     <div>
-        <h2>{{ association.name }}</h2>
+        <h2>name : {{ association.name }}</h2>
 
+        {# ----------------- Image de l'association ----------------- #}
         <div>
             {% if association.image is null %}
                 <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
@@ -15,33 +25,47 @@
             {% endif %}
         </div>
 
-        <p>{{ association.description }}</p><br>
+        {# ----------------- Détails de l'association ----------------- #}
 
-        <a href="{{ association.urlAssos }}" target="_blank">Visitez le site de l'assciation</a>
+        <p>{{ association.description }}</p>
 
-        <select name="donation" id="donation">
-            {% for amount in array_amount %}
-                <option value="{{ amount }}">{{ amount }}</option>
-            {% endfor %}
-        </select>
-        <button>donner</button>
+        <a href="{{ association.urlAssos }}">Site de l'association</a>
 
+        {# ----------------- Dons a l'associations ----------------- #}
+        <div>
+            <select name="donation" class="donation">
+                {% for amount in array_amount %}
+                    <option
+                            {% if amount == default_amount %}
+                                {# détecte le montant selectionné par défaut #}
+                                selected
+                            {% endif %}
+                            value="{{ amount }}">{{ amount }}</option>
+                {% endfor %}
+            </select>
+            <button class="donation-button" data-association-id="{{ association.id }}">Donner</button>
+        </div>
+
+        {# ----------------- Catégories de l'associations ----------------- #}
         <div>
             <p>
                 categories :
                 {% for category in association.categories %}
                     {{ category.name }}
                     {% if loop.index < association.categories | length %}
-                        /
+                        {# détecte la dernière catégories #} <b>/</b>
                     {% endif %}
                 {% endfor %}
             </p>
         </div>
 
+        {# ----------------- Reviews de l'associations ----------------- #}
         <div>
-            <p>
-                reviews
-            </p>
+            {% for review in association.reviews %}
+            <p>{{ review.user }}</p>
+            <p>{{ review.comment }}</p>
+            <p>{{ review.createdAt }}</p>
+            {% endfor %}
         </div>
     </div>
 
@@ -53,5 +77,5 @@
     {% else %}
         <a href="{{ path('associations') }}">retour</a>
     {% endif %}
-
+</main>
 {% endblock %}

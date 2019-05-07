@@ -10,6 +10,12 @@ namespace AppBundle\Repository;
  */
 class AssosRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $id
+     * @return array
+     *
+     * Retourne les associations liées à une catégorie
+     */
     public function getByCategory($id)
     {
         $queryBuilder = $this->createQueryBuilder('assos');

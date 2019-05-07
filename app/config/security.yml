@@ -24,4 +24,6 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/admin/, role: ROLE_ADMIN }
+        # Défini l'access aux pages qui ont les préfix 'user' ou 'admin' en fonction des 'ROLE_' utilisateurs
+        - { path: ^/user/, role: ROLE_USER }
+        - { path: ^/admin/, role: ROLE_ADMIN }
