@@ -53,7 +53,7 @@
 
         {# ----------------- Total / Paiement ----------------- #}
         <div class="total-amount" id="total-amount">
-            <p>Total : {{ total_amount }}€</p>
+            <p>Total : <span id="amount">{{ total_amount }}</span>€</p>
         </div>
 
     </main>
@@ -99,7 +99,7 @@
                         {
                             {# Raffraichi le nombre de dons et le montant total en cas de succès #}
                             $('#basket-link span').text(response.quantity)
-                            $('#total-amount p').text(response.amount)
+                            $('#amount').text(response.amount)
                             $('#flash-ajax p').text('')
                         }
                         else if(response.status === false)
@@ -143,7 +143,7 @@
 
                             {# Raffraichi le nombre de dons et le montant total en cas de succès #}
                             $('#basket-link span').text(response.quantity)
-                            $('#total-amount p').text(response.amount)
+                            $('#amount').text(response.amount)
                             $('#flash-ajax p').text('')
                         }
                         else if(response.status === false)

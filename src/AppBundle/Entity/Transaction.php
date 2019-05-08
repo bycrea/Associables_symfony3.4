@@ -12,8 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Transaction extends BaseTransaction
 {
+    // On crée un atribue de Class pour la méthode 'setDonation'
     private $donations;
 
+    // La méthode 'setDonations' permet de récupérer les attribus
+    // 'name' et 'price' des donations sous forme de tableau
+    // afin de les injecter à la transaction PayPal comme le nécessite le Bundle
     public function setDonations($donations)
     {
         $this->donations = [];
@@ -30,22 +34,19 @@ class Transaction extends BaseTransaction
 
     public function getDescription(): ?string
     {
-        return 'Paiement de vos dons';
+        // Description du paiement
+        return 'Vos dons aux associations';
     }
 
     public function getItems(): array
     {
-        // here you can return an array of items, with each item being an array of name, quantity, price
-        // Note that if the total (price * quantity) of items doesn't match total amount, this won't work
-        /*return array(
-            ['name' => 'don asso test', 'price' => 100.00, 'quantity' => 1]
-        );*/
+        // Détails de la transaction
         return $this->donations;
     }
 
     public function getShippingAmount(): string
     {
-        // here you can return shipping amount. This amount MUST be already in your total amount
+        // Frais de port
         return '0.00';
     }
 }

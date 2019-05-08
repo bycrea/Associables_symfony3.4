@@ -90,8 +90,25 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('id_cookie', $id_cookie);
         }
 
-        //  Retourne un tableau des résultats
+        //  Retourne un tableau des résultats (index : 'quantity' , 'amount')
         $resultArray = $queryBuilder->getQuery()->getScalarResult();
         return $resultArray[0];
+    }
+
+
+    public function getExpiredDonations($day)
+    {
+        $expiredDate = new \DateTime();
+        $expiredDate->modify('-'.$day.' day');
+
+        $queryBuilder = $this->createQueryBuilder('donation');
+
+        $queryBuilder
+            ->where('donation.paymentStatus = :status')
+            ->setParameter('status', Donation::PAY_BASKET)
+            ->andWhere('donation.createdAt < :expiredDate')
+            ->setParameter('expiredDate', $expiredDate);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 }

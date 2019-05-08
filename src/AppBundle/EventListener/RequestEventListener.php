@@ -26,7 +26,7 @@ class RequestEventListener
         // qui permet ensuite de récuperer les cookies.
         $cookie = $event->getRequest()->cookies;
 
-        // Si l'objet $cookie de possède pas déjà notre cookie 'assocaibles_basket'
+        // Si l'objet $cookie ne possède pas déjà notre cookie 'assocaibles_basket'
         // On utlise la méthode 'getResponse' pour injecter un cookie au headers HTTP de notre application
         if(!$cookie->has('associables_basket'))
         {

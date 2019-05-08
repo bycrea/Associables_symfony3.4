@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Assos;
 use AppBundle\Entity\Donation;
-use AppBundle\EventListener\LoginListener;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,35 +13,40 @@ class BasketController extends Controller
     /**
      * @Route("/basket", name="basket")
      *
-     * Affiche le panier
-     * Récupère les dons via le formulaire avant le paiement
+     * Récupère et Affiche les donations d'un utilisateur ou d'une machine dans le panier
+     * Affiche le montant Total des donations
      */
     public function basketAction(Request $request)
     {
-
+        // Initialise la variable null
         $donations = null;
+
+        // Récupère l'utilisateur et le cookie
         $user = $this->getUser();
         $cookieId = $request->cookies->get('associables_basket');
 
+        // Si l'utilisateur existe :
         if(\is_object($user))
         {
+            // On récupère ses donations
             $donations = $this->getDoctrine()->getRepository(Donation::class)
                 ->findBy(['user' => $user]);
+
         } elseif ($cookieId != null) {
+
+            // Sinon on récupère les donations liées au cookie
             $donations = $this->getDoctrine()->getRepository(Donation::class)
                 ->findBy(['cookieId' => $cookieId]);
         }
 
-        $total_amount = 0;
-        foreach ($donations as $donation) {
-            $amount = $donation->getAmount();
-            $total_amount += $amount;
-        }
+        // Récupère le montant total des dons grâce à la méthode 'getBasketTotal' de 'DonationRepository'
+        $totalAmount = $this->getDoctrine()->getRepository(Donation::class)
+            ->getBasketTotal($user->getId())['amount'];
 
         return $this->render('basket.html.twig', [
             'title' => 'panier',
             'donations' => $donations,
-            'total_amount' => $total_amount
+            'total_amount' => $totalAmount
         ]);
     }
 
@@ -50,7 +54,8 @@ class BasketController extends Controller
     /**
      * @Route("/_ajax/add_to_basket", name="_ajax_add_to_basket")
      *
-     * Create ou Update d'un don transmit en AJAX
+     * AJAX
+     * Create ou Update d'une donation transmise en AJAX
      */
     public function _ajaxAddToBasketAction(Request $request)
     {
@@ -146,6 +151,7 @@ class BasketController extends Controller
     /**
      * @Route("/_ajax/delete_from_basket", name="_ajax_delete_from_basket")
      *
+     * AJAX
      * Delete d'une donation transmise en AJAX
      */
     public function _ajaxDeleteFromBasketAction(Request $request)
