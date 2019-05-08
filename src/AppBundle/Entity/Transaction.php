@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Beelab\PaypalBundle\Entity\Transaction as BaseTransaction;
 use Doctrine\ORM\Mapping as ORM;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 
 /**
@@ -12,16 +13,21 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Transaction extends BaseTransaction
 {
-    // On crée un atribue de Class pour la méthode 'setDonation'
-    private $donations;
+    /**
+     * Entity Transaction
+     * Utililisé par le 'BeelabPaypalBundle' et le 'PaymentController' pour les transaction PayPal
+     *
+     * doc: https://github.com/Bee-Lab/BeelabPaypalBundle/blob/master/Resources/doc/index.md
+     */
+
+    // On initialise un tableau vide pour la méthode 'setDonation'
+    private $donations  = [];
 
     // La méthode 'setDonations' permet de récupérer les attribus
     // 'name' et 'price' des donations sous forme de tableau
     // afin de les injecter à la transaction PayPal comme le nécessite le Bundle
     public function setDonations($donations)
     {
-        $this->donations = [];
-
         foreach($donations as $donation)
         {
             $this->donations[] = [
@@ -40,13 +46,13 @@ class Transaction extends BaseTransaction
 
     public function getItems(): array
     {
-        // Détails de la transaction
+        // Articles de la transaction
         return $this->donations;
     }
 
     public function getShippingAmount(): string
     {
-        // Frais de port
+        // Frais de port (=null)
         return '0.00';
     }
 }

@@ -95,11 +95,22 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
         return $resultArray[0];
     }
 
-
+    /**
+     * @param $day
+     * @return array
+     * @throws \Exception
+     *
+     * Retoune les donations "expirées" du panier
+     * Là ou 'createdAt' est inférieur à 'new DateTime' moins le nombre de jours '$day'
+     * et 'paymentStatus = 0'
+     */
     public function getExpiredDonations($day)
     {
-        $expiredDate = new \DateTime();
-        $expiredDate->modify('-'.$day.' day');
+        // Initialise un nouveau DateTime
+        $todayDate = new \DateTime();
+
+        // Modifie la date - le nombre de jours entré en paramètre '$day'
+        $expiredDate = $todayDate->modify('-'.$day.' day');
 
         $queryBuilder = $this->createQueryBuilder('donation');
 
