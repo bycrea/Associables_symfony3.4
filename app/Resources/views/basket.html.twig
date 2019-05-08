@@ -14,7 +14,7 @@
         <h1>panier public</h1>
 
         <div class="basket">
-            <form action="{{ path('basket') }}" method="post">
+            <form action="{{ path('user_payment') }}" method="post">
             {% for donation in donations %}
                     {# ----------------- block donation ----------------- #}
                 <div class="donation" id="{{ donation.id }}">
@@ -31,7 +31,7 @@
 
                     {# ----------------- modifier / supprimer un don ----------------- #}
                     <div>
-                        <select name="donation" class="donation-select" data-association-id="{{ donation.assos.id }}">
+                        <select name="donation_{{ donation.id }}" class="donation-select" data-association-id="{{ donation.assos.id }}">
                             {% for amount in array_amount %}
                                 <option
                                     {% if amount == donation.amount %}
@@ -47,6 +47,7 @@
                     </div>
                 </div>
             {% endfor %}
+                <button type="submit" class="btn btn-info">Payer</button>
             </form>
         </div>
 
@@ -55,8 +56,6 @@
             <p>Total : {{ total_amount }}€</p>
         </div>
 
-        <a href="{{ path('user_payment') }}" id="payment-button" data-total-amount="{{ total_amount }}"
-           class="btn btn-info">Payer</a>
     </main>
 {% endblock %}
 
@@ -158,13 +157,6 @@
                 });
             })
 
-            var total_amount = $('#payment-button').data('total-amount')
-            if (total_amount == 0)
-            {
-                $('#payment-button').hide()
-            } else {
-                $('#payment-button').show()
-            }
 
             {# cache la modal loading-modal après le chargement AJAX #}
             $(document).ajaxStop(function(){

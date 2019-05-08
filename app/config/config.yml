@@ -109,3 +109,11 @@ fos_user:
     registration:
         form:
             type: AppBundle\Form\RegistrationFormType
+
+beelab_paypal:
+    username: "%paypal_username%"
+    password: "%paypal_password%"
+    signature: "%paypal_signature%"
+    return_route: user_payment_success
+    cancel_route: user_payment_cancel
+    test_mode: "%kernel.debug%"
