@@ -3,7 +3,6 @@
 namespace AppBundle\Twig;
 
 use AppBundle\Entity\Donation;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -25,7 +24,7 @@ class AppExtension extends AbstractExtension
 
     // Un service symfony appelle le constructeur automatiquement et applique l'injection de dépendance.
     // Ici nous injectons RegistryInterface pour avoir access aux méthodes de $entityManager
-    // et TokenStorageInterface pour la méthodes $tonken ->getToken->getUser
+    // et TokenStorageInterface pour la méthodes $user = $this->tokenStorage->getToken()->getUser();
     public function __construct(RegistryInterface $entityManager, TokenStorageInterface $tokenStorage)
     {
         $this->entityManager = $entityManager;
@@ -36,7 +35,7 @@ class AppExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('basket_total', [$this, 'getBasketTotal'])
+            new TwigFunction('getBasketTotal', [$this, 'getBasketTotal'])
         ];
     }
 
@@ -44,21 +43,25 @@ class AppExtension extends AbstractExtension
     // Récupère le nombre de dons dans le panier
     public function getBasketTotal (Request $request)
     {
+        // Initialise les variables
         $id_cookie = null;
         $id_user = null;
 
-        $token = $this->tokenStorage->getToken();
+        // Récupère l'objet Token grâce à l'injection de dépendances
+        // et récupère l'utilisateur grâce à la méthode getUser
+        $user = $this->tokenStorage->getToken()->getUser();
 
-        if(\is_object($token->getUser()))
+        if(\is_object($user))
         {
-            $id_user = $token->getUser()->getId();
+            $id_user = $user->getId();
         } else {
+            // Récupère l'id_cookie grâce à la requête HTTP injecté en paramètre
             $id_cookie = $request->cookies->get('associables_basket');
         }
 
-        $total = $this->entityManager->getRepository(Donation::class)
+        $basketTotal = $this->entityManager->getRepository(Donation::class)
             ->getBasketTotal($id_user, $id_cookie);
 
-        return $total;
+        return $basketTotal['quantity'];
     }
 }

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/dist/css/style_tempo.css') }}">
+
     {% block stylesheets %}
     {% endblock %}
 </head>
@@ -18,8 +19,8 @@
             <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
 
-                    {#              exemple de condition ternaire twig            #}
-                    {# {{ ('argument' in 'test argument') ? 'success' : 'fail' }} #}
+                    {#              exemple de condition ternaire twig              #}
+                    {#  {{ ('argument' in 'test argument') ? 'success' : 'fail' }}  #}
 
                     {% set route = app.request.attributes.get('_route') %}
 
@@ -34,11 +35,31 @@
                     </li>
                     <li class="nav-item {{ ('basket' in route) ? 'active' : '' }}">
                         <a class="nav-link" id="basket-link" href="{{ path('basket') }}">panier
-                            <span>{{ basket_total( app.request ) }}</span>
+
+                        {#   Appel la fonction 'getBasketTotal' avec en paramètre  #}
+                        {# 'app.request' afin de pouvoir récupérer la requête HTTP #}
+                            <span>{{ getBasketTotal( app.request ) }}</span>
                         </a>
                     </li>
                 </ul>
             </div>
+
+            {# Récupère et affiche le nom d'utilisateur Si celui-ci est connecté #}
+            {% if app.user.username is defined %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ app.user.username }}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{{ path('user_dashboard') }}">Mon Compte</a>
+                        <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="btn-group">
+                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-info">Connexion</a>
+                </div>
+            {% endif %}
         </nav>
     {% endblock %}
 

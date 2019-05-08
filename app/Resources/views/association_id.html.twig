@@ -1,81 +1,84 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-<main>
-    {# message d'erreur et loading AJAX #}
-    <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <p></p>
-    </div>
-    <div id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <i class="fas fa-spinner fa-3x"></i>
-        {#<p>veuillez patienter</p>#}
-    </div>
-
-    <h1>Détail association public</h1>
-
-    <div>
-        <h2>name : {{ association.name }}</h2>
-
-        {# ----------------- Image de l'association ----------------- #}
-        <div>
-            {% if association.image is null %}
-                <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
-            {% else %}
-                <img src="{{ asset(ImgAssosFolder ~ association.image) }}" alt="{{ association.name }}" style="width: 10%;">
-            {% endif %}
+    <main>
+        {# message d'erreur et loading AJAX #}
+        <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <p></p>
+        </div>
+        <div id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <i class="fas fa-spinner fa-3x"></i>
         </div>
 
-        {# ----------------- Détails de l'association ----------------- #}
+        <h1>Détail association public</h1>
 
-        <p>{{ association.description }}</p>
-
-        <a href="{{ association.urlAssos }}">Site de l'association</a>
-
-        {# ----------------- Dons a l'associations ----------------- #}
         <div>
-            <select name="donation" class="donation">
-                {% for amount in array_amount %}
-                    <option
+            <h2>name : {{ association.name }}</h2>
+
+            {# ----------------- Image de l'association ----------------- #}
+            <div>
+                {% if association.image is null %}
+                    <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
+                {% else %}
+                    <img src="{{ asset(ImgAssosFolder ~ association.image) }}" alt="{{ association.name }}" style="width: 10%;">
+                {% endif %}
+            </div>
+
+            {# ----------------- Détails de l'association ----------------- #}
+
+            <p>{{ association.description }}</p>
+
+            <a href="{{ association.urlAssos }}" target="_blank">Site de l'association</a>
+
+            {# ----------------- Dons a l'associations ----------------- #}
+            <div>
+                <select name="donation" class="donation">
+                    {% for amount in array_amount %}
+                        <option
                             {% if amount == default_amount %}
                                 {# détecte le montant selectionné par défaut #}
                                 selected
                             {% endif %}
                             value="{{ amount }}">{{ amount }}</option>
+                    {% endfor %}
+                </select>
+                <button class="donation-button" data-association-id="{{ association.id }}">Donner</button>
+            </div>
+
+            {# ----------------- Catégories de l'associations ----------------- #}
+            <div>
+                <p>
+                    categories :
+                    {% for category in association.categories %}
+                        {{ category.name }}
+                        {% if loop.index < association.categories | length %}
+                            {# détecte la dernière catégories #} <b>/</b>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+
+            {# ----------------- Reviews de l'associations ----------------- #}
+            <div>
+                {% for review in association.reviews %}
+                <p>{{ review.user }}</p>
+                <p>{{ review.comment }}</p>
+                <p>{{ review.createdAt }}</p>
                 {% endfor %}
-            </select>
-            <button class="donation-button" data-association-id="{{ association.id }}">Donner</button>
+            </div>
         </div>
 
-        {# ----------------- Catégories de l'associations ----------------- #}
-        <div>
-            <p>
-                categories :
-                {% for category in association.categories %}
-                    {{ category.name }}
-                    {% if loop.index < association.categories | length %}
-                        {# détecte la dernière catégories #} <b>/</b>
-                    {% endif %}
-                {% endfor %}
-            </p>
-        </div>
+        {# Lien vers la page précédente grace au 'referer' de Twig #}
+        {% set referer = app.request.headers.get('referer') %}
 
-        {# ----------------- Reviews de l'associations ----------------- #}
-        <div>
-            {% for review in association.reviews %}
-            <p>{{ review.user }}</p>
-            <p>{{ review.comment }}</p>
-            <p>{{ review.createdAt }}</p>
-            {% endfor %}
-        </div>
-    </div>
+        {% if referer is not null %}
+            <a href="{{ referer }}">retour</a>
+        {% else %}
+            <a href="{{ path('associations') }}">retour</a>
+        {% endif %}
+    </main>
+{% endblock %}
 
-    {# Lien vers la page précédente grace au 'referer' de Twig #}
-    {% set referer = app.request.headers.get('referer') %}
-
-    {% if referer is not null %}
-        <a href="{{ referer }}">retour</a>
-    {% else %}
-        <a href="{{ path('associations') }}">retour</a>
-    {% endif %}
-</main>
+{% block scripts %}
+{% include 'includes/js_ajax_basket.html.twig' %}
 {% endblock %}

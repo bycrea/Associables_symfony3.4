@@ -6,11 +6,16 @@ use AppBundle\Entity\Traits\CreatedAtTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
  * @ORM\Table(name="fos_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @UniqueEntity(
+ *     fields={"username"},
+ *     message="Ce nom d'utilisateur existe déjà."
+ * )
  */
 class User extends BaseUser
 {
@@ -65,6 +70,7 @@ class User extends BaseUser
      * @var Review
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Review", mappedBy="user")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $reviews;
 
@@ -72,6 +78,7 @@ class User extends BaseUser
      * @var Donation
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Donation", mappedBy="user")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $donations;
 

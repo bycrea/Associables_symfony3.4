@@ -13,6 +13,8 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -28,9 +30,22 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname', TextType::class)
-            ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
+            ->add('firstname', TextType::class, array('label' => 'prénom'))
+            ->add('lastname', TextType::class, array('label' => 'nom'))
             ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
+            ->add('birthdayAt',DateType::Class, array(
+                'widget' => 'choice',
+                'label' => 'Date de naissance',
+                'years' => range(date('Y')-12, date('Y')-100),
+                'months' => range(1, 12),
+                'days' => range(1, 31),
+                'placeholder' => array('year' => 'année', 'month' => 'mois', 'day' => 'jour')
+            ))
+            ->add('gender', ChoiceType::class, array(
+                'choices' => array_flip(User::GENDERS),
+                'label' => 'Civilité'
+            ))
+            ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'options' => array(
@@ -56,8 +71,6 @@ class RegistrationFormType extends AbstractType
             'csrf_token_id' => 'registration',
         ));
     }
-
-    // BC for SF < 3.0
 
     /**
      * {@inheritdoc}

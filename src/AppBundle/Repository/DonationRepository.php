@@ -58,11 +58,11 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
     /**
      * @param null $id_user
      * @param null $id_cookie
-     * @return mixed
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return array
      *
      * Compte le nombre de dons associés à un utilisateur (id_user ou id_cookie)
+     * ET
+     * La somme total de tous ces dons.
      */
     public function getBasketTotal($id_user = null, $id_cookie = null)
     {
@@ -71,7 +71,7 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
 
         $queryBuilder
             // On utilise la fonction SQL count() pour retourner le nombre d'id donation
-            ->select('count(donation.id)')
+            ->select('count(donation.id) as quantity, SUM(donation.amount) as amount')
             // là OU le status de paiement est égal à la constante PAY_BASKET(=0)
             ->where('donation.paymentStatus = :status')
             ->setParameter('status', Donation::PAY_BASKET);
@@ -90,7 +90,8 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('id_cookie', $id_cookie);
         }
 
-        //  Retourne un seul résultat de type int
-        return $queryBuilder->getQuery()->getSingleScalarResult();
+        //  Retourne un tableau des résultats
+        $resultArray = $queryBuilder->getQuery()->getScalarResult();
+        return $resultArray[0];
     }
 }
