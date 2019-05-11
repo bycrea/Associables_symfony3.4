@@ -8,12 +8,13 @@
 
 namespace AppBundle\Entity\Traits;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 trait CreatedAtTrait
 {
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
@@ -22,7 +23,7 @@ trait CreatedAtTrait
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param DateTime $createdAt
      *
      * @return mixed
      */
@@ -36,7 +37,7 @@ trait CreatedAtTrait
     /**
      * Get createdAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {

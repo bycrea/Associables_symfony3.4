@@ -90,8 +90,12 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('id_cookie', $id_cookie);
         }
 
-        //  Retourne un tableau des résultats (index : 'quantity' , 'amount')
+        // Retourne un tableau des résultats (index : 'quantity' , 'amount')
         $resultArray = $queryBuilder->getQuery()->getScalarResult();
+
+        // Si amount = null on converti en 'int 0' pour l'affichage
+        if(is_null($resultArray[0]['amount'])) { $resultArray[0]['amount'] = 0; }
+
         return $resultArray[0];
     }
 

@@ -15,14 +15,14 @@ class Payment
 {
     use CreatedAtTrait;
 
-    // Constantes des status de paiement des dons
+    // Constantes des status de paiement des transferts aux associations
     const PAY_BASKET = 0;
     const PAY_ERROR = 1;
     const PAY_REFUSED = 2;
     const PAY_CANCEL = 3;
-    // Constantes des status de paiement des dons et de paiement aux assos
     const PAY_IN_TRANSFER = 4;
     const PAY_PROCESSED = 5;
+    // Tableau des constantes
     const PAYEMENT_STATUS = [
         self::PAY_BASKET => 'Panier',
         self::PAY_ERROR => 'Erreur de paiement',
@@ -32,12 +32,13 @@ class Payment
         self::PAY_PROCESSED => 'Transfert effectué'
     ];
 
-    // Constantes des modes de paiment des dons et des transferts aux associations
+    // Constantes des modes de paiment des transferts aux associations
     const PAY_STRIPE = 0;
     const PAY_PAYPAL = 1;
     const PAY_CARD = 2;
     const PAY_WIRETRANS = 3;
     const PAY_CHECK = 4;
+    // Tableau des constantes
     const PAYEMENT_MODE = [
         self::PAY_STRIPE => 'Stripe',
         self::PAY_PAYPAL => 'PayPal',

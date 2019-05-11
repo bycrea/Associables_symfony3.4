@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Donation;
+
 /**
  * AssosRepository
  *
@@ -26,5 +28,40 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('id', $id);
 
         return $queryBuilder->getQuery()->getResult();
+    }
+
+
+    public function getByUserDonation($user)
+    {
+        $queryBuilder = $this->createQueryBuilder('assos');
+
+        $queryBuilder
+            ->leftJoin('assos.donations', 'don')
+            ->leftJoin('don.user', 'user')
+
+            ->where('don.user = :user')
+            ->setParameter('user', $user)
+
+            ->andWhere('don.paymentStatus IN (:status)')
+            ->setParameter('status', [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED])
+
+            ->orderBy('don.createdAt', 'DESC');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function getGivenAmount($association)
+    {
+        $queryBuilder = $this->createQueryBuilder('assos');
+
+        $queryBuilder
+            ->select('SUM(don.amount)')
+            ->leftJoin('assos.donations', 'don')
+
+            ->where('don.assos = :asso')
+            ->setParameter('asso', $association);
+
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 }

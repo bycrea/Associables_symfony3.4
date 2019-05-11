@@ -8,7 +8,6 @@
         </div>
         <div id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
             <i class="fas fa-spinner fa-3x"></i>
-            {#<p>veuillez patienter</p>#}
         </div>
 
         <h1>panier public</h1>
@@ -47,13 +46,13 @@
                     </div>
                 </div>
             {% endfor %}
-                <button type="submit" class="btn btn-info">Payer</button>
+                <button type="submit" id="submit" class="btn btn-info">Payer</button>
             </form>
         </div>
 
         {# ----------------- Total / Paiement ----------------- #}
         <div class="total-amount" id="total-amount">
-            <p>Total : <span id="amount">{{ total_amount }}</span>€</p>
+            <p>Total : <span id="amount" data-total-amount="{{ total_amount }}">{{ total_amount }}</span>€</p>
         </div>
 
     </main>
@@ -66,6 +65,15 @@
         $(document).ready(function() {
 
             $('#loading-modal').hide()
+
+            {# Désactive le bouton 'payer' si le montant est <= 0 #}
+            var total_amount = $('#amount').data('total-amount')
+            if (total_amount <= 0)
+            {
+                $('#submit').prop('disabled', true)
+            } /*else {
+                $('#submit').prop('disabled', false)
+            }*/
 
             {# affiche la modal loading-modal pendant le chargement AJAX #}
             $(document).ajaxStart(function(){
@@ -144,6 +152,13 @@
                             {# Raffraichi le nombre de dons et le montant total en cas de succès #}
                             $('#basket-link span').text(response.quantity)
                             $('#amount').text(response.amount)
+
+                            {# Désactive le bouton 'payer' si le montant est <= 0 #}
+                            if (response.amount <= 0)
+                            {
+                                $('#submit').prop('disabled', true)
+                            }
+
                             $('#flash-ajax p').text('')
                         }
                         else if(response.status === false)
@@ -156,7 +171,6 @@
                     dataType: 'json'
                 });
             })
-
 
             {# cache la modal loading-modal après le chargement AJAX #}
             $(document).ajaxStop(function(){

@@ -20,13 +20,14 @@ class BasketController extends Controller
     {
         // Initialise la variable null
         $donations = null;
+        $totalAmount = 0;
 
         // Récupère l'utilisateur et le cookie
         $user = $this->getUser();
         $cookieId = $request->cookies->get('associables_basket');
 
         // Si l'utilisateur existe :
-        if(\is_object($user))
+        if (is_object($user))
         {
             // On récupère ses donations
             $donations = $this->getDoctrine()->getRepository(Donation::class)
@@ -39,9 +40,11 @@ class BasketController extends Controller
                 ->findBy(['cookieId' => $cookieId]);
         }
 
-        // Récupère le montant total des dons grâce à la méthode 'getBasketTotal' de 'DonationRepository'
-        $totalAmount = $this->getDoctrine()->getRepository(Donation::class)
-            ->getBasketTotal($user->getId())['amount'];
+        // Récupère le montant total des donations
+        foreach ($donations as $donation)
+        {
+            $totalAmount += $donation->getAmount();
+        }
 
         return $this->render('basket.html.twig', [
             'title' => 'panier',
@@ -179,8 +182,8 @@ class BasketController extends Controller
             $id_cookie = $request->cookies->get('associables_basket');
         }
 
-        // On verifie que le don existe grace à la méthode
-        // 'existingBasketDonation' du 'DonationRepository'
+        // On verifie que le don existe et qu'il appartient bien à l'utilisateur connecté (ou au cookie)
+        // grace à la méthode 'existingBasketDonation' du 'DonationRepository'
         $donationExists = $this->getDoctrine()->getRepository(Donation::class)
             ->existingBasketDonation($id_asso, $id_user, $id_cookie);
 

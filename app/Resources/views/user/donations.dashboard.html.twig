@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    {# ----------------- Menu dashboard ----------------- #}
+    {% include 'user/menu.dashboard.html.twig' %}
+
+    {# ----------------- Historique des dons ----------------- #}
+    <h2 class="title dons">Historiques des donations</h2>
+    <div class="donations">
+        <h3 class="sub-title dons">Donations en attente de transfert</h3>
+        <div class="box-dons">
+            {% for don in awaitDons %}
+                <div class="donation">
+                    <a href="{{ path('association_id', {id: don.assos.id}) }}"><span>{{ don.assos.name }}</span></a>
+                    - <span>le: {{ don.createdAt | date("d.m.y H:i:s") }}</span>
+                    - <span>montant : {{ don.amount }}€</span>
+                    - <span>mode : <i class="fab fa-paypal"></i></span>
+                    - <span>En attente de transfert</span>
+                </div>
+            {% else %}
+                <div class="donation">
+                    <span>Aucunes donations en attente de transfert</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="donations">
+        <h3 class="sub-title dons">Donations transférées aux associations</h3>
+        <div class="box-dons">
+            {% for don in transDons %}
+                <div class="donation">
+                    <a href="{{ path('association_id', {id: don.assos.id}) }}"><span>{{ don.assos.name }}</span></a>
+                    - <span>le : {{ don.createdAt | date("d.m.y H:i:s") }}</span>
+                    - <span>montant : {{ don.amount }}€</span>
+                    - <span>mode : <i class="fab fa-paypal"></i></span>
+                    - <span>Transféré le : "date de transfert"</span>
+                </div>
+            {% else %}
+                <div class="donation">
+                    <span>Aucunes donations transférées aux associations</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

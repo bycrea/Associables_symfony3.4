@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Traits\CreatedAtTrait;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
@@ -148,7 +149,7 @@ class User extends BaseUser
     /**
      * Set birthdayAt
      *
-     * @param \DateTime $birthdayAt
+     * @param DateTime $birthdayAt
      *
      * @return User
      */
@@ -162,7 +163,7 @@ class User extends BaseUser
     /**
      * Get birthdayAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getBirthdayAt()
     {

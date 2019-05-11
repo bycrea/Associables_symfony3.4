@@ -9,13 +9,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReviewController extends Controller
 {
     /**
-     * @Route("/review", name="user_review")
+     * @Route("/reviews", name="user_reviews")
      */
-    public function indexAction(Request $request)
+    public function UserReviewsAction(Request $request)
     {
 
-        return $this->render('user/reviews/index.html.twig', [
-            'title' => 'SAV'
+        return $this->render('user/reviews.dashboard.html.twig', [
+            'title' => 'Mon Compte - Mes Avis'
         ]);
     }
 }

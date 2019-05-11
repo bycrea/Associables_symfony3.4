@@ -4,7 +4,6 @@ namespace AppBundle\Entity;
 
 use Beelab\PaypalBundle\Entity\Transaction as BaseTransaction;
 use Doctrine\ORM\Mapping as ORM;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 
 /**

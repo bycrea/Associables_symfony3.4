@@ -6,6 +6,7 @@ use AppBundle\Entity\Donation;
 use AppBundle\Entity\Transaction;
 use Beelab\PaypalBundle\Paypal\Exception;
 use Beelab\PaypalBundle\Paypal\Service;
+use function Sodium\add;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -33,8 +34,18 @@ class PaymentController extends Controller
         $totalAmount = $this->getDoctrine()->getRepository(Donation::class)
             ->getBasketTotal($user->getId())['amount'];
 
-        // Création d'une nouvelle entity Transaction
-        $transaction = new Transaction($totalAmount);
+        // Verifie que le montant soit supérieur à zéro avant de lancer une transaction
+        if ($totalAmount != null && $totalAmount > 0)
+        {
+            // Création d'une nouvelle entity Transaction
+            $transaction = new Transaction($totalAmount);
+
+        } else {
+
+            // Redirection vers la panier
+            $this->addFlash('danger', 'Votre panier est vide.');
+            return $this->redirectToRoute('basket');
+        }
 
         // 'setDonations' est une méthode crée dans l'entity Transaction pour
         // transmettre les détails de la transaction à PayPal via le Bundle
