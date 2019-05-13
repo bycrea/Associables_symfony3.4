@@ -31,13 +31,13 @@ class BasketController extends Controller
         {
             // On récupère ses donations
             $donations = $this->getDoctrine()->getRepository(Donation::class)
-                ->findBy(['user' => $user]);
+                ->findBy(['user' => $user, 'paymentStatus' => Donation::PAY_BASKET]);
 
         } elseif ($cookieId != null) {
 
             // Sinon on récupère les donations liées au cookie
             $donations = $this->getDoctrine()->getRepository(Donation::class)
-                ->findBy(['cookieId' => $cookieId]);
+                ->findBy(['cookieId' => $cookieId, 'paymentStatus' => Donation::PAY_BASKET]);
         }
 
         // Récupère le montant total des donations

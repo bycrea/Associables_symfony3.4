@@ -76,9 +76,11 @@ class PaymentController extends Controller
     {
         $token = $request->query->get('token');
         $transaction = $this->getDoctrine()->getRepository(Transaction::class)->findOneByToken($token);
+
         if (null === $transaction) {
             throw $this->createNotFoundException(sprintf('Transaction with token %s not found.', $token));
         }
+
         $transaction->cancel(null);
         $this->getDoctrine()->getManager()->flush();
 
@@ -89,13 +91,14 @@ class PaymentController extends Controller
     /**
      * @Route("/payment_success", name="user_payment_success")
      *
-     * Modifie le 'paymentStatus' des donations en cas de success ou d'erreur
+     * Modifie les 'paymentStatus' et 'paymentMode' des donations en cas de success ou d'erreur
      * Redirige vers le dashboard utilisateur
      */
     public function completedPaymentAction(Service $service, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
+        // Vérifi que le token reçu via PayPal corresponde bien à la transaction envoyé
         $token = $request->query->get('token');
         $transaction = $this->getDoctrine()->getRepository(Transaction::class)->findOneByToken($token);
 
@@ -110,25 +113,32 @@ class PaymentController extends Controller
         $donations = $this->getDoctrine()->getRepository(Donation::class)
             ->findBy(['user' => $user]);
 
-        // transmettre les détails de la transaction pour getItems
+        // Transmettre les détails de la transaction pour getItems
         $transaction->setDonations($donations);
 
+        // Inscrit la transaction comme terminé en base de donnée
         $service->setTransaction($transaction)->complete();
         $entityManager->flush();
 
+        // Si la transcation est défini comme 'différent de isOk' (soit refusé par PayPal)
         if (!$transaction->isOk())
         {
-            $status = Donation::PAY_ERROR;
+            // On selectionne le status refusé (paymentStatus = 2)
+            $status = Donation::PAY_REFUSED;
+            // On averti l'utilisateur
             $this->addFlash('danger', 'Une erreur est survenue, veuillez contacter le service PayPal.');
 
         } else {
-
+            // Sinon, selectionne le status réussi (soit en attente de transfert : paymentStatus = 4)
             $status = Donation::PAY_IN_TRANSFER;
+            // On averti l'utilisateur
             $this->addFlash('success', 'Paiement validé, merci pour vos dons et votre confiance.');
         }
 
         foreach($donations as $donation)
         {
+            // Pour chaque donations on inscrit définitivement le status de la transaction
+            // ainsi que le mode de paiement (soit PayPal : paymentMode = 1)
             $donation->setPaymentStatus($status);
             $donation->setPaymentMode(Donation::PAY_PAYPAL);
             $entityManager->persist($donation);

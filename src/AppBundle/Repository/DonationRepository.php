@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Donation;
+use DateTime;
 
 /**
  * DonationRepository
@@ -60,33 +61,33 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
      * @param null $id_cookie
      * @return array
      *
-     * Compte le nombre de dons associés à un utilisateur (id_user ou id_cookie)
+     * Compte le nombre de dons associés au Panier d'un Utilisateur (id_user ou id_cookie)
      * ET
      * La somme total de tous ces dons.
      */
     public function getBasketTotal($id_user = null, $id_cookie = null)
     {
         // Crée un nouveau $queryBuilder pour préparer notre requête DQL en lien avec l'entity Donation
-        $queryBuilder = $this->createQueryBuilder('donation');
+        $queryBuilder = $this->createQueryBuilder('don');
 
         $queryBuilder
             // On utilise la fonction SQL count() pour retourner le nombre d'id donation
-            ->select('count(donation.id) as quantity, SUM(donation.amount) as amount')
+            ->select('count(don.id) as quantity, SUM(don.amount) as amount')
             // là OU le status de paiement est égal à la constante PAY_BASKET(=0)
-            ->where('donation.paymentStatus = :status')
+            ->where('don.paymentStatus = :status')
             ->setParameter('status', Donation::PAY_BASKET);
 
         if(!is_null($id_user))
         {
             // et OU l'id_user correspond si l'utilisateur est conecté
             $queryBuilder
-                ->leftJoin('donation.user', 'user')
+                ->leftJoin('don.user', 'user')
                 ->andWhere('user.id = :id_user')
                 ->setParameter('id_user', $id_user);
         } else {
             // et OU l'id_cookie correspond dans le cas contraire
             $queryBuilder
-                ->andWhere('donation.cookieId = :id_cookie')
+                ->andWhere('don.cookieId = :id_cookie')
                 ->setParameter('id_cookie', $id_cookie);
         }
 
@@ -111,19 +112,79 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
     public function getExpiredDonations($day)
     {
         // Initialise un nouveau DateTime
-        $todayDate = new \DateTime();
+        $todayDate = new DateTime();
 
         // Modifie la date - le nombre de jours entré en paramètre '$day'
         $expiredDate = $todayDate->modify('-'.$day.' day');
 
-        $queryBuilder = $this->createQueryBuilder('donation');
+        $queryBuilder = $this->createQueryBuilder('don');
 
         $queryBuilder
-            ->where('donation.paymentStatus = :status')
+            ->where('don.paymentStatus = :status')
             ->setParameter('status', Donation::PAY_BASKET)
-            ->andWhere('donation.createdAt < :expiredDate')
+            ->andWhere('don.createdAt < :expiredDate')
             ->setParameter('expiredDate', $expiredDate);
 
         return $queryBuilder->getQuery()->getResult();
+    }
+
+
+    /**
+     * @param $year //année recherché
+     * @param null $user //utilisateur connecté (tous si null)
+     * @param array null $status //status du paiement (tous si null)
+     * @return array
+     *
+     * * Retourne les donations de l'année sélectionné
+     *
+     * Intallation du Bundle https://github.com/beberlei/DoctrineExtensions
+     * qui permet de rajouter des méthode DQL telque YEAR() / MONTH() etc.
+     */
+    public function findDonationsByYear($year, $user = null, array $status = null)
+    {
+        $queryBuilder = $this->createQueryBuilder('don');
+
+        $queryBuilder
+            ->where('YEAR(don.createdAt) = :year')
+            ->setPArameter('year', $year);
+
+        // Si on ne précise pas l'utilisateur, le montant sera calculé sur tous les dons confondus
+        if(!empty($user))
+        {
+            $queryBuilder
+                ->andWhere('don.user = :user')
+                ->setParameter('user', $user);
+        }
+
+        // Si on ne précise pas le paymentStatus, tous les dons seront sélectionnés
+        if($status != null)
+        {
+            $queryBuilder
+                ->andWhere('don.paymentStatus IN (:status)')
+                ->setParameter('status', $status);
+        }
+
+        $queryBuilder
+            ->orderBy('don.createdAt', 'DESC');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+
+    /**
+     * @param $donations //Dons
+     * @return int
+     *
+     * Retourne le montant total des donations définies en paramètre
+     */
+    public function getDonationsTotalAmount($donations)
+    {
+        $totalAmount = 0;
+        foreach ($donations as $don)
+        {
+            $totalAmount += $don->getAmount();
+        }
+
+        return $totalAmount;
     }
 }

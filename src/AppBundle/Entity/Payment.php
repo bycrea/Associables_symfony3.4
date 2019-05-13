@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Traits\CreatedAtTrait;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Payment
 {
+    // On défini la date à l'intant T ou l'on crée notre notre nouvelle Donation
     use CreatedAtTrait;
 
     // Constantes des status de paiement des transferts aux associations
@@ -87,7 +89,8 @@ class Payment
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        // On défini la date à l'intant T ou l'on crée notre notre nouvelle Payment
+        $this->createdAt = new DateTime();
     }
 
     /**

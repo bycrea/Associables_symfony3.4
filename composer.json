@@ -15,6 +15,7 @@
     },
     "require": {
         "php": "7.1.*",
+        "beberlei/doctrineextensions": "^1.2",
         "beelab/paypal-bundle": "^1.4",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",

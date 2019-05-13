@@ -20,7 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User extends BaseUser
 {
-    // On utilise le trait CreatedAtTrait simplifier notre code
+    // On défini la date à l'intant T ou l'on crée notre notre nouvelle Donation
     use CreatedAtTrait;
 
     const GENDER_MAN = 0;
@@ -88,8 +88,8 @@ class User extends BaseUser
     {
         parent::__construct();
 
-        // On instancie un nouveau DateTime a chaque nouvelle creation d'un objet User
-        $this->createdAt = new \DateTime();
+        // On défini la date à l'intant T ou l'on crée notre notre nouvel utilisateur
+        $this->createdAt = new DateTime();
 
         // On instancie un tableau vide pour éviter un erreur PHP quand on veut boucler
         // sur une collection d'objets tel que les 'reviews' ou 'donations'

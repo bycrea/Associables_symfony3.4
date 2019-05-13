@@ -1,7 +1,66 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    <main>
+        {# message d'erreur et loading AJAX #}
+        <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <p></p>
+        </div>
+        <div id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <i class="fas fa-spinner fa-3x"></i>
+            {#<p>veuillez patienter</p>#}
+        </div>
 
-    <h1>home page public</h1>
+        <h1>Home page public</h1>
+        <h2>Les assciations récemment ajoutées</h2>
 
+        {% for association in associations %}
+            <div>
+                <h3>{{ association.name }}</h3>
+
+                {# ----------------- Images des associations ----------------- #}
+                <div>
+                    {% if association.image is null %}
+                        <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
+                    {% else %}
+                        <img src="{{ asset(ImgAssosFolder ~ association.image) }}" alt="{{ association.name }}" style="width: 10%;">
+                    {% endif %}
+                </div>
+
+                <a href="{{ path('association_id', {id: association.id}) }}">Voir l'association</a>
+
+                {# ----------------- Dons aux associations ----------------- #}
+                <div>
+                    <select name="donation" class="donation">
+                        {% for amount in array_amount %}
+                            <option
+                                {% if amount == default_amount %}
+                                    {# détecte le montant selectionné par défaut #}
+                                    selected
+                                {% endif %}
+                                value="{{ amount }}">{{ amount }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="donation-button btn btn-info btn-sm" data-association-id="{{ association.id }}">Donner</button>
+                </div>
+
+                {# ----------------- Catégories des associations ----------------- #}
+                <div>
+                    <p>
+                        categories :
+                        {% for category in association.categories %}
+                            {{ category.name }}
+                            {% if loop.index < association.categories | length %}
+                                {# détecte la dernière catégories #} <b>/</b>
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    {% include 'includes/js_ajax_basket.html.twig' %}
 {% endblock %}

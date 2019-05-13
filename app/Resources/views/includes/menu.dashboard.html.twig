@@ -4,7 +4,7 @@
             {% set route = app.request.attributes.get('_route') %}
 
             <li class="nav-item {{ ('user_donations' in route) ? 'active' : '' }}">
-                <a class="nav-link" href="{{ path('user_donations') }}">Mes Dons</a>
+                <a class="nav-link" href="{{ path('user_donations', {'year' : '2019'}) }}">Mes Dons</a>
             </li>
             <li class="nav-item {{ ('user_associations' in route) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ path('user_associations') }}">Mes Assos</a>

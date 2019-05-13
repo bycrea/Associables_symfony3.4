@@ -13,7 +13,7 @@ use AppBundle\Entity\Donation;
 class AssosRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
-     * @param $id
+     * @param $id //Id de la catégorie
      * @return array
      *
      * Retourne les associations liées à une catégorie
@@ -31,6 +31,13 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
+    /**
+     * @param $user //utilisateur connecté
+     * @return array
+     *
+     * Retourne les associtations auquelles un utilisateur à donné
+     * paymentStatus = en attente de transfert OU transféré
+     */
     public function getByUserDonation($user)
     {
         $queryBuilder = $this->createQueryBuilder('assos');
@@ -50,7 +57,18 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
-    public function getGivenAmount($association)
+    /**
+     * @param $association //associtaion testé
+     * @param $user //utilisateur connecté (ou null)
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     *
+     * Retourne les montant total des dons pour une association
+     * paymentStatus = en attente de transfert OU transféré
+     * NB: peut être trié pour UN utilisateur OU TOUS utilisateur confondus
+     */
+    public function getGivenAmount($association, $user = null)
     {
         $queryBuilder = $this->createQueryBuilder('assos');
 
@@ -61,7 +79,38 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
             ->where('don.assos = :asso')
             ->setParameter('asso', $association);
 
+        // Si on ne précise pas l'utilisateur, le montant sera calculé sur tous les dons confondus
+        if(!empty($user))
+        {
+            $queryBuilder
+                ->andWhere('don.user = :user')
+                ->setParameter('user', $user);
+        }
+
+        $queryBuilder
+            ->andWhere('don.paymentStatus IN (:status)')
+            ->setParameter('status', [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED]);
+
 
         return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+
+    /**
+     * @param $limit //max results
+     * @return array
+     *
+     * Retourne le nombre $limit d'assciations trié du don le plus récent au plus vieux.
+     */
+    public function findMostRecent($limit)
+    {
+        $queryBuilder = $this->createQueryBuilder('assos');
+
+        $queryBuilder
+            ->leftJoin('assos.donations', 'don')
+            ->orderBy('don.createdAt', 'DESC')
+            ->setMaxResults($limit);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 }

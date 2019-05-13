@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Review
 {
+    // On défini la date à l'intant T ou l'on crée notre notre nouvelle Donation
     use CreatedAtTrait;
 
     /**
@@ -58,6 +59,7 @@ class Review
 
     public function __construct()
     {
+        // On défini la date à l'intant T ou l'on crée notre notre nouvelle Review
         $this->createdAt = new DateTime();
     }
 

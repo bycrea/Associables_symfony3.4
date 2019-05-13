@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Traits\CreatedAtTrait;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Donation
 {
+    // Importe la propriété 'createdAt' du trait 'CreatedAtTrait'
     use CreatedAtTrait;
 
     // Constantes des status de paiement des dons
@@ -117,7 +119,8 @@ class Donation
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        // On défini la date à l'intant T ou l'on crée notre notre nouvelle Donation
+        $this->createdAt = new DateTime();
 
         // $reccurent permet de déterminer si un paiement est mensuel ou ponctuel
         // Par défaut la variable sera false = ponctuel

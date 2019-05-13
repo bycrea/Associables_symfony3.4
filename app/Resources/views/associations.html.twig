@@ -28,9 +28,14 @@
             {% endfor %}
         </select>
 
+        <form>
+            <input type="text" id="search">
+        </form>
+        
+                {# ----------------- Liste des associations ----------------- #}
         {% for association in associations %}
             <div>
-                <h2>name : {{ association.name }}</h2>
+                <h3>{{ association.name }}</h3>
 
                 {# ----------------- Images des associations ----------------- #}
                 <div>
@@ -76,5 +81,23 @@
 {% endblock %}
 
 {% block scripts %}
-{% include 'includes/js_ajax_basket.html.twig' %}
+    {% include 'includes/js_ajax_basket.html.twig' %}
+
+    <script>
+        $(document).ready(function () {
+
+            var search = $(this).val()
+
+            $.ajax({
+                type: "POST",
+                url: '{{ path('_ajax_search') }}',
+                data: search,
+                success: function (response) {
+                    console.log(response.search)
+                }
+            })
+
+        })
+    </script>
+
 {% endblock %}

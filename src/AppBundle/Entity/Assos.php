@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Traits\CreatedAtTrait;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Assos
 {
+    // On défini la date à l'intant T ou l'on crée notre notre nouvelle Donation
     use CreatedAtTrait;
 
     /**
@@ -101,7 +103,8 @@ class Assos
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        // On défini la date à l'intant T ou l'on crée notre notre nouvelle Association
+        $this->createdAt = new DateTime();
 
         // On instancie un tableau vide pour éviter un erreur PHP lorsque l'on boucle sur une collection
         $this->reviews = new ArrayCollection();

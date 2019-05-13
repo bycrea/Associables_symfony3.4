@@ -51,6 +51,7 @@ class AssociationsController extends Controller
         ]);
     }
 
+
     /**
      * @Route("/association/{id}", name="association_id")
      */
@@ -63,4 +64,16 @@ class AssociationsController extends Controller
             'association' => $association
         ]);
     }
+
+
+    /**
+     * @Route("/_ajax/search", name="_ajax_search")
+     */
+    public function _ajaxSearchAction($search)
+    {
+        return $this->json([
+            'search' => $search
+        ]);
+    }
+
 }

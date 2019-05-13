@@ -75,17 +75,19 @@ doctrine:
         user: '%database_user%'
         password: '%database_password%'
         charset: UTF8
-        # if using pdo_sqlite as your database driver:
-        #   1. add the path in parameters.yml
-        #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
-        #   2. Uncomment database_path in parameters.yml.dist
-        #   3. Uncomment next line:
-        #path: '%database_path%'
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+
+        # Intallation du Bundle https://github.com/beberlei/DoctrineExtensions
+        # qui permet de rajouter des méthode DQL telque YEAR() / MONTH() etc.
+        dql:
+            string_functions:
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+                YEAR: DoctrineExtensions\Query\Mysql\Year
+
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -99,6 +101,7 @@ sensio_framework_extra:
    router:
         annotations: false
 
+# Config du FOSUser
 fos_user:
     db_driver: orm
     firewall_name: main
@@ -110,6 +113,7 @@ fos_user:
         form:
             type: AppBundle\Form\RegistrationFormType
 
+# Config du Bundle PayPal
 beelab_paypal:
     username: "%paypal_username%"
     password: "%paypal_password%"
