@@ -52,7 +52,7 @@
                     {% for category in association.categories %}
                         {{ category.name }}
                         {% if loop.index < association.categories | length %}
-                            {# détecte la dernière catégories #} <b>/</b>
+                            {# détecte la dernière catégories #} <i>/</i>
                         {% endif %}
                     {% endfor %}
                 </p>

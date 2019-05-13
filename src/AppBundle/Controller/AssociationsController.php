@@ -69,10 +69,16 @@ class AssociationsController extends Controller
     /**
      * @Route("/_ajax/search", name="_ajax_search")
      */
-    public function _ajaxSearchAction($search)
+    public function _ajaxSearchAction(Request $request)
     {
-        return $this->json([
-            'search' => $search
+        $search = $request->request->get('search');
+
+        $associations = $this->getDoctrine()->getRepository(Assos::class)
+            ->findBySearchBar($search);
+
+
+        return $this->render('associations_search.html.twig', [
+            'associations' => $associations
         ]);
     }
 

@@ -13,91 +13,95 @@
 
         <h1>listes des associations public</h1>
 
-                {# ----------------- Menu déroulant des Catégories ----------------- #}
-        <label for="categories">Catégories</label>
-        <select name="categories" id="categories" onchange="window.location.href = this.value">
-            <option value="{{ path('associations') }}">Toutes</option>
-            {% for category in categories %}
-                <option
-                    {% if category.id == getCategory %}
-                        {# détecte la catégorie selectionné #}
-                        selected
-                    {% endif %}
-                    value="{{ path('associations', {getCategory: category.id}) }}">{{ category.name }}
-                </option>
-            {% endfor %}
-        </select>
-
-        <form>
-            <input type="text" id="search">
-        </form>
-        
-                {# ----------------- Liste des associations ----------------- #}
-        {% for association in associations %}
-            <div>
-                <h3>{{ association.name }}</h3>
-
-                {# ----------------- Images des associations ----------------- #}
-                <div>
-                {% if association.image is null %}
-                    <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
-                {% else %}
-                    <img src="{{ asset(ImgAssosFolder ~ association.image) }}" alt="{{ association.name }}" style="width: 10%;">
-                {% endif %}
-                </div>
-
-                <a href="{{ path('association_id', {id: association.id}) }}">Voir l'association</a>
-
-                {# ----------------- Dons aux associations ----------------- #}
-                <div>
-                    <select name="donation" class="donation">
-                        {% for amount in array_amount %}
-                            <option
-                                {% if amount == default_amount %}
-                                    {# détecte le montant selectionné par défaut #}
-                                    selected
-                                {% endif %}
-                            value="{{ amount }}">{{ amount }}</option>
-                        {% endfor %}
-                    </select>
-                    <button class="donation-button" data-association-id="{{ association.id }}">Donner</button>
-                </div>
-
-                {# ----------------- Catégories des associations ----------------- #}
-                <div>
-                    <p>
-                        categories :
-                    {% for category in association.categories %}
-                        {{ category.name }}
-                        {% if loop.index < association.categories | length %}
-                            {# détecte la dernière catégories #} <b>/</b>
+        {# ----------------- Menu déroulant des Catégories + Search bar ----------------- #}
+        <div class="search">
+            <label for="categories">Catégories</label>
+            <select name="categories" id="categories" onchange="window.location.href = this.value">
+                <option value="{{ path('associations') }}">Toutes</option>
+                {% for category in categories %}
+                    <option
+                        {% if category.id == getCategory %}
+                            {# détecte la catégorie selectionné #}
+                            selected
                         {% endif %}
-                    {% endfor %}
-                    </p>
+                        value="{{ path('associations', {getCategory: category.id}) }}">{{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <label for="search">rechercher</label>
+            <input type="text" id="search">
+            <i class="fas fa-search"></i>
+        </div>
+        
+        {# ----------------- Liste des associations ----------------- #}
+        <div class="associations">
+            {% for association in associations %}
+                <div>
+                    <h3>{{ association.name }}</h3>
+
+                    {# ----------------- Images des associations ----------------- #}
+                    <div>
+                    {% if association.image is null %}
+                        <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
+                    {% else %}
+                        <img src="{{ asset(ImgAssosFolder ~ association.image) }}" alt="{{ association.name }}" style="width: 10%;">
+                    {% endif %}
+                    </div>
+
+                    <a href="{{ path('association_id', {id: association.id}) }}">Voir l'association</a>
+
+                    {# ----------------- Dons aux associations ----------------- #}
+                    <div>
+                        <select name="donation" class="donation">
+                            {% for amount in array_amount %}
+                                <option
+                                    {% if amount == default_amount %}
+                                        {# détecte le montant selectionné par défaut #}
+                                        selected
+                                    {% endif %}
+                                value="{{ amount }}">{{ amount }}</option>
+                            {% endfor %}
+                        </select>
+                        <button class="donation-button btn btn-info btn-sm" data-association-id="{{ association.id }}">Donner</button>
+                    </div>
+
+                    {# ----------------- Catégories des associations ----------------- #}
+                    <div>
+                        <p>
+                            categories :
+                        {% for category in association.categories %}
+                            {{ category.name }}
+                            {% if loop.index < association.categories | length %}
+                                {# détecte la dernière catégories #} <i>/</i>
+                            {% endif %}
+                        {% endfor %}
+                        </p>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </main>
 {% endblock %}
 
 {% block scripts %}
-    {% include 'includes/js_ajax_basket.html.twig' %}
-
     <script>
-        $(document).ready(function () {
+        $(document).ready(function(){
 
-            var search = $(this).val()
+            $("#search").val('')
 
-            $.ajax({
-                type: "POST",
-                url: '{{ path('_ajax_search') }}',
-                data: search,
-                success: function (response) {
-                    console.log(response.search)
-                }
-            })
-
-        })
+            $("#search").keyup(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('_ajax_search') }}",
+                    data: {
+                        search: $("#search").val()
+                    },
+                    success: function(response){
+                        $('.associations').html(response)
+                    }
+                });
+            });
+        });
     </script>
-
+    {% include 'includes/js_ajax_basket.html.twig' %}
 {% endblock %}

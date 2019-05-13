@@ -96,6 +96,19 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
+
+    public function findBySearchBar($search)
+    {
+        $queryBuilder = $this->createQueryBuilder('assos');
+
+        $queryBuilder
+            ->where('assos.name LIKE :search')
+            ->setParameter('search', $search.'%');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+
     /**
      * @param $limit //max results
      * @return array
