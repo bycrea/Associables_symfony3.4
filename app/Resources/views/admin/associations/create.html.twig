@@ -2,7 +2,11 @@
 
 {% block content %}
 
-    <h1>Ajouter une association admin</h1>
+    {# ----------------- Menu dashboard ----------------- #}
+    {% include 'includes/menu_admin_dashboard.html.twig' %}
+
+    {# ----------------- Créer une association ----------------- #}
+    <h2 class="title dons">Créer une association (ADMIN)</h2>
 
     {{ form_start(form) }}
     {{ form_widget(form) }}

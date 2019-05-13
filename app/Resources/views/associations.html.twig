@@ -30,7 +30,7 @@
             </select>
             <label for="search">rechercher</label>
             <input type="text" id="search">
-            <i class="fas fa-search"></i>
+            <i id="search-btn" class="fas fa-search"></i>
         </div>
         
         {# ----------------- Liste des associations ----------------- #}
@@ -84,24 +84,47 @@
 {% endblock %}
 
 {% block scripts %}
+    {% include 'includes/js_ajax_basket.html.twig' %}
+
     <script>
+        {# On attend que la page est fini de charger #}
         $(document).ready(function(){
 
-            $("#search").val('')
+            {# Si un champ est entré dans le formulaire 'input' #}
+            /*$("#search").on('input',function (){
+                // Appel la fonction 'callAjax'
+                callAjax($("#search").val())
+            })*/
 
-            $("#search").keyup(function(){
+            {# Si on click sur l'icone loupe '#search-btn' #}
+            $("#search-btn").on('click',function (e){
+                e.preventDefault()
+                // Appel la fonction 'callAjax'
+                callAjax($("#search").val())
+            })
+
+            {# Si on appuis sur 'Enter' dans le formulaire #}
+            $("#search").on('keypress',function(e) {
+                if(e.which == 13) {
+                    // Appel la fonction 'callAjax'
+                    callAjax($("#search").val())
+                }
+            })
+
+            {#          La fonction callAjax transmet les caractères du formulaire 'input'        #}
+            {# à la route '_ajax_search' qui renvoie la vue contenant les associations concernées #}
+            function callAjax(search) {
                 $.ajax({
                     type: "POST",
                     url: "{{ path('_ajax_search') }}",
                     data: {
-                        search: $("#search").val()
+                        search: search
                     },
                     success: function(response){
                         $('.associations').html(response)
                     }
-                });
-            });
-        });
+                })
+            }
+        })
     </script>
-    {% include 'includes/js_ajax_basket.html.twig' %}
 {% endblock %}

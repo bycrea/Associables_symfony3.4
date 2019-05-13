@@ -2,7 +2,11 @@
 
 {% block content %}
 
-    <h1>Liste des categories admin</h1>
+    {# ----------------- Menu dashboard ----------------- #}
+    {% include 'includes/menu_admin_dashboard.html.twig' %}
+
+    {# ----------------- Categories ----------------- #}
+    <h2 class="title dons">Categories (ADMIN)</h2>
 
     {% for category in categories %}
         <span>{{ category.name }}</span>

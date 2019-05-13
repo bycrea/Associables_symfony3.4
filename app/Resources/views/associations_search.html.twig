@@ -18,19 +18,19 @@
                 <a href="{{ path('association_id', {id: association.id}) }}">Voir l'association</a>
 
                 {# ----------------- Dons aux associations ----------------- #}
-                <div>
-                    <select name="donation" class="donation">
+                <form action="{{ path('_search_donation') }}" method="POST">
+                    <select name="amount" class="donation">
                         {% for amount in array_amount %}
                             <option
-                                    {% if amount == default_amount %}
-                                        {# détecte le montant selectionné par défaut #}
-                                        selected
-                                    {% endif %}
-                                    value="{{ amount }}">{{ amount }}</option>
+                                {% if amount == default_amount %}
+                                    {# détecte le montant selectionné par défaut #}
+                                    selected
+                                {% endif %}
+                                value="{{ amount }}">{{ amount }}</option>
                         {% endfor %}
                     </select>
-                    <button class="donation-button btn btn-info btn-sm" data-association-id="{{ association.id }}">Donner</button>
-                </div>
+                    <button name="submit" value="{{ association.id }}" class="donation-button btn btn-info btn-sm" type="submit">Donner</button>
+                </form>
 
                 {# ----------------- Catégories des associations ----------------- #}
                 <div>
@@ -61,19 +61,19 @@
                 <a href="{{ path('association_id', {id: associations.id}) }}">Voir l'association</a>
 
                 {# ----------------- Dons aux associations ----------------- #}
-                <div>
-                    <select name="donation" class="donation">
+                <form action="{{ path('_search_donation') }}" method="POST">
+                    <select name="amount" class="donation">
                         {% for amount in array_amount %}
                             <option
-                                    {% if amount == default_amount %}
-                                        {# détecte le montant selectionné par défaut #}
-                                        selected
-                                    {% endif %}
-                                    value="{{ amount }}">{{ amount }}</option>
+                                {% if amount == default_amount %}
+                                    {# détecte le montant selectionné par défaut #}
+                                    selected
+                                {% endif %}
+                                value="{{ amount }}">{{ amount }}</option>
                         {% endfor %}
                     </select>
-                    <button class="donation-button btn btn-info btn-sm" data-association-id="{{ association.id }}">Donner</button>
-                </div>
+                    <button name="submit" value="{{ associations.id }}" class="donation-button btn btn-info btn-sm" type="submit">Donner</button>
+                </form>
 
                 {# ----------------- Catégories des associations ----------------- #}
                 <div>

@@ -57,6 +57,7 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+
     /**
      * @param $association //associtaion testé
      * @param $user //utilisateur connecté (ou null)
@@ -96,7 +97,12 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-
+    /**
+     * @param $search //caractères recherchés
+     * @return array
+     *
+     * Retourne les associations commencant par les caractères '$search'
+     */
     public function findBySearchBar($search)
     {
         $queryBuilder = $this->createQueryBuilder('assos');
@@ -113,7 +119,7 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
      * @param $limit //max results
      * @return array
      *
-     * Retourne le nombre $limit d'assciations trié du don le plus récent au plus vieux.
+     * Retourne le nombre $limit d'assciations trié du don le plus récent au moins récent.
      */
     public function findMostRecent($limit)
     {

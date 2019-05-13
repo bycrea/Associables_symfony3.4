@@ -7,6 +7,8 @@ use AppBundle\Entity\Donation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use DateTime;
+use Exception;
 
 class BasketController extends Controller
 {
@@ -66,10 +68,6 @@ class BasketController extends Controller
         $id_asso = $request->request->get('id');
         $amount = $request->request->get('amount');
 
-        // Initialise les variables transmisent aux méthodes 'DonationRepository'
-        $id_user = null;
-        $id_cookie = null;
-
         // Initialise l'EntityManager de Doctrine
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -78,13 +76,16 @@ class BasketController extends Controller
         try {
 
             // On utlise la méthode 'getUser' de symfony pour savoir si un utilisateur est connecté
+            // et ainsi initialiser les variables $id_user et $id_cookie
             if ($this->getUser())
             {
                 // Si l'utilisateur est connecté on récupère son Id
                 $id_user = $this->getUser()->getId();
+                $id_cookie = null;
             } else {
                 // Sinon on utilise la valeur du coockie enregistré
                 $id_cookie = $request->cookies->get('associables_basket');
+                $id_user = null;
             }
 
             // On verifie que le don n'existe pas déjà grace à la méthode
@@ -97,7 +98,7 @@ class BasketController extends Controller
             {
                 // Si le don existe déjà, on enregistre le nouveau montant (celui-ci peut être le même)
                 $donationExists->setAmount($amount);
-                $donationExists->setCreatedAt(new \DateTime());
+                $donationExists->setCreatedAt(new DateTime());
                 $entityManager->persist($donationExists);
 
             } else {
@@ -131,7 +132,7 @@ class BasketController extends Controller
             // Enregistre toute les modification en base de donnée
             $entityManager->flush();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
 
             // Si une erreur est détecté on retourne 'false' au paramètre SUCCESS de l'AJAX
             return $this->json(['status' => false]);

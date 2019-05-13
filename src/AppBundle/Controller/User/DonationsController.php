@@ -38,6 +38,7 @@ class DonationsController extends Controller
             'title' => 'Mon Compte - Mes Dons',
             'awaitDons' => $awaitDons,
             'transDons' => $transDons,
+            'paymentStatus' => Donation::PAYEMENT_STATUS,
             'totalAmount' => $totalAmount
         ]);
     }

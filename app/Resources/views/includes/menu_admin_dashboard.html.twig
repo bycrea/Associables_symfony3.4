@@ -1,0 +1,29 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+            {% set route = app.request.attributes.get('_route') %}
+
+            <li class="nav-item {{ ('admin_donations' in route) ? 'active' : '' }}">
+                <a class="nav-link" href="{{ path('admin_donations', {'year' : '2019'}) }}">Dons</a>
+            </li>
+            <li class="nav-item {{ ('admin_associations' in route) ? 'active' : '' }}">
+                <a class="nav-link" href="{{ path('admin_associations') }}">Associations</a>
+            </li>
+            <li class="nav-item {{ ('admin_users' in route) ? 'active' : '' }}">
+                <a class="nav-link" href="{{ path('admin_users') }}">Utilisateurs</a>
+            </li>
+            <li class="nav-item {{ ('admin_reviews' in route) ? 'active' : '' }}">
+                <a class="nav-link" href="{{ path('admin_reviews') }}">Avis</a>
+            </li>
+            <li class="nav-item {{ ('admin_categories' in route) ? 'active' : '' }}">
+                <a class="nav-link" id="basket-link" href="{{ path('admin_categories') }}">Categories</a>
+            </li>
+            <li class="nav-item {{ ('admin_payments' in route) ? 'active' : '' }}">
+                <a class="nav-link" id="basket-link" href="{{ path('admin_payments') }}">Paiements</a>
+            </li>
+        </ul>
+    </div>
+
+</nav>

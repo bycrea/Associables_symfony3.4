@@ -3,20 +3,38 @@
 {% block content %}
 
     {# ----------------- Menu dashboard ----------------- #}
-    {% include 'includes/menu_user_dashboard.html.twig' %}
+    {% include 'includes/menu_admin_dashboard.html.twig' %}
 
     {# ----------------- Historique des dons ----------------- #}
-    <h2 class="title dons">Historiques des donations</h2>
+    <h2 class="title dons">Historiques des donations (ADMIN)</h2>
     <div class="dashboard">
-        <form action="{{ path('user_donations') }}" method="GET">
+        <form action="{{ path('admin_donations') }}" method="GET">
 
-            {# Récupère le paramètre GET['year'] afin de définir quelle option sera sélectionné #}
+            {# Récupère les paramètre GET afin de définir les options à sélectionner #}
             {% set getYear = app.request.get('year') %}
+            {% set getUser = app.request.get('user') %}
+            {% set getStatus = app.request.get('status') %}
 
+            {# Filtre années #}
             <select name="year" id="year">
                 <option {{ ('2019' in getYear) ? 'selected' : ''  }} value="2019">2019</option>
                 <option {{ ('2018' in getYear) ? 'selected' : ''  }} value="2018">2018</option>
             </select>
+
+            {# Filtre User #}
+            <select name="user" id="user">
+                <option value="null">utilisateurs</option>
+                {% for user in allUser %}
+                    <option {{ (user.id in getUser) ? 'selected' : ''  }} value="{{ user.id }}">{{ user.username }}</option>
+                {% endfor %}
+            </select>
+
+            {# Filtre paymentStatus #}
+            <select name="status" id="user">
+                <option {{ (1 in getStatus) ? '' : 'selected'  }} value="">Sauf Panier</option>
+                <option {{ (1 in getStatus) ? 'selected' : ''  }} value="1">Panier</option>
+            </select>
+
             <button type="submit" class="btn btn-info btn-sm">Filtrer</button>
 
         </form>
@@ -26,9 +44,9 @@
     </div>
 
     <div class="donations">
-        <h3 class="sub-title dons">Donations en attente de transfert</h3>
+        <h3 class="sub-title dons">Donations</h3>
         <div class="box-dons">
-            {% for don in awaitDons %}
+            {% for don in donations %}
                 <div class="donation">
                     <a href="{{ path('association_id', {id: don.assos.id}) }}"><span>{{ don.assos.name }}</span></a>
                     - <span>le: {{ don.createdAt | date("d.m.y H:i:s") }}</span>
@@ -41,26 +59,6 @@
             {% else %}
                 <div class="donation">
                     <span>Aucunes donations en attente de transfert</span>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="donations">
-        <h3 class="sub-title dons">Donations transférées aux associations</h3>
-        <div class="box-dons">
-            {% for don in transDons %}
-                <div class="donation">
-                    <a href="{{ path('association_id', {id: don.assos.id}) }}"><span>{{ don.assos.name }}</span></a>
-                    - <span>le : {{ don.createdAt | date("d.m.y H:i:s") }}</span>
-                    - <span>montant : {{ don.amount }}€</span>
-                    {% if don.paymentMode == 1 %}
-                        - <span>moyen : <i class="fab fa-paypal"></i></span>
-                    {% endif %}
-                    - <span>{{ paymentStatus[don.paymentStatus] }}</span>
-                </div>
-            {% else %}
-                <div class="donation">
-                    <span>Aucunes donations transférées aux associations</span>
                 </div>
             {% endfor %}
         </div>
