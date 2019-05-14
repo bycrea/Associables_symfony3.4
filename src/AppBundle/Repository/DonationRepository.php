@@ -135,12 +135,41 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
      * @param array null $status //status du paiement (tous si null)
      * @return array
      *
-     * * Retourne les donations de l'année sélectionné
+     * Retourne les donations de l'année sélectionné ( YEAR() )
      *
      * Intallation du Bundle https://github.com/beberlei/DoctrineExtensions
      * qui permet de rajouter des méthode DQL telque YEAR() / MONTH() etc.
      */
-    public function findDonationsByYear($year, $user = null, array $status = null)
+    public function findDonationsByYear($year, $user)
+    {
+        $queryBuilder = $this->createQueryBuilder('don');
+
+        $queryBuilder
+            ->where('YEAR(don.createdAt) = :year')
+            ->setPArameter('year', $year)
+
+            ->andWhere('don.user = :user')
+            ->setParameter('user', $user)
+
+            ->andWhere('don.paymentStatus IN (:status)')
+            ->setParameter('status', [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED])
+
+            ->orderBy('don.createdAt', 'DESC');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+
+    /**
+     * @param $year
+     * @param null $asso
+     * @param null $user
+     * @param array|null $status
+     * @return array
+     *
+     * Retourne les donations selon l'année / l'asso / l'user / le status paiement Sélectionées
+     */
+    public function adminDonationsFilter($year, $asso = null, $user = null, array $status = null)
     {
         $queryBuilder = $this->createQueryBuilder('don');
 
@@ -148,7 +177,15 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
             ->where('YEAR(don.createdAt) = :year')
             ->setPArameter('year', $year);
 
-        // Si on ne précise pas l'utilisateur, le montant sera calculé sur tous les dons confondus
+        // Possibilité de trier par associations
+        if(!empty($asso))
+        {
+            $queryBuilder
+                ->andWhere('don.assos = :asso')
+                ->setParameter('asso', $asso);
+        }
+
+        // Possibilité de trier par utilisateur
         if(!empty($user))
         {
             $queryBuilder
@@ -156,7 +193,7 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('user', $user);
         }
 
-        // Si on ne précise pas le paymentStatus, tous les dons seront sélectionnés
+        // Possibilité de trier par status de paiement
         if($status != null)
         {
             $queryBuilder
@@ -172,7 +209,7 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
 
 
     /**
-     * @param $donations //Dons
+     * @param $donations
      * @return int
      *
      * Retourne le montant total des donations définies en paramètre

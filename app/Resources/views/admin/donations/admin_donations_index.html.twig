@@ -12,6 +12,7 @@
 
             {# Récupère les paramètre GET afin de définir les options à sélectionner #}
             {% set getYear = app.request.get('year') %}
+            {% set getAsso = app.request.get('asso') %}
             {% set getUser = app.request.get('user') %}
             {% set getStatus = app.request.get('status') %}
 
@@ -19,6 +20,14 @@
             <select name="year" id="year">
                 <option {{ ('2019' in getYear) ? 'selected' : ''  }} value="2019">2019</option>
                 <option {{ ('2018' in getYear) ? 'selected' : ''  }} value="2018">2018</option>
+            </select>
+
+            {# Filtre Asso #}
+            <select name="asso" id="asso">
+                <option value="null">associations</option>
+                {% for asso in allAsso %}
+                    <option {{ (asso.id in getAsso) ? 'selected' : ''  }} value="{{ asso.id }}">{{ asso.name }}</option>
+                {% endfor %}
             </select>
 
             {# Filtre User #}
@@ -30,7 +39,7 @@
             </select>
 
             {# Filtre paymentStatus #}
-            <select name="status" id="user">
+            <select name="status" id="status">
                 <option {{ (1 in getStatus) ? '' : 'selected'  }} value="">Sauf Panier</option>
                 <option {{ (1 in getStatus) ? 'selected' : ''  }} value="1">Panier</option>
             </select>

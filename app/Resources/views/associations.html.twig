@@ -24,6 +24,7 @@
                             {# détecte la catégorie selectionné #}
                             selected
                         {% endif %}
+                        data-catg="{{ category.id }}"
                         value="{{ path('associations', {getCategory: category.id}) }}">{{ category.name }}
                     </option>
                 {% endfor %}
@@ -69,9 +70,9 @@
                     <div>
                         <p>
                             categories :
-                        {% for category in association.categories %}
-                            {{ category.name }}
-                            {% if loop.index < association.categories | length %}
+                        {% for category in association.categories |sort %}
+                                {# |sort tri par ordre alph. #}{{ category.name }}
+                            {% if loop.index < association.categories |length %}
                                 {# détecte la dernière catégories #} <i>/</i>
                             {% endif %}
                         {% endfor %}
@@ -99,26 +100,35 @@
             {# Si on click sur l'icone loupe '#search-btn' #}
             $("#search-btn").on('click',function (e){
                 e.preventDefault()
+
+                // Récupère les valeurs de input search et menu catégories
+                var search = $("#search").val()
+                var catg = $('#categories').find('option:selected').data('catg')
                 // Appel la fonction 'callAjax'
-                callAjax($("#search").val())
+                callAjax(search, catg)
             })
 
             {# Si on appuis sur 'Enter' dans le formulaire #}
             $("#search").on('keypress',function(e) {
                 if(e.which == 13) {
+
+                    // Récupère les valeurs de input search et menu catégories
+                    var search = $("#search").val()
+                    var catg = $('#categories').find('option:selected').data('catg')
                     // Appel la fonction 'callAjax'
-                    callAjax($("#search").val())
+                    callAjax(search, catg)
                 }
             })
 
             {#          La fonction callAjax transmet les caractères du formulaire 'input'        #}
             {# à la route '_ajax_search' qui renvoie la vue contenant les associations concernées #}
-            function callAjax(search) {
+            function callAjax(search, catg) {
                 $.ajax({
                     type: "POST",
                     url: "{{ path('_ajax_search') }}",
                     data: {
-                        search: search
+                        search: search,
+                        catg: catg
                     },
                     success: function(response){
                         $('.associations').html(response)

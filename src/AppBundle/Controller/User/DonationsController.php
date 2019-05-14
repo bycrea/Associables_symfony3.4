@@ -21,23 +21,18 @@ class DonationsController extends Controller
         $year = $request->query->get('year');
         if(empty($year)) {$year = 2019;}
 
-        // Récupère les dons par YEAR()/$user/$paymentStatus = 4 avec la méthode 'findDonationsByYear'
-        $awaitDons = $this->getDoctrine()->getRepository(Donation::class)
-            ->findDonationsByYear($year, $user, [Donation::PAY_IN_TRANSFER]);
-
-        // Récupère les dons par YEAR()/$user/$paymentStatus = 5 avec la méthode 'findDonationsByYear'
-        $transDons = $this->getDoctrine()->getRepository(Donation::class)
-            ->findDonationsByYear($year, $user, [Donation::PAY_PROCESSED]);
+        // Récupère les dons de l'utilisateur, par année et paymentStatus = 4 et 5 avec la méthode 'findDonationsByYear'
+        $donations = $this->getDoctrine()->getRepository(Donation::class)
+            ->findDonationsByYear($year, $user);
 
         // Récupère le montant total des donations grâce à la méthode 'getDonationsTotalAmount'
         $totalAmount = $this->getDoctrine()->getRepository(Donation::class)
-            ->getDonationsTotalAmount(array_merge($awaitDons,$transDons));
+            ->getDonationsTotalAmount($donations);
 
 
         return $this->render('user/donations.dashboard.html.twig', [
             'title' => 'Mon Compte - Mes Dons',
-            'awaitDons' => $awaitDons,
-            'transDons' => $transDons,
+            'donations' => $donations,
             'paymentStatus' => Donation::PAYEMENT_STATUS,
             'totalAmount' => $totalAmount
         ]);

@@ -25,7 +25,8 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
         $queryBuilder
             ->leftJoin('assos.categories', 'category')
             ->where('category.id = :id')
-            ->setParameter('id', $id);
+            ->setParameter('id', $id)
+            ->orderBy('assos.name', 'ASC');
 
         return $queryBuilder->getQuery()->getResult();
     }
@@ -99,17 +100,29 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
 
     /**
      * @param $search //caractères recherchés
+     * @param $catg //tri par catégorie
      * @return array
      *
      * Retourne les associations commencant par les caractères '$search'
+     * En fonction, aussi, de la catégorie sélectionné
      */
-    public function findBySearchBar($search)
+    public function findBySearchBar($search, $catg)
     {
         $queryBuilder = $this->createQueryBuilder('assos');
 
         $queryBuilder
             ->where('assos.name LIKE :search')
             ->setParameter('search', $search.'%');
+
+        if (null != $catg) {
+            $queryBuilder
+                ->leftJoin('assos.categories', 'catg')
+                ->andWhere('catg.id = :catg')
+                ->setParameter('catg', $catg);
+        }
+
+        $queryBuilder
+         ->orderBy('assos.name', 'ASC');
 
         return $queryBuilder->getQuery()->getResult();
     }

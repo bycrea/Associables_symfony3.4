@@ -40,7 +40,8 @@ class AssociationsController extends Controller
         } else {
 
             // Récupère toutes les associations, toutes catégories confondues
-            $associations = $this->getDoctrine()->getRepository(Assos::class)->findAll();
+            $associations = $this->getDoctrine()->getRepository(Assos::class)
+                ->findBy([],['name' => 'ASC']);
         }
 
         // Retourne la vue Twig à la quelle nous avons injecté les variables nécessaire à l'affichage
@@ -78,12 +79,13 @@ class AssociationsController extends Controller
     public function _ajaxSearchAction(Request $request)
     {
         $search = $request->request->get('search');
+        $catg = intval($request->request->get('catg'));
 
         $associations = $this->getDoctrine()->getRepository(Assos::class)
-            ->findBySearchBar($search);
+            ->findBySearchBar($search, $catg);
 
 
-        return $this->render('associations_search.html.twig', [
+        return $this->render('ajax/associations_search.html.twig', [
             'associations' => $associations
         ]);
     }
