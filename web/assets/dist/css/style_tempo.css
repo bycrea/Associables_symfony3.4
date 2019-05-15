@@ -12,10 +12,18 @@ main {
     height: 100vh;
 }
 
+.title-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: auto;
+}
+
 /*
 // ------------- MODAL ------------- //
 */
-#loading-modal {
+#loading-modal, #validate-modal {
     position: absolute;
     top: 0px;
     width: 100vw;
@@ -34,6 +42,28 @@ main {
     -webkit-animation: spin 1s infinite linear;
     -moz-animation: spin 1s infinite linear;
     animation: spin 1s infinite linear;
+}
+
+/*
+// ------------- DELETE ------------- //
+*/
+
+.message-delete {
+    position: sticky;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 30%;
+    height: 100px;
+
+    text-align: center;
+    background-color: rgba(255,255,255,0.9);
 }
 
 

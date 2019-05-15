@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
-
+{% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_user_dashboard.html.twig' %}
+{% endblock %}
+
+{% block content %}
+
 
     {# ----------------- Historiques des avis ----------------- #}
-    <h2 class="title infos">Historiques des avis</h2>
+    <h2 class="title-page">Historiques des avis</h2>
 
 
 {% endblock %}

@@ -16,7 +16,7 @@ class AssociationsController extends Controller
     /**
      * @Route("/associations/{getCategory}", name="associations")
      */
-    public function associationsAction(Request $request, $getCategory = null)
+    public function associationsAction($getCategory = null)
     {
         // Récupère toutes les catégories pour les afficher dans le menu déroulant
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
@@ -73,7 +73,7 @@ class AssociationsController extends Controller
     /**
      * @Route("/_ajax/search", name="_ajax_search")
      *
-     * Retourne, sous forme de vue, les associations qui contenant
+     * Retourne, sous forme de vue, les associations qui contiennent
      * les caractères entrés en POST 'Request' via la barre de recherche
      */
     public function _ajaxSearchAction(Request $request)
@@ -94,9 +94,8 @@ class AssociationsController extends Controller
     /**
      * @Route("/search/donation", name="_search_donation")
      *
-     * Création de donations liées aux formulaires de Dons de la vue 'associations_search.html.twig'
-     * Redirection vers le panier après validation
-     * OU vers les associations en cas d'echec
+     * Validation de donations liées aux formulaires de Dons de la vue 'associations_search.html.twig'
+     * Redirection vers le panier après validation OU vers les associations en cas d'echec
      */
     public function searchDonationAction(Request $request)
     {

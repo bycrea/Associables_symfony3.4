@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
-
+{% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_admin_dashboard.html.twig' %}
+{% endblock %}
+
+{% block content %}
 
     {# ----------------- Utilisateurs ----------------- #}
     <h2 class="title dons">Utilisateurs (ADMIN)</h2>

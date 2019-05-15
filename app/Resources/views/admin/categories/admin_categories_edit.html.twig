@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
-
+{% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_admin_dashboard.html.twig' %}
+{% endblock %}
+
+{% block content %}
 
     {# ----------------- Categories ----------------- #}
-    <h2 class="title dons">Ajouter une categorie (ADMIN)</h2>
+    <h2 class="title-page">Ajouter une categorie (ADMIN)</h2>
 
     {{ form_start(form) }}
     {{ form_widget(form) }}

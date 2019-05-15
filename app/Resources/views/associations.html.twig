@@ -6,16 +6,17 @@
         <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
             <p></p>
         </div>
-        <div id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
             <i class="fas fa-spinner fa-3x"></i>
-            {#<p>veuillez patienter</p>#}
         </div>
 
-        <h1>listes des associations public</h1>
+        <h2 class="title-page">listes des associations public</h2>
 
         {# ----------------- Menu déroulant des Catégories + Search bar ----------------- #}
         <div class="search">
             <label for="categories">Catégories</label>
+            {#  La méthode JS 'onchange="window.location.href' = this.value"
+               permet de recharger la page en dès la sélection d'une l'option  #}
             <select name="categories" id="categories" onchange="window.location.href = this.value">
                 <option value="{{ path('associations') }}">Toutes</option>
                 {% for category in categories %}
@@ -30,7 +31,7 @@
                 {% endfor %}
             </select>
             <label for="search">rechercher</label>
-            <input type="text" id="search">
+            <input type="text" id="search" data-search-url="{{ path('_ajax_search') }}">
             <i id="search-btn" class="fas fa-search"></i>
         </div>
         
@@ -63,7 +64,8 @@
                                 value="{{ amount }}">{{ amount }}</option>
                             {% endfor %}
                         </select>
-                        <button class="donation-button btn btn-info btn-sm" data-association-id="{{ association.id }}">Donner</button>
+                        <button class="donation-button btn btn-info btn-sm"
+                                data-association-id="{{ association.id }}">Donner</button>
                     </div>
 
                     {# ----------------- Catégories des associations ----------------- #}
@@ -86,55 +88,5 @@
 
 {% block scripts %}
     {% include 'includes/js_ajax_basket.html.twig' %}
-
-    <script>
-        {# On attend que la page est fini de charger #}
-        $(document).ready(function(){
-
-            {# Si un champ est entré dans le formulaire 'input' #}
-            /*$("#search").on('input',function (){
-                // Appel la fonction 'callAjax'
-                callAjax($("#search").val())
-            })*/
-
-            {# Si on click sur l'icone loupe '#search-btn' #}
-            $("#search-btn").on('click',function (e){
-                e.preventDefault()
-
-                // Récupère les valeurs de input search et menu catégories
-                var search = $("#search").val()
-                var catg = $('#categories').find('option:selected').data('catg')
-                // Appel la fonction 'callAjax'
-                callAjax(search, catg)
-            })
-
-            {# Si on appuis sur 'Enter' dans le formulaire #}
-            $("#search").on('keypress',function(e) {
-                if(e.which == 13) {
-
-                    // Récupère les valeurs de input search et menu catégories
-                    var search = $("#search").val()
-                    var catg = $('#categories').find('option:selected').data('catg')
-                    // Appel la fonction 'callAjax'
-                    callAjax(search, catg)
-                }
-            })
-
-            {#          La fonction callAjax transmet les caractères du formulaire 'input'        #}
-            {# à la route '_ajax_search' qui renvoie la vue contenant les associations concernées #}
-            function callAjax(search, catg) {
-                $.ajax({
-                    type: "POST",
-                    url: "{{ path('_ajax_search') }}",
-                    data: {
-                        search: search,
-                        catg: catg
-                    },
-                    success: function(response){
-                        $('.associations').html(response)
-                    }
-                })
-            }
-        })
-    </script>
+    {% include 'includes/js_ajax_search.html.twig' %}
 {% endblock %}

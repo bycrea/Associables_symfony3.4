@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Simplification de la Route pour les méthodes du controller
  * en ajoutant le commentaire ci-dessous pour éviter de nommer les routes
  * en commencant par '/categories'/... à chaque fois
+ *
  * @Route("/categories")
  */
 class CategoriesController extends Controller
@@ -23,17 +24,6 @@ class CategoriesController extends Controller
     {
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
-        return $this->render('admin/categories/index.html.twig', [
-            'title' => 'Categories',
-            'categories' => $categories
-        ]);
-    }
-
-    /**
-     * @Route("/create", name="admin_categories_create")
-     */
-    public function createAction(Request $request)
-    {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
 
@@ -49,11 +39,13 @@ class CategoriesController extends Controller
             return $this->redirectToRoute('admin_categories');
         }
 
-        return $this->render('admin/categories/form.html.twig', [
-            'title' => 'Creation categorie',
+        return $this->render('admin/categories/admin_categories_index.html.twig', [
+            'title' => 'Categories',
+            'categories' => $categories,
             'form' => $form->createView()
         ]);
     }
+
 
     /**
      * @Route("/update/{id}", name="admin_categories_update")
@@ -75,24 +67,28 @@ class CategoriesController extends Controller
             return $this->redirectToRoute('admin_categories');
         }
 
-        return $this->render('admin/categories/form.html.twig', [
+        return $this->render('admin/categories/admin_categories_edit.html.twig', [
             'title' => 'Edition categorie',
             'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/delete/{id}", name="admin_categories_delete")
+     * @Route("/delete", name="admin_ajax_categories_delete")
      */
-    public function deleteAction($id)
+    public function _ajaxDeleteAction(Request $request)
     {
-        $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
+        $catg_id = $request->request->get('id');
+        $category = $this->getDoctrine()->getRepository(Category::class)->find($catg_id);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($category);
         $entityManager->flush();
 
         $this->addFlash('success', 'La categorie a bien été supprimé.');
-        return $this->redirectToRoute('admin_categories');
+        return $this->json([
+            'status' => true,
+            'url' => $this->generateUrl('admin_categories')
+        ]);
     }
 }

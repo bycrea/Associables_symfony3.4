@@ -6,13 +6,14 @@
         <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
             <p></p>
         </div>
-        <div id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
             <i class="fas fa-spinner fa-3x"></i>
             {#<p>veuillez patienter</p>#}
         </div>
 
-        <h1>Home page public</h1>
-        <h2>Les assciations récemment ajoutées</h2>
+        <h1 class="title-page">Les Associables</h1>
+
+        <h2 class="title-page">Les assciations récemment ajoutées</h2>
 
         {% for association in associations %}
             <div>

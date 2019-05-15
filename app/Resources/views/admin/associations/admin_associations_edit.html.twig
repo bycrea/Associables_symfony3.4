@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {# ----------------- Menu dashboard ----------------- #}
+    {% include 'includes/menu_admin_dashboard.html.twig' %}
+{% endblock %}
+
+{% block content %}
+
+    {# ----------------- Categories ----------------- #}
+    <h2 class="title-page">Edit Association (ADMIN)</h2>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-warning btn-sm">Valider</button>
+    <a href="{{ path('admin_associations') }}" class="btn btn-danger btn-sm">Annuler</a>
+    {{ form_end(form) }}
+
+{% endblock %}

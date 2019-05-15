@@ -1,0 +1,66 @@
+
+{#          Script de recherche associations           #}
+
+<script>
+
+    {# On attend que la page est fini de charger #}
+    $(document).ready(function(){
+
+        {# affiche la modal loading-modal pendant le chargement AJAX #}
+        $(document).ajaxStart(function(){
+            $('#loading-modal').removeClass('d-none')
+        });
+
+        {# Si un champ est entré dans le formulaire 'input' #}
+        /*$("#search").on('input',function (){
+            // Appel la fonction 'callAjax'
+            callAjax($("#search").val())
+        })*/
+
+        {# Si on click sur l'icone loupe '#search-btn' #}
+        $("#search-btn").on('click',function (e){
+            e.preventDefault()
+
+            // Récupère les valeurs de input search et menu catégories
+            var search = $("#search").val()
+            var catg = $('#categories').find('option:selected').data('catg')
+            var search_url = $('#search').data('search-url')
+            // Appel la fonction 'callAjax'
+            callAjax(search, catg, search_url)
+        })
+
+        {# Si on appuis sur 'Enter' dans le formulaire #}
+        $("#search").on('keypress',function(e) {
+            if(e.which == 13) {
+
+                // Récupère les valeurs de input search et menu catégories
+                var search = $("#search").val()
+                var catg = $('#categories').find('option:selected').data('catg')
+                var search_url = $('#search').data('search-url')
+                // Appel la fonction 'callAjax'
+                callAjax(search, catg, search_url)
+            }
+        })
+
+        {#          La fonction callAjax transmet les caractères du formulaire 'input'        #}
+        {# à la route '_ajax_search' qui renvoie la vue contenant les associations concernées #}
+        function callAjax(search, catg, search_url) {
+            $.ajax({
+                type: "POST",
+                url: search_url,
+                data: {
+                    search: search,
+                    catg: catg
+                },
+                success: function(response){
+                    $('.associations').html(response)
+                }
+            })
+        }
+
+        {# cache la modal loading-modal après le chargement AJAX #}
+        $(document).ajaxStop(function(){
+            $('#loading-modal').addClass('d-none')
+        });
+    })
+</script>

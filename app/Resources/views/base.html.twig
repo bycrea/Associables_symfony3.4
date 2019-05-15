@@ -14,60 +14,21 @@
     {% endblock %}
 </head>
 <body>
-    {% block header %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
-                <ul class="navbar-nav">
+    <header>
+        {% include 'includes/_header.html.twig' %}
+        {% block header %}
+        {% endblock %}
 
-                    {#              exemple de condition ternaire twig              #}
-                    {#  {{ ('argument' in 'test argument') ? 'success' : 'fail' }}  #}
-
-                    {% set route = app.request.attributes.get('_route') %}
-
-                    <li class="nav-item {{ ('home' in route) ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ path('home') }}">Accueil</a>
-                    </li>
-                    <li class="nav-item {{ ('mentions' in route) ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ path('mentions') }}">Mentions</a>
-                    </li>
-                    <li class="nav-item {{ ('associations' in route) ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ path('associations') }}">Associations</a>
-                    </li>
-                    <li class="nav-item {{ ('basket' in route) ? 'active' : '' }}">
-                        <a class="nav-link" id="basket-link" href="{{ path('basket') }}">Panier
-
-                        {#   Appel la fonction 'getBasketTotal' avec en paramètre  #}
-                        {# 'app.request' afin de pouvoir récupérer la requête HTTP #}
-                            <span>{{ getBasketTotal( app.request ) }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            {# Récupère et affiche le nom d'utilisateur Si celui-ci est connecté #}
-            {% if app.user.username is defined %}
-                {% if is_granted('ROLE_ADMIN') %}
-                    {% include 'includes/drop_admin_option.html.twig' %}
-                {% else %}
-                    {% include 'includes/drop_user_option.html.twig' %}
-                {% endif %}
-            {% else %}
-                <div class="btn-group">
-                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-info">Connexion</a>
-                </div>
-            {% endif %}
-        </nav>
-    {% endblock %}
-
-    {# Permet d'affciher les messages envoyé avec la méthode symfony 'addFlash()' et contenu dans app.flashes
+        {# Permet d'affciher les messages envoyé avec la méthode symfony 'addFlash()' et contenu dans app.flashes
         doc : https://symfony.com/doc/3.4/controller.html#flash-messages #}
-    {% for key, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{ key }}" role="alert">
-                {{ message }}
-            </div>
+        {% for key, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ key }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
+    </header>
 
     {% block content %}
     {% endblock %}

@@ -6,15 +6,14 @@
         <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
             <p></p>
         </div>
-        <div id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
             <i class="fas fa-spinner fa-3x"></i>
         </div>
 
-        <h1>Détail association public</h1>
+
+        <h2 class="title-page">{{ association.name }}</h2>
 
         <div>
-            <h3>{{ association.name }}</h3>
-
             {# ----------------- Image de l'association ----------------- #}
             <div>
                 {% if association.image is null %}

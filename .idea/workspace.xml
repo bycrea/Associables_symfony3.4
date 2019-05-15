@@ -2,22 +2,42 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a42e37de-6fef-4343-b1cd-effe2d3cc026" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Resources/views/ajax/admin_associations_search.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Resources/views/includes/_header.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Resources/views/includes/js_ajax_delete.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Resources/views/includes/js_ajax_search.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/associations/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/categories/admin_categories_edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/associations/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/associations/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/associations/admin_associations_index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/categories/form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/associations/admin_associations_edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/categories/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/categories/admin_categories_index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/dashboard.html.twig" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/donations/admin_donations_index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/donations/admin_donations_index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/payments/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/payments/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/reviews/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/reviews/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/users/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/users/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/ajax/associations_search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/ajax/associations_search.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/association_id.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/association_id.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Resources/views/associations.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/associations.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/associations_search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/ajax/associations_search.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/includes/drop_admin_option.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/includes/drop_admin_option.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/includes/drop_user_option.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/includes/drop_user_option.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/basket.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/basket.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Resources/views/includes/js_ajax_basket.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/includes/js_ajax_basket.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/includes/menu_admin_dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/includes/menu_admin_dashboard.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/includes/menu_user_dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/includes/menu_user_dashboard.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/mentions.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/mentions.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Resources/views/user/associations.dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/user/associations.dashboard.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Resources/views/user/donations.dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/user/donations.dashboard.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/user/infos.dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/user/infos.dashboard.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/user/reviews.dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/user/reviews.dashboard.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Admin/AssociationsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Admin/AssociationsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Admin/CategoriesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Admin/CategoriesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Admin/DashboardController.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Admin/DonationsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Admin/DonationsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/AssociationsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/AssociationsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/User/DonationsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/User/DonationsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Repository/AssosRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Repository/AssosRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Repository/DonationRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Repository/DonationRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/User/AssociationsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/User/AssociationsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppBundle/Form/CategoryType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Form/CategoryType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/assets/dist/css/style_tempo.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/dist/css/style_tempo.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/assets/images/assos/5cd004835099e.jpeg" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,14 +53,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/assets/dist/css/style_tempo.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="51" column="67" selection-start-line="51" selection-start-column="67" selection-end-line="51" selection-end-column="67" />
+            <state relative-caret-position="390">
+              <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/associations/admin_associations_index.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="363">
+              <caret line="53" column="79" selection-start-line="53" selection-start-column="79" selection-end-line="53" selection-end-column="79" />
               <folding>
-                <element signature="e#2720#2756#0#Twig" expanded="true" />
-                <element signature="e#2820#2855#0#Twig" expanded="true" />
+                <element signature="e#4242#4275#0#Twig" expanded="true" />
+                <element signature="e#4296#4329#0#Twig" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Admin/AssociationsController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-871">
+              <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+              <folding>
+                <element signature="e#46#73#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -50,13 +91,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>users</find>
-      <find>getI</find>
-      <find>$ima</find>
-      <find>category_assos</find>
-      <find>user</find>
-      <find>dépendence</find>
-      <find>$user</find>
       <find>DonationRepository</find>
       <find>addFlash</find>
       <find>fos_user_content</find>
@@ -80,6 +114,13 @@
       <find>&lt;b&gt;</find>
       <find>dele</find>
       <find>donation</find>
+      <find>constr</find>
+      <find>remove</find>
+      <find>creat</find>
+      <find>timezone</find>
+      <find>128</find>
+      <find>request</find>
+      <find>add</find>
     </findStrings>
     <replaceStrings>
       <replace>PAY</replace>
@@ -94,9 +135,10 @@
       <dir>$PROJECT_DIR$/src</dir>
       <dir>$PROJECT_DIR$/app/Resources/FOSUserBundle/views/Registration</dir>
       <dir>$PROJECT_DIR$/app/Resources/FOSUserBundle</dir>
-      <dir>$PROJECT_DIR$/src/AppBundle</dir>
       <dir>$PROJECT_DIR$/vendor</dir>
       <dir>$PROJECT_DIR$/src/AppBundle/Controller</dir>
+      <dir>$PROJECT_DIR$/src/AppBundle</dir>
+      <dir>$PROJECT_DIR$/app/config</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -105,57 +147,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Resources/views/basket.html.twig" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Form/AssociationType.php" />
-        <option value="$PROJECT_DIR$/app/Resources/FOSUserBundle/views/Registration/register_content.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/user/dashboard.html.twig" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/User/DashboardController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/User/ReviewController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/User/InfosController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/User/AssociationsController.php" />
-        <option value="$PROJECT_DIR$/app/config/config.yml" />
-        <option value="$PROJECT_DIR$/app/Resources/views/user/menu.dashboard.html.twig" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/User/PaymentController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Traits/CreatedAtTrait.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Donation.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Review.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Payment.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Assos.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/index.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/association_id.html.twig" />
         <option value="$PROJECT_DIR$/app/config/parameters.yml" />
         <option value="$PROJECT_DIR$/app/Resources/views/associations_search.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/BasketController.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/mentions.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/user/infos.dashboard.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/user/reviews.dashboard.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Admin/ReviewsController.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/admin/users/index.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/admin/reviews/index.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/admin/payments/index.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/admin/categories/index.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/admin/categories/form.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/admin/associations/index.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/admin/associations/edit.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/admin/associations/create.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/includes/js_ajax_basket.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/includes/menu_admin_dashboard.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/includes/menu_user_dashboard.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/includes/drop_admin_option.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/includes/drop_user_option.html.twig" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Admin/DonationsController.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/admin/donations/admin_donations_index.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/DonationRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/User/DonationsController.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/user/donations.dashboard.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/ajax/asso_user_search.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/user/associations.dashboard.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/associations.html.twig" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/AssociationsController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/AssosRepository.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Admin/DonationsController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/User/AssociationsController.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/admin/categories/form.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/admin/categories/index.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/association_id.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/basket.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/index.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/mentions.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Form/CategoryType.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/_header.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/includes/_header.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/user/donations.dashboard.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/user/associations.dashboard.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/user/infos.dashboard.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/user/reviews.dashboard.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/admin/categories/admin_categories_edit.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/admin/donations/admin_donations_index.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/admin/payments/index.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/admin/reviews/index.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/admin/users/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/AssociationsController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Admin/CategoriesController.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/admin/categories/admin_categories_index.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/includes/js_ajax_basket.html.twig" />
+        <option value="$PROJECT_DIR$/web/assets/dist/css/style_tempo.css" />
+        <option value="$PROJECT_DIR$/app/Resources/views/admin/associations/admin_associations_edit.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/includes/js_ajax_delete.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/includes/js_ajax_search.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/associations.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/ajax/associations_search.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/ajax/admin_associations_search.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Admin/AssociationsController.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/admin/associations/admin_associations_index.html.twig" />
       </list>
     </option>
   </component>
@@ -251,13 +293,14 @@
               <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
               <item name="associables.local" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="Resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
               <item name="associables.local" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="Resources" type="462c0819:PsiDirectoryNode" />
+              <item name="FOSUserBundle" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
@@ -291,42 +334,6 @@
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="admin" type="462c0819:PsiDirectoryNode" />
               <item name="categories" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
-              <item name="associables.local" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="donations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
-              <item name="associables.local" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="payments" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
-              <item name="associables.local" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="reviews" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
-              <item name="associables.local" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="users" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
@@ -405,6 +412,14 @@
               <item name="associables.local" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="AppBundle" type="462c0819:PsiDirectoryNode" />
+              <item name="Entity" type="462c0819:PsiDirectoryNode" />
+              <item name="Traits" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
+              <item name="associables.local" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="AppBundle" type="462c0819:PsiDirectoryNode" />
               <item name="EventListener" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -463,25 +478,25 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Resources/views/ajax" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Resources/views/includes" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/Resources/views/ajax" />
       <recent name="$PROJECT_DIR$/app/Resources/views/includes" />
+      <recent name="$PROJECT_DIR$/app/Resources/views/ajax" />
       <recent name="$PROJECT_DIR$/app/Resources/FOSUserBundle/views" />
       <recent name="$PROJECT_DIR$/app/Resources" />
       <recent name="$PROJECT_DIR$/app/Resources/views" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/Resources/views/ajax" />
-      <recent name="$PROJECT_DIR$/app/Resources/views/admin" />
-      <recent name="$PROJECT_DIR$/src/AppBundle/Controller/Admin" />
       <recent name="$PROJECT_DIR$/app/Resources/views/includes" />
+      <recent name="$PROJECT_DIR$/app/Resources/views/ajax" />
       <recent name="$PROJECT_DIR$/app/Resources/views" />
+      <recent name="$PROJECT_DIR$/app/Resources/views/admin/associations" />
+      <recent name="$PROJECT_DIR$/app/Resources/views/admin" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -516,18 +531,20 @@
       <workItem from="1556929419642" duration="6743000" />
       <workItem from="1557131776894" duration="111970000" />
       <workItem from="1557476909770" duration="21000" />
-      <workItem from="1557477161382" duration="72426000" />
+      <workItem from="1557477161382" duration="94519000" />
+      <workItem from="1557945292205" duration="4447000" />
+      <workItem from="1557959291978" duration="2312000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="235288000" />
+    <option name="totallyTimeSpent" value="264140000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2786753" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27221325" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -564,123 +581,106 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/User/ReviewController.php">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/User/AssociationsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        <state relative-caret-position="369">
+          <caret line="30" column="58" lean-forward="true" selection-start-line="30" selection-start-column="58" selection-end-line="30" selection-end-column="58" />
           <folding>
-            <element signature="e#397#431#0#PHP" expanded="true" />
+            <element signature="e#45#72#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Transaction.php">
+    <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Component/HttpFoundation/File/UploadedFile.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="2607">
+          <caret line="185" column="20" selection-start-line="185" selection-start-column="20" selection-end-line="185" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Component/Filesystem/Filesystem.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="177" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="39" column="53" lean-forward="true" selection-start-line="39" selection-start-column="53" selection-end-line="39" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Admin/DonationsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="58" selection-start-line="58" selection-end-line="58" />
           <folding>
-            <element signature="e#36#98#0#PHP" expanded="true" />
+            <element signature="e#46#73#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BasketController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="80" selection-start-line="22" selection-start-column="80" selection-end-line="22" selection-end-column="80" />
+        <state relative-caret-position="434">
+          <caret line="150" column="11" selection-start-line="145" selection-start-column="8" selection-end-line="150" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/User/DonationsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
           <folding>
-            <element signature="e#36#79#0#PHP" expanded="true" />
+            <element signature="e#45#75#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Review.php">
+    <entry file="file://$PROJECT_DIR$/app/config/config.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="16" column="80" selection-start-line="16" selection-start-column="80" selection-end-line="16" selection-end-column="80" />
+        <state relative-caret-position="675">
+          <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Payment.php">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Traits/CreatedAtTrait.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="16" column="80" selection-start-line="16" selection-start-column="80" selection-end-line="16" selection-end-column="80" />
+        <state relative-caret-position="483">
+          <caret line="39" column="5" lean-forward="true" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/doctrine/common/lib/Doctrine/Common/Persistence/ObjectRepository.php">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Category.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="63" column="20" selection-start-line="63" selection-start-column="20" selection-end-line="63" selection-end-column="20" />
+        <state relative-caret-position="-388">
+          <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/doctrine/orm/lib/Doctrine/ORM/EntityRepository.php">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/date/date_c.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-805">
-          <caret line="161" column="20" selection-start-line="161" selection-start-column="20" selection-end-line="161" selection-end-column="20" />
+        <state relative-caret-position="1785">
+          <caret line="119" column="51" lean-forward="true" selection-start-line="119" selection-start-column="51" selection-end-line="119" selection-end-column="51" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/association_id.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="195">
+          <caret line="13" column="29" lean-forward="true" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="29" />
           <folding>
             <element signature="e#12#26#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/DonationType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Admin/CategoriesController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="49" column="9" lean-forward="true" selection-start-line="36" selection-start-column="8" selection-end-line="49" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Admin/AssociationsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="41" column="35" lean-forward="true" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BasketController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="14" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
-          <folding>
-            <element signature="e#40#67#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/mentions.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="641" selection-start-line="10" selection-start-column="641" selection-end-line="10" selection-end-column="641" />
+        <state relative-caret-position="195">
+          <caret line="13" column="14" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
           <folding>
             <element signature="e#12#26#0#Twig" expanded="true" />
           </folding>
@@ -689,250 +689,240 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="43" column="70" selection-start-line="43" selection-start-column="35" selection-end-line="43" selection-end-column="70" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-            <element signature="e#2273#2306#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/dashboard.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        <state relative-caret-position="210">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
           <folding>
             <element signature="e#12#26#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/user/reviews.dashboard.html.twig">
+    <entry file="file://$PROJECT_DIR$/app/config/services.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="58" lean-forward="true" selection-start-line="5" selection-start-column="58" selection-end-line="5" selection-end-column="58" />
-          <folding>
-            <element signature="e#130#168#0#Twig" expanded="true" />
-          </folding>
+        <state relative-caret-position="375">
+          <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/user/infos.dashboard.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/EventListener/LoginListener.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="58" selection-start-line="5" selection-start-column="58" selection-end-line="5" selection-end-column="58" />
-          <folding>
-            <element signature="e#130#168#0#Twig" expanded="true" />
-          </folding>
+        <state relative-caret-position="632">
+          <caret line="66" column="21" selection-start-line="66" selection-start-column="21" selection-end-line="66" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Admin/ReviewsController.php">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/EventListener/RequestEventListener.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-          <folding>
-            <element signature="e#46#103#0#PHP" expanded="true" />
-            <element signature="e#395#426#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="510">
+          <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/users/index.html.twig">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/basket.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="37" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
+        <state relative-caret-position="210">
+          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
           <folding>
             <element signature="e#12#26#0#Twig" expanded="true" />
-            <element signature="e#130#169#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/reviews/index.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/AssosRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#130#169#0#Twig" expanded="true" />
-          </folding>
+        <state relative-caret-position="300">
+          <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/payments/index.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Assos.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="51" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="51" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-            <element signature="e#130#169#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/associations/create.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-            <element signature="e#130#169#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/associations/edit.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="48" selection-start-line="7" selection-start-column="48" selection-end-line="7" selection-end-column="48" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-            <element signature="e#130#169#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/associations/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-            <element signature="e#130#169#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/categories/form.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="48" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="48" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-            <element signature="e#130#169#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/categories/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-            <element signature="e#130#169#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Admin/DashboardController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="27" column="43" lean-forward="true" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
-          <folding>
-            <element signature="e#40#67#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Donation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
+        <state relative-caret-position="462">
+          <caret line="106" column="36" lean-forward="true" selection-start-line="106" selection-start-column="36" selection-end-line="106" selection-end-column="36" />
           <folding>
             <element signature="e#36#79#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/includes/menu_admin_dashboard.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Review.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="52" lean-forward="true" selection-start-line="1" selection-end-line="2" />
+        <state relative-caret-position="-343">
+          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/includes/menu_user_dashboard.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Transaction.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
+        <state relative-caret-position="22">
+          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/includes/drop_user_option.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="6" lean-forward="true" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+        <state relative-caret-position="238">
+          <caret line="73" column="37" lean-forward="true" selection-start-line="73" selection-start-column="37" selection-end-line="73" selection-end-column="37" />
+          <folding>
+            <element signature="e#36#79#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Payment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Donation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="751">
+          <caret line="101" column="18" lean-forward="true" selection-start-line="101" selection-start-column="18" selection-end-line="101" selection-end-column="18" />
+          <folding>
+            <element signature="e#36#79#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/CategoryType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="11" lean-forward="true" selection-start-line="30" selection-start-column="11" selection-end-line="30" selection-end-column="11" />
+          <folding>
+            <element signature="e#34#74#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/user/donations.dashboard.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+            <element signature="e#136#174#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/user/reviews.dashboard.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+            <element signature="e#140#178#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/user/infos.dashboard.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+            <element signature="e#139#177#0#Twig" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/includes/drop_admin_option.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        <state relative-caret-position="180">
+          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/includes/js_ajax_basket.html.twig">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/includes/_header.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="56" selection-start-line="1" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Admin/DonationsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="52" column="24" selection-start-line="52" selection-start-column="24" selection-end-line="52" selection-end-column="24" />
+        <state relative-caret-position="383">
+          <caret line="33" column="41" lean-forward="true" selection-start-line="33" selection-start-column="41" selection-end-line="33" selection-end-column="41" />
           <folding>
-            <element signature="e#46#73#0#PHP" expanded="true" />
-            <element signature="e#1708#1757#0#PHP" expanded="true" />
+            <element signature="e#1633#1669#0#Twig" expanded="true" />
+            <element signature="e#1717#1752#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/DonationRepository.php">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/users/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+            <element signature="e#127#166#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/reviews/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+            <element signature="e#128#167#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/payments/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
-          <caret line="142" column="32" selection-start-line="142" selection-start-column="32" selection-end-line="142" selection-end-column="32" />
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
           <folding>
-            <element signature="e#40#70#0#PHP" expanded="true" />
+            <element signature="e#12#26#0#Twig" expanded="true" />
+            <element signature="e#128#167#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/categories/admin_categories_edit.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+            <element signature="e#128#167#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/donations/admin_donations_index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
+        <state relative-caret-position="105">
+          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
           <folding>
             <element signature="e#12#26#0#Twig" expanded="true" />
-            <element signature="e#130#169#0#Twig" expanded="true" />
+            <element signature="e#128#167#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/ajax/asso_user_search.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Admin/CategoriesController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-187">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="278">
+          <caret line="76" column="59" lean-forward="true" selection-start-line="76" selection-start-column="59" selection-end-line="76" selection-end-column="59" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/User/AssociationsController.php">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/categories/admin_categories_index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="36" column="34" lean-forward="true" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
+        <state relative-caret-position="540">
+          <caret line="36" column="16" lean-forward="true" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
           <folding>
-            <element signature="e#45#72#0#PHP" expanded="true" />
+            <element signature="e#12#26#0#Twig" expanded="true" />
+            <element signature="e#1491#1519#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -940,94 +930,100 @@
     <entry file="file://$PROJECT_DIR$/app/Resources/views/user/associations.dashboard.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" column="58" selection-start-line="5" selection-start-column="58" selection-end-line="5" selection-end-column="58" />
+          <caret line="5" column="14" lean-forward="true" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/associations/admin_associations_edit.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
           <folding>
-            <element signature="e#130#168#0#Twig" expanded="true" />
+            <element signature="e#128#167#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/user/donations.dashboard.html.twig">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/includes/js_ajax_delete.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="53" column="47" selection-start-line="53" selection-start-column="47" selection-end-line="53" selection-end-column="47" />
+        <state relative-caret-position="15">
+          <caret line="1" column="18" selection-start-line="1" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/includes/js_ajax_search.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="8" lean-forward="true" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/includes/js_ajax_basket.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="915">
+          <caret line="61" selection-start-line="61" selection-end-line="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/dist/css/style_tempo.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/associations.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
           <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-            <element signature="e#130#168#0#Twig" expanded="true" />
+            <element signature="e#4205#4238#0#Twig" expanded="true" />
+            <element signature="e#4259#4292#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/AssociationsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="90" column="5" selection-start-line="72" selection-start-column="4" selection-end-line="90" selection-end-column="5" />
+          <folding>
+            <element signature="e#40#67#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/ajax/associations_search.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="36" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
+        <state relative-caret-position="368">
+          <caret line="40" column="19" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Assos.php">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/ajax/admin_associations_search.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="6" lean-forward="true" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
+        <state relative-caret-position="420">
+          <caret line="28" column="16" lean-forward="true" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Admin/AssociationsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-871">
+          <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
           <folding>
-            <element signature="e#36#79#0#PHP" expanded="true" />
+            <element signature="e#46#73#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/AssociationType.php">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/associations/admin_associations_index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="49" column="32" selection-start-line="49" selection-start-column="32" selection-end-line="49" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/AssosRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="120" column="45" selection-start-line="120" selection-start-column="45" selection-end-line="120" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/AssociationsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="84" column="23" selection-start-line="84" selection-start-column="23" selection-end-line="84" selection-end-column="23" />
+        <state relative-caret-position="363">
+          <caret line="53" column="79" selection-start-line="53" selection-start-column="79" selection-end-line="53" selection-end-column="79" />
           <folding>
-            <element signature="e#40#67#0#PHP" expanded="true" />
-            <element signature="e#3060#3096#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/User/DonationsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
-          <folding>
-            <element signature="e#45#75#0#PHP" expanded="true" />
-            <element signature="e#1411#1447#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/associations.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="116" column="81" selection-start-line="116" selection-start-column="81" selection-end-line="116" selection-end-column="81" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="51" column="67" selection-start-line="51" selection-start-column="67" selection-end-line="51" selection-end-column="67" />
-          <folding>
-            <element signature="e#2720#2756#0#Twig" expanded="true" />
-            <element signature="e#2820#2855#0#Twig" expanded="true" />
+            <element signature="e#4242#4275#0#Twig" expanded="true" />
+            <element signature="e#4296#4329#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>

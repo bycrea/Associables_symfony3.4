@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {# ----------------- Menu dashboard ----------------- #}
+    {% include 'includes/menu_admin_dashboard.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    {# message d'erreur et loading AJAX #}
+    <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <p></p>
+    </div>
+    <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <i class="fas fa-spinner fa-3x"></i>
+    </div>
+
+    {# ----------------- Modal Suppression asso ----------------- #}
+    <div id="validate-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="message-delete">
+            <div>Etes vous sûr de vouloir supprimer l'association <b><span class="name"></span></b> ?</div>
+            <div>
+                <button id="validate" class="btn btn-danger btn-sm">Valider</button>
+                <button id="cancel" class="btn btn-info btn-sm">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="title-page ajout">
+        <h2 class="title assos">Associations (ADMIN)</h2>
+    </div>
+
+    {# ----------------- Menu déroulant des Catégories + Search bar ----------------- #}
+    <div class="search">
+        <label for="categories">Catégories</label>
+          {#    La méthode JS 'onchange="window.location.href' = this.value"
+          permet de recharger la page en dès la sélection d'une l'option    #}
+        <select name="categories" id="categories" onchange="window.location.href = this.value">
+            <option value="{{ path('admin_associations') }}">Toutes</option>
+            {% for category in categories %}
+                <option
+                    {% if category.id == getCategory %}
+                         détecte la catégorie selectionné
+                        selected
+                    {% endif %}
+                    data-catg="{{ category.id }}"
+                    value="{{ path('admin_associations', {getCategory: category.id}) }}">{{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+        <label for="search">rechercher</label>
+        <input type="text" id="search" data-search-url="{{ path('admin_ajax_search') }}">
+        <i id="search-btn" class="fas fa-search"></i>
+        <a href="{{ path('admin_associations_create') }}">créer une association</a>
+    </div>
+
+
+    {# ----------------- Historique des Dons aux associations ----------------- #}
+    <div class="associations">
+        {% for asso in assosAmount %}
+            <div class="assos">
+                <a href="{{ path('association_id', {id: asso[0].id}) }}">
+                    {% if asso[0].image is null %}
+                        <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
+                    {% else %}
+                        <img src="{{ asset(ImgAssosFolder ~ asso[0].image) }}" alt="{{ asso[0].name }}" style="width: 10%;">
+                    {% endif %}
+                    <span>{{ asso[0].name }}</span>
+                </a>
+                - <span>Depuis le : {{ asso[0].createdAt | date("d/m/y") }}</span>
+                - <span>Contact : {{ asso[0].contactInfo }}</span>
+                - <span>Total des Dons : {{ asso[1] }}€</span>
+                <a href="{{ path('admin_associations_edit', {id: asso[0].id }) }}" class="edit">
+                    <i class="far fa-edit btn btn-info btn-sm"></i>
+                </a>
+                <a href="" class="delete" data-delete-id="{{ asso[0].id }}" data-delete-name="{{ asso[0].name }}"
+                    data-delete-path="{{ path('admin_ajax_associations_delete') }}">
+                    <i class="fas fa-trash-alt btn btn-info btn-sm"></i>
+                </a>
+            </div>
+        {% else %}
+            <div class="assos">
+                <span>Aucunes associations trouvé</span>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    {% include 'includes/js_ajax_delete.html.twig' %}
+    {% include 'includes/js_ajax_search.html.twig' %}
+{% endblock %}

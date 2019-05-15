@@ -57,7 +57,6 @@ class DonationsController extends Controller
             ->getDonationsTotalAmount($donations);
 
 
-
         return $this->render('admin/donations/admin_donations_index.html.twig', [
             'title' => 'Donations Admin',
 

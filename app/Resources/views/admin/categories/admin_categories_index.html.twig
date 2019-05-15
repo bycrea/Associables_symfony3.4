@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {# ----------------- Menu dashboard ----------------- #}
+    {% include 'includes/menu_admin_dashboard.html.twig' %}
+{% endblock %}
+
+{% block content %}
+
+    {# ----------------- Modal Suppression categories ----------------- #}
+    <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <p></p>
+    </div>
+    <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="message-delete">
+            <div>Etes vous sûr de vouloir supprimer la catégorie <b><span class="name"></span></b> ?</div>
+            <div>
+                <button id="validate" class="btn btn-danger btn-sm">Valider</button>
+                <button id="cancel" class="btn btn-info btn-sm">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+        {# ----------------- Categories ----------------- #}
+    <h2 class="title-page">Categories (ADMIN)</h2>
+
+    {% for category in categories %}
+        <div class="catg-show">
+            <span>{{ category.name }}</span>
+            <a href="{{ path('admin_categories_update', {id: category.id}) }}" class="edit">
+                <i class="far fa-edit btn btn-info btn-sm"></i>
+            </a>
+            <a href="" class="delete"
+               data-delete-id="{{ category.id }}" data-delete-name="{{ category.name }}"
+               data-delete-path="{{ path('admin_ajax_categories_delete') }}">
+                <i class="fas fa-trash-alt btn btn-info btn-sm"></i>
+            </a>
+        </div>
+    {% endfor %}
+
+    {# ----------------- Ajouter une Categories ----------------- #}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+        <button type="submit">Valider</button>
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block scripts %}
+    {% include 'includes/js_ajax_delete.html.twig' %}
+{% endblock %}

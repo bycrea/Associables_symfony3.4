@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
-
+{% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_user_dashboard.html.twig' %}
+{% endblock %}
+
+{% block content %}
 
     {# ----------------- Historique des Dons aux associations ----------------- #}
-    <h2 class="title assos">Historiques des associations</h2>
+    <h2 class="title-page">Historiques des associations</h2>
+
     <div class="box-assos">
         {% for asso in userAssosAmount %}
             <div class="assos">

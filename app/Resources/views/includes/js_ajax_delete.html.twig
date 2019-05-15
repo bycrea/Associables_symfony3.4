@@ -1,0 +1,65 @@
+
+{#          Script de la Modal de suppression           #}
+
+<script>
+    {# On attend que la page est fini de charger #}
+    $(document).ready( function () {
+
+        {# Ecoute le click sur l'icone delete #}
+        $('.delete').on('click', function (e) {
+            e.preventDefault()
+
+            {# Récupère l'id, le nom et le path Ajax de l'entité a supprimer #}
+            var id = $(this).data('delete-id')
+            var name = $(this).data('delete-name')
+            var path_action = $(this).data('delete-path')
+
+            {# Affiche la modal de validation de suppression #}
+            $('#validate-modal').removeClass('d-none').find('span').text(name)
+
+            {# Ecoute le click sur le bouton 'valider' #}
+            $('#validate').on('click', function (e) {
+                e.preventDefault()
+
+                $('#validate-modal').addClass('d-none')
+                {# Si la suppréssion est validé AJAX méthode POST #}
+                $.ajax({
+                    type: "POST",
+                    {# chemin vers la route controller qui va traiter les datas #}
+                    url: path_action,
+                    {# Data a envoyer en POST #}
+                    data: {
+                        id: id,
+                    },
+                    {# fontion à excécuter en cas d'échec #}
+                    success: function (response) {
+
+                        if(response.status === true)
+                        {
+                            {#   Success redirect vers l'url passé en paramètre   #}
+                            window.location.href = response.url;
+                        } else {
+
+                            {#   Affiche un message d'erreur en cas d'échec   #}
+                            $('#flash-ajax p').text('une erreur est survenue, veuillez réessayer.')
+                        }
+                    },
+                    {# Type de réponse attendu #}
+                    dataType: 'json'
+                });
+            })
+
+            {# Ecoute le click sur tout la page (document) #}
+            $(document).on('click', function (e) {
+                e.preventDefault()
+
+                {# Si le click est à l'extérieur de la modal ou sur le bouton 'annuler' #}
+                if($('#validate-modal').is(e.target) || $('#cancel').is(e.target))
+                {
+                    {#      Referme la modal      #}
+                    $('#validate-modal').addClass('d-none')
+                }
+            })
+        })
+    })
+</script>

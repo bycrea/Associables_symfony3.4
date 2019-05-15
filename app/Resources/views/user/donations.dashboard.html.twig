@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
-
+{% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_user_dashboard.html.twig' %}
+{% endblock %}
+
+{% block content %}
 
     {# ----------------- Historique des dons ----------------- #}
-    <h2 class="title dons">Historiques des donations</h2>
+    <h2 class="title-page">Historiques des donations</h2>
+
     <div class="dashboard">
         <form action="{{ path('user_donations') }}" method="GET">
 

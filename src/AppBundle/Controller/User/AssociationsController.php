@@ -34,6 +34,7 @@ class AssociationsController extends Controller
                 $userAssosAmount[] = [$association, $amount];
             }
         } else {
+
             $userAssosAmount = [];
         }
 

@@ -1,12 +1,18 @@
 {% extends 'base.html.twig' %}
 
+{% block header %}
+    {# ----------------- Menu dashboard ----------------- #}
+    {% include 'includes/menu_user_dashboard.html.twig' %}
+{% endblock %}
+
 {% block content %}
 
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_user_dashboard.html.twig' %}
 
     {# ----------------- Informations personelles ----------------- #}
-    <h2 class="title infos">Informations personnelles</h2>
+    <h2 class="title-page">Informations personnelles</h2>
+
     <div class="infos">
         <div class="info"><span>{{ user.firstname }}</span>, <span>{{ user.lastname }}</span></div>
         <div class="info"><span>Nom d'utilisateur : {{ user.username }}</span></div>

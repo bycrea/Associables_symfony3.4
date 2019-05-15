@@ -1,0 +1,30 @@
+
+    {# ----------------- Template des recherche Ajax des associations ----------------- #}
+<div class="associations">
+    {% for asso in assosAmount %}
+        <div class="assos">
+            <a href="{{ path('association_id', {id: asso[0].id}) }}">
+                {% if asso[0].image is null %}
+                    <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
+                {% else %}
+                    <img src="{{ asset(ImgAssosFolder ~ asso[0].image) }}" alt="{{ asso[0].name }}" style="width: 10%;">
+                {% endif %}
+                <span>{{ asso[0].name }}</span>
+            </a>
+            - <span>Depuis le : {{ asso[0].createdAt | date("d/m/y") }}</span>
+            - <span>Contact : {{ asso[0].contactInfo }}</span>
+            - <span>Total des Dons : {{ asso[1] }}€</span>
+            <a href="{{ path('admin_associations_edit', {id: asso[0].id }) }}" class="edit">
+                <i class="far fa-edit btn btn-info btn-sm"></i>
+            </a>
+            <a href="" class="delete" data-delete-id="{{ asso[0].id }}" data-delete-name="{{ asso[0].name }}"
+               data-delete-path="{{ path('admin_ajax_associations_delete') }}">
+                <i class="fas fa-trash-alt btn btn-info btn-sm"></i>
+            </a>
+        </div>
+    {% else %}
+        <div>
+            <span>Aucunes associations trouvées</span>
+        </div>
+    {% endfor %}
+</div>
