@@ -20,6 +20,7 @@
             {% set getUser = app.request.get('user') %}
             {% set getStatus = app.request.get('status') %}
 
+            <label for="year">Trier par : </label>
             {# Filtre années #}
             <select name="year" id="year">
                 <option {{ ('2019' in getYear) ? 'selected' : ''  }} value="2019">2019</option>

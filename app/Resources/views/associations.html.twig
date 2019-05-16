@@ -12,27 +12,30 @@
 
         <h2 class="title-page">listes des associations public</h2>
 
-        {# ----------------- Menu déroulant des Catégories + Search bar ----------------- #}
-        <div class="search">
+        <div>
+            {# ----------------- Menu déroulant des Catégories + Search bar ----------------- #}
+            {% set getCategory = app.request.get('getCategory') %}
+
             <label for="categories">Catégories</label>
-            {#  La méthode JS 'onchange="window.location.href' = this.value"
-               permet de recharger la page en dès la sélection d'une l'option  #}
+            {#    La méthode JS 'onchange="window.location.href' = this.value"
+            permet de recharger la page en dès la sélection d'une l'option    #}
             <select name="categories" id="categories" onchange="window.location.href = this.value">
-                <option value="{{ path('associations') }}">Toutes</option>
+                <option value="{{ path('associations', {getCategory: null}) }}">Toutes</option>
                 {% for category in categories %}
                     <option
-                        {% if category.id == getCategory %}
-                            {# détecte la catégorie selectionné #}
-                            selected
-                        {% endif %}
-                        data-catg="{{ category.id }}"
-                        value="{{ path('associations', {getCategory: category.id}) }}">{{ category.name }}
+                            {{ (category.id in getCategory) ? 'selected' : '' }}
+                            data-catg="{{ category.id }}"
+                            value="{{ path('associations', {getCategory: category.id}) }}">{{ category.name }}
                     </option>
                 {% endfor %}
             </select>
-            <label for="search">rechercher</label>
-            <input type="text" id="search" data-search-url="{{ path('_ajax_search') }}">
-            <i id="search-btn" class="fas fa-search"></i>
+
+            {# ----------------- Rechercher une association ----------------- #}
+            <div>
+                <label for="search">rechercher</label>
+                <input type="text" id="search" data-search-url="{{ path('_ajax_search') }}">
+                <i id="search-btn" class="fas fa-search"></i>
+            </div>
         </div>
         
         {# ----------------- Liste des associations ----------------- #}

@@ -2,16 +2,13 @@
 {#  Script de rajout des dons au paniers depuis l'onglet 'Associations'  #}
 
 <script>
-
     {# On attend que la page est fini de charger #}
     $(document).ready(function() {
-
-        //$('#loading-modal').hide()
 
         {# affiche la modal loading-modal pendant le chargement AJAX #}
         $(document).ajaxStart(function(){
             $('#loading-modal').removeClass('d-none')
-        });
+        })
 
         {# On écoute l'évènement 'click' sur le bouton donation #}
         $('.donation-button').on('click', function (e) {
@@ -57,7 +54,6 @@
         {# cache la modal loading-modal après le chargement AJAX #}
         $(document).ajaxStop(function(){
             $('#loading-modal').addClass('d-none')
-        });
+        })
     })
-
 </script>

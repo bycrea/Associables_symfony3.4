@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Donation;
+
 /**
  * UserRepository
  *
@@ -10,4 +12,33 @@ namespace AppBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * @param $filter //Colonne visé par le tri
+     * @param $order //Sens du tri (ASC/DESC)
+     * @return array
+     *
+     * Retourne L'Entity [User], Le montant total de ses Dons [amount], Le nombre total de ses Dons [nb]
+     */
+    public function OrderByCustom($filter, $order)
+    {
+        $queryBuilder = $this->createQueryBuilder('user');
+
+        $queryBuilder
+            // Sélectionne les colonnes nécéssaires (entity User/SUM des dons/COUNT des dons
+            ->select('user, d.paymentStatus AS HIDDEN paymentStatus, SUM(d.amount) AS amount, COUNT(d.id) AS nb')
+            // Jointure de la l'entity Donnation AS d
+            ->leftJoin('user.donations', 'd')
+            // Là ou les dons sont égale à 'paymentStatus' = PAY_IN_TRANSFER ou PAY_PROCESSED
+            ->andWhere('d.paymentStatus IN (:status)')
+            ->setParameter('status', [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED])
+            // Regroupement par Utilisateur
+            ->groupBy('user')
+            // Trié par la colonne visé par le filtre en paramètre
+            ->orderBy($filter, $order);
+
+        // Retourne un tableau [user, amount, nb]
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 }

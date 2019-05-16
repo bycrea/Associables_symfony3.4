@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {# ----------------- Menu dashboard ----------------- #}
+    {% include 'includes/menu_admin_dashboard.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    {# --------------- message d'erreur et loading AJAX --------------- #}
+    <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <p></p>
+    </div>
+    <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <i class="fas fa-spinner fa-3x"></i>
+    </div>
+
+    {# ----------------- Modal Suppression asso ----------------- #}
+    <div id="validate-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="message-delete">
+            <div><span class="action"> action </span><b><span class="name"> name </span></b> ?</div>
+            <div>
+                <button id="validate" class="btn btn-danger btn-sm">Valider</button>
+                <button id="cancel" class="btn btn-info btn-sm">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    {# ----------------- Liste et historique des utilisateurs ----------------- #}
+    <h2 class="title-page">Liste des utilisateurs (ADMIN)</h2>
+
+    <div>
+        {# ----------------- Ajouter une Suppression asso ----------------- #}
+        <div>
+            <a href="{{ path('fos_user_registration_register') }}">créer un utilisateur</a>
+        </div>
+
+        {# ----------------- Filtres ----------------- #}
+        {% set filter = app.request.get('filter') %}
+
+        <label for="filtre">Trier par : </label>
+        <select name="categories" id="filtre" onchange="window.location.href = this.value">
+            <option {{ ('id' in filter)? 'selected' : '' }}
+                value="{{ path('admin_users', {filter: 'id'}) }}">id</option>
+            <option {{ ('username' in filter)? 'selected' : '' }}
+                value="{{ path('admin_users', {filter: 'username'}) }}">Username</option>
+            <option {{ ('roles' in filter)? 'selected' : '' }}
+                value="{{ path('admin_users', {filter: 'roles'}) }}">Roles</option>
+            <option {{ ('created' in filter)? 'selected' : '' }}
+                value="{{ path('admin_users', {filter: 'created'}) }}">Date Inscrpt.</option>
+            <option {{ ('connexion' in filter)? 'selected' : '' }}
+                value="{{ path('admin_users', {filter: 'lastLog'}) }}">Date Connex.</option>
+            <option {{ ('nb' in filter)? 'selected' : '' }}
+                value="{{ path('admin_users', {filter: 'nb'}) }}">Nb Dons</option>
+            <option {{ ('amount' in filter)? 'selected' : '' }}
+                value="{{ path('admin_users', {filter: 'amount'}) }}">Total Dons</option>
+        </select>
+    </div>
+
+    <div class="users">
+        {% for key, user in users %}
+            <div class="user-line">
+                {# info utilisateur #}
+                {{ user.0.id }}. <span>{{ user.0.username }}</span>
+                - <span>mail : {{ user.0.email }}</span>
+                - <a href="" class="upgrade"><span>{{ ('ROLE_ADMIN' in user.0.roles.0)? 'ADMIN' : 'USER' }}</span></a>
+                / <span>Membre : {{ user.0.createdAt | date("d/m/y H:i:s") }}</span>
+                - <span>Connexion : {{ user.0.lastLogin | date("d/m/y H:i:s") }}</span>
+                / <span>Nb de Dons : {{ user.nb }}</span>
+                - <span>Total : {{ user.amount }}€</span>
+
+                {# supprimer un utilisateur #}
+                <a href="" class="delete" data-delete-id="" data-delete-name=""
+                    {# Envoi le nom du chemin à suivre (path) de la fonction AJAX afin de mutualiser les scripts #}
+                   data-delete-path="">
+                    <i class="fas fa-trash-alt btn btn-info btn-sm"></i>
+                </a>
+            </div>
+        {% else %}
+            <div class="assos">
+                <span>Aucun utilisateur trouvé, ce qui est bien mais pas top.</span>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

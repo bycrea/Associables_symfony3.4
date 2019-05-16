@@ -224,4 +224,5 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
 
         return $totalAmount;
     }
+
 }

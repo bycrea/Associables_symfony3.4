@@ -60,7 +60,7 @@ class AssociationsController extends Controller
 
 
     /**
-     * @Route("/associations/edit/{id}", name="admin_associations_edit")
+     * @Route("/edit/associations/{id}", name="admin_associations_edit")
      */
     public function associationEditAction(Request $request, $id)
     {
@@ -118,7 +118,7 @@ class AssociationsController extends Controller
 
 
     /**
-     * @Route("/associations/create", name="admin_associations_create")
+     * @Route("create/associations", name="admin_associations_create")
      */
     public function associationCreateAction(Request $request)
     {
@@ -166,7 +166,7 @@ class AssociationsController extends Controller
 
 
     /**
-     * @Route("_ajax/associations/delete", name="admin_ajax_associations_delete")
+     * @Route("_ajax/delete/associations", name="admin_ajax_associations_delete")
      */
     public function _ajaxDeleteAction(Request $request)
     {
@@ -186,7 +186,7 @@ class AssociationsController extends Controller
 
 
     /**
-     * @Route("/_ajax/search", name="admin_ajax_search")
+     * @Route("/_ajax/search/associations", name="admin_ajax_search")
      *
      * Retourne, sous forme de vue, les associations qui contiennent
      * les caractères entrés en POST 'Request' via la barre de recherche
