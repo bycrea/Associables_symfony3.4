@@ -1,5 +1,5 @@
-
     {# ----------------- Template des recherche Ajax des associations ----------------- #}
+
 <div class="associations">
     {% for asso in assosAmount %}
         <div class="assos">
@@ -17,8 +17,7 @@
             <a href="{{ path('admin_associations_edit', {id: asso[0].id }) }}" class="edit">
                 <i class="far fa-edit btn btn-info btn-sm"></i>
             </a>
-            <a href="" class="delete" data-delete-id="{{ asso[0].id }}" data-delete-name="{{ asso[0].name }}"
-               data-delete-path="{{ path('admin_ajax_associations_delete') }}">
+            <a href="{{ path('admin_associations_delete', {id: asso[0].id }) }}" class="delete">
                 <i class="fas fa-trash-alt btn btn-info btn-sm"></i>
             </a>
         </div>

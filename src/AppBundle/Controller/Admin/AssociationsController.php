@@ -166,6 +166,22 @@ class AssociationsController extends Controller
 
 
     /**
+     * @Route("/delete/associations/{id}", name="admin_associations_delete")
+     */
+    public function deleteAction($id)
+    {
+        $association = $this->getDoctrine()->getRepository(Assos::class)->find($id);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($association);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'L\'association a bien été supprimé.');
+        return $this->redirectToRoute('admin_associations');
+    }
+
+
+    /**
      * @Route("_ajax/delete/associations", name="admin_ajax_associations_delete")
      */
     public function _ajaxDeleteAction(Request $request)
@@ -177,7 +193,7 @@ class AssociationsController extends Controller
         $entityManager->remove($association);
         $entityManager->flush();
 
-        $this->addFlash('success', 'La categorie a bien été supprimé.');
+        $this->addFlash('success', 'L\'association a bien été supprimé.');
         return $this->json([
             'status' => true,
             'url' => $this->generateUrl('admin_associations')

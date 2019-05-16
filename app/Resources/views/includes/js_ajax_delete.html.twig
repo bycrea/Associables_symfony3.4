@@ -50,7 +50,7 @@
             })
 
             {# Ecoute le click sur tout la page (document) #}
-            $(document).on('click', function (e) {
+            $('#validate-modal').on('click', function (e) {
                 e.preventDefault()
 
                 {# Si le click est à l'extérieur de la modal ou sur le bouton 'annuler' #}
@@ -60,6 +60,12 @@
                     $('#validate-modal').addClass('d-none')
                 }
             })
+
+            {# Ecoute le click sur tout la page (document) #}{#
+            $('#cancel').on('click', function (e) {
+                e.preventDefault()
+                $('#validate-modal').addClass('d-none')
+            })#}
         })
     })
 </script>
