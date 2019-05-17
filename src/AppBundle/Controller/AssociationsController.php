@@ -14,15 +14,15 @@ use Exception;
 class AssociationsController extends Controller
 {
     /**
-     * @Route("/associations/{getCategory}", name="associations")
+     * @Route("/associations/{getCategory}", name="associations", defaults={"getCategory": ""})
      */
-    public function associationsAction($getCategory = null)
+    public function associationsAction($getCategory)
     {
         // Récupère toutes les catégories pour les afficher dans le menu déroulant
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
         // Si une catégorie est entrée en paramètre $_GET de l'url
-        if($getCategory != null)
+        if($getCategory)
         {
             // Récupère les associations lié a la catégorie grâce à la méthode créé dans 'AssosRepository'
             $associations = $this->getDoctrine()->getRepository(Assos::class)

@@ -27,13 +27,17 @@
     {% for category in categories %}
         <div class="catg-show">
             <span>{{ category.name }}</span>
-            <a href="{{ path('admin_categories_update', {id: category.id}) }}" class="edit">
-                <i class="far fa-edit btn btn-info btn-sm"></i>
+
+            {# Editer une categorie #}
+            <a href="{{ path('admin_categories_update', {id: category.id}) }}" class="edit btn btn-info btn-sm">
+                <i class="far fa-edit"></i>
             </a>
-            <a href="" class="delete"
+
+            {# Supprimer une categorie #}
+            <a href="" class="delete btn btn-danger btn-sm"
                data-delete-id="{{ category.id }}" data-delete-name="{{ category.name }}"
                data-delete-path="{{ path('admin_ajax_categories_delete') }}">
-                <i class="fas fa-trash-alt btn btn-info btn-sm"></i>
+                <i class="fas fa-trash-alt"></i>
             </a>
         </div>
     {% endfor %}

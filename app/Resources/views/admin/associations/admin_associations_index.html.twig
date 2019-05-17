@@ -76,13 +76,17 @@
                 - <span>Depuis le : {{ asso[0].createdAt | date("d/m/y") }}</span>
                 - <span>Contact : {{ asso[0].contactInfo }}</span>
                 - <span>Total des Dons : {{ asso[1] }}€</span>
-                <a href="{{ path('admin_associations_edit', {id: asso[0].id }) }}" class="edit">
-                    <i class="far fa-edit btn btn-info btn-sm"></i>
+
+                {# Editer une association #}
+                <a href="{{ path('admin_associations_edit', {id: asso[0].id }) }}" class="edit btn btn-info btn-sm">
+                    <i class="far fa-edit"></i>
                 </a>
-                <a href="" class="delete" data-delete-id="{{ asso[0].id }}" data-delete-name="{{ asso[0].name }}"
+
+                {# Supprimer une categorie #}
+                <a href="" class="delete btn btn-danger btn-sm" data-delete-id="{{ asso[0].id }}" data-delete-name="{{ asso[0].name }}"
                     {# Envoi le nom du chemin à suivre (path) de la fonction AJAX afin de mutualiser les scripts #}
                     data-delete-path="{{ path('admin_ajax_associations_delete') }}">
-                    <i class="fas fa-trash-alt btn btn-info btn-sm"></i>
+                    <i class="fas fa-trash-alt"></i>
                 </a>
             </div>
         {% else %}

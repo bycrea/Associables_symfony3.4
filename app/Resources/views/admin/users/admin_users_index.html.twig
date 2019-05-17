@@ -61,19 +61,22 @@
             <div class="user-line">
                 {# info utilisateur #}
                 {{ user.0.id }}. <span>{{ user.0.username }}</span>
-                - <span>mail : {{ user.0.email }}</span>
-                - <a href="" class="upgrade"><span>{{ ('ROLE_ADMIN' in user.0.roles.0)? 'ADMIN' : 'USER' }}</span></a>
+                - <span>{{ user.0.email }}</span>
                 / <span>Membre : {{ user.0.createdAt | date("d/m/y H:i:s") }}</span>
                 - <span>Connexion : {{ user.0.lastLogin | date("d/m/y H:i:s") }}</span>
                 / <span>Nb de Dons : {{ user.nb }}</span>
                 - <span>Total : {{ user.amount }}€</span>
 
-                {# supprimer un utilisateur #}
                 {% if user.0.username not in app.user.username %}
-                    <a href="" class="delete" data-delete-id="{{ user.0.id }}" data-delete-name="{{ user.0.username }}"
+                    {# Role utilisateur #}
+                    / <span>{{ ('ROLE_ADMIN' in user.0.roles.0)? 'ADMIN' : 'USER' }} </span>
+                    <a href="{{ path('admin_users_roles', {id: user.0.id}) }}" class="btn btn-info btn-sm"><i class="fas fa-sync"></i></a>
+
+                    {# Suppression utilisateur #}
+                    <a href="" class="delete btn btn-danger btn-sm" data-delete-id="{{ user.0.id }}" data-delete-name="{{ user.0.username }}"
                         {# Envoi le nom du chemin à suivre (path) de la fonction AJAX afin de mutualiser les scripts #}
                        data-delete-path="{{ path('admin_users_delete') }}">
-                        <i class="fas fa-trash-alt btn btn-info btn-sm"></i>
+                        <i class="fas fa-trash-alt"></i>
                     </a>
                 {% endif %}
             </div>

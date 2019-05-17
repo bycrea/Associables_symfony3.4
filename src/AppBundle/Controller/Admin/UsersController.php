@@ -10,39 +10,29 @@ use Symfony\Component\Routing\Annotation\Route;
 class UsersController extends Controller
 {
     /**
-     * @Route("/users/{filter}", name="admin_users")
+     * @Route("/users/{filter}", name="admin_users", defaults={"filter": "id"})
      */
-    public function indexAction($filter = null)
+    public function indexAction($filter)
     {
+        // Grâce au $filter, on détermine OrderBy[] pour l'envoyer dans la requête DQL
+        switch ($filter) {
 
-        // Si aucun filtre n'est entré en paramètre
-        if(!$filter)
-        {
-            // OrderBy par défaut
-            $orderBy = ['user.id', 'ASC'];
+            case 'id' : $orderBy = ['user.id', 'ASC']; break;
 
-        } else {
+            case 'username' : $orderBy = ['user.username', 'ASC']; break;
 
-            // Sinon on détermine OrderBy en fonction du filtre
-            switch ($filter) {
+            case 'roles' : $orderBy = ['user.roles', 'DESC']; break;
 
-                case 'id' : $orderBy = ['user.id', 'ASC']; break;
+            case 'created' : $orderBy = ['user.createdAt', 'DESC']; break;
 
-                case 'username' : $orderBy = ['user.username', 'ASC']; break;
+            case 'lastLog' : $orderBy = ['user.lastLogin', 'DESC']; break;
 
-                case 'roles' : $orderBy = ['user.roles', 'DESC']; break;
+            case 'nb' : $orderBy = ['nb', 'DESC']; break;
 
-                case 'created' : $orderBy = ['user.createdAt', 'DESC']; break;
+            case 'amount' : $orderBy = ['amount', 'DESC']; break;
 
-                case 'lastLog' : $orderBy = ['user.lastLogin', 'DESC']; break;
-
-                case 'nb' : $orderBy = ['nb', 'DESC']; break;
-
-                case 'amount' : $orderBy = ['amount', 'DESC']; break;
-
-                // Defaut évite les entrées aléatoire dans l'url
-                default: $orderBy = ['user.id', 'ASC']; break;
-            }
+            // Defaut évite les entrées aléatoire dans l'url
+            default: $orderBy = ['user.id', 'ASC']; break;
         }
 
         // Récupère les utilisateurs en fonction du filtre grâce à la méthode 'OrderByCustom'
@@ -57,10 +47,39 @@ class UsersController extends Controller
 
 
     /**
-     * @Route("/delete/users/}", name="admin_users_delete")
+     * @Route("/roles/users/{id}", name="admin_users_roles")
+     */
+    public function rolesAction($id)
+    {
+        // Récupère l'entity User via l'id
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+        // Si le 'ROLE_ADMIN' existe pour cet Utilisateur
+        if(false !== array_search('ROLE_ADMIN', $user->getRoles(), true))
+        {
+            // On le retire
+            $user->removeRole('ROLE_ADMIN');
+
+        } else {
+
+            // Sinon on le rajoute
+            $user->addRole('ROLE_ADMIN');
+        }
+
+        // Persist -> Flush
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin_users');
+    }
+
+
+    /**
+     * @Route("/delete/users}", name="admin_users_delete")
      */
     public function deleteAction()
     {
-        dump('coucou'); die;
+        dump('Pas eu le temps de gérer ça... déso.'); die;
     }
 }
