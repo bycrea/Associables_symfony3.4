@@ -43,8 +43,6 @@
                 value="{{ path('admin_users', {filter: 'id'}) }}">id</option>
             <option {{ ('username' in filter)? 'selected' : '' }}
                 value="{{ path('admin_users', {filter: 'username'}) }}">Username</option>
-            <option {{ ('roles' in filter)? 'selected' : '' }}
-                value="{{ path('admin_users', {filter: 'roles'}) }}">Roles</option>
             <option {{ ('created' in filter)? 'selected' : '' }}
                 value="{{ path('admin_users', {filter: 'created'}) }}">Date Inscrpt.</option>
             <option {{ ('connexion' in filter)? 'selected' : '' }}
@@ -53,6 +51,8 @@
                 value="{{ path('admin_users', {filter: 'nb'}) }}">Nb Dons</option>
             <option {{ ('amount' in filter)? 'selected' : '' }}
                 value="{{ path('admin_users', {filter: 'amount'}) }}">Total Dons</option>
+            <option {{ ('roles' in filter)? 'selected' : '' }}
+                    value="{{ path('admin_users', {filter: 'roles'}) }}">Roles</option>
         </select>
     </div>
 
@@ -69,7 +69,7 @@
 
                 {% if user.0.username not in app.user.username %}
                     {# Role utilisateur #}
-                    / <span>{{ ('ROLE_ADMIN' in user.0.roles.0)? 'ADMIN' : 'USER' }} </span>
+                    / Role : <b><span class="roles">{{ ('ROLE_ADMIN' in user.0.roles.0)? 'Admin' : 'User' }} </span></b>
                     <a href="{{ path('admin_users_roles', {id: user.0.id}) }}" class="btn btn-info btn-sm"><i class="fas fa-sync"></i></a>
 
                     {# Suppression utilisateur #}
@@ -78,6 +78,10 @@
                        data-delete-path="{{ path('admin_users_delete') }}">
                         <i class="fas fa-trash-alt"></i>
                     </a>
+                {% else %}
+                    {# Role utilisateur #}
+                    / Role : <b><span class="roles">{{ ('ROLE_ADMIN' in user.0.roles.0)? 'Admin' : 'User' }} </span></b>
+                    <i>(Connecté)</i>
                 {% endif %}
             </div>
         {% else %}

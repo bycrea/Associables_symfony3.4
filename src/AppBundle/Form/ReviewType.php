@@ -2,13 +2,14 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Category;
+use AppBundle\Entity\Review;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoryType extends AbstractType
+class ReviewType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -16,9 +17,14 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class,
+            ->add('comment', TextareaType::class,
                 [
-                    'label' => 'Ajouter une catégories'
+                    'label' => 'Vous aimez cette association? Donnez votre Avis :'
+                ])
+            ->add('mark', ChoiceType::class,
+                [
+                    'choices' => array_flip(Review::MARK),
+                    'label' => 'Note'
                 ]);
     }
 
@@ -28,7 +34,7 @@ class CategoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Category::class
+            'data_class' => Review::class
         ));
     }
 
@@ -37,7 +43,7 @@ class CategoryType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_category';
+        return 'appbundle_review';
     }
 
 

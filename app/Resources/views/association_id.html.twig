@@ -57,24 +57,35 @@
                 </p>
             </div>
 
+            {# ----------------- Bouton Retour ----------------- #}
+
+            {# Lien vers la page précédente grace au 'referer' de Twig #}
+            {% set referer = app.request.headers.get('referer') %}
+
+            {% if referer is not null %}
+                <a href="{{ referer }}">retour</a>
+            {% else %}
+                <a href="{{ path('associations') }}">retour</a>
+            {% endif %}
+
             {# ----------------- Reviews de l'associations ----------------- #}
-            <div>
+            <div class="reviews">
                 {% for review in association.reviews %}
-                <p>{{ review.user }}</p>
-                <p>{{ review.comment }}</p>
-                <p>{{ review.createdAt }}</p>
+                    <div class="review-asso">
+                        <p>{{ review.user }}</p>
+                        <p>{{ review.comment }}</p>
+                        <p>{{ review.createdAt }}</p>
+                    </div>
                 {% endfor %}
+                <div class="review-add">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="btn btn-warning btn-sm">Valider</button>
+                    <a href="{{ path('admin_categories') }}" class="btn btn-danger btn-sm">Annuler</a>
+                    {{ form_end(form) }}
+                </div>
             </div>
         </div>
-
-        {# Lien vers la page précédente grace au 'referer' de Twig #}
-        {% set referer = app.request.headers.get('referer') %}
-
-        {% if referer is not null %}
-            <a href="{{ referer }}">retour</a>
-        {% else %}
-            <a href="{{ path('associations') }}">retour</a>
-        {% endif %}
     </main>
 {% endblock %}
 

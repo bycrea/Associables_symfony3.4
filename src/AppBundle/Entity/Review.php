@@ -17,6 +17,8 @@ class Review
     // On défini la date à l'intant T ou l'on crée notre notre nouvelle Donation
     use CreatedAtTrait;
 
+    const MARK = [0 => 5, 1 => 4, 2 => 3, 3 => 2, 4 => 1];
+
     /**
      * @var int
      *

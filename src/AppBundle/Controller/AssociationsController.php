@@ -5,6 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Assos;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Donation;
+use AppBundle\Entity\Review;
+use AppBundle\Form\CategoryType;
+use AppBundle\Form\ReviewType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,13 +62,19 @@ class AssociationsController extends Controller
     /**
      * @Route("/association/{id}", name="association_id")
      */
-    public function associationIdAction($id)
+    public function associationIdAction(Request $request, $id)
     {
         $association = $this->getDoctrine()->getRepository(Assos::class)->find($id);
 
+        $review = new Review();
+        $form = $this->createForm(ReviewType::class, $review);
+
+        $form->handleRequest($request);
+
         return $this->render('association_id.html.twig', [
             'title' => $association->getName(),
-            'association' => $association
+            'association' => $association,
+            'form' => $form->createView()
         ]);
     }
 
