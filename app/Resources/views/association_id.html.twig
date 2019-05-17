@@ -41,7 +41,8 @@
                             value="{{ amount }}">{{ amount }}</option>
                     {% endfor %}
                 </select>
-                <button class="donation-button" data-association-id="{{ association.id }}">Donner</button>
+                <button class="donation-button btn btn-info btn-sm"
+                        data-association-id="{{ association.id }}">Donner</button>
             </div>
 
             {# ----------------- Catégories de l'associations ----------------- #}
@@ -70,20 +71,33 @@
 
             {# ----------------- Reviews de l'associations ----------------- #}
             <div class="reviews">
+                <h5>Vous aimez cette association? Donnez votre Avis.</h5>
                 {% for review in association.reviews %}
                     <div class="review-asso">
                         <p>{{ review.user }}</p>
                         <p>{{ review.comment }}</p>
-                        <p>{{ review.createdAt }}</p>
+                        <p>Note :
+                            <span>
+                            {% for i in range(1, 5) %}
+                                {% if review.mark >= i %}
+                                    <i class="fas fa-star"></i>
+                                {% else %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                            </span>
+                        <p>le : {{ review.createdAt | date('d-m-y') }} à {{ review.createdAt | date('H:i:s') }}</p>
                     </div>
                 {% endfor %}
-                <div class="review-add">
-                    {{ form_start(form) }}
-                    {{ form_widget(form) }}
-                    <button type="submit" class="btn btn-warning btn-sm">Valider</button>
-                    <a href="{{ path('admin_categories') }}" class="btn btn-danger btn-sm">Annuler</a>
-                    {{ form_end(form) }}
-                </div>
+                {% if app.user %}
+                    <div class="review-add">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        <button type="submit" class="btn btn-warning btn-sm">Valider</button>
+                        <a href="{{ path('associations') }}" class="btn btn-danger btn-sm">Annuler</a>
+                        {{ form_end(form) }}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </main>

@@ -71,6 +71,19 @@ class AssociationsController extends Controller
 
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $review->setUser($this->getUser());
+            $review->setAssos($association);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($review);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre avis à bien été ajouté, merci!');
+            return $this->redirectToRoute('association_id', ['id' => $id]);
+        }
+
         return $this->render('association_id.html.twig', [
             'title' => $association->getName(),
             'association' => $association,

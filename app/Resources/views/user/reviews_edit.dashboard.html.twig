@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {# ----------------- Menu dashboard ----------------- #}
+    {% include 'includes/menu_user_dashboard.html.twig' %}
+{% endblock %}
+
+{% block content %}
+
+    {# ----------------- Historiques des avis ----------------- #}
+    <div class="title-page">
+        <h2>Modifier mon avis</h2>
+    </div>
+
+    <div class="review-add">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-warning btn-sm">Valider</button>
+        <a href="{{ path('user_reviews') }}" class="btn btn-danger btn-sm">Annuler</a>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+
