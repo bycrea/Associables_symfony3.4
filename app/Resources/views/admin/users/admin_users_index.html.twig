@@ -17,7 +17,7 @@
     {# ----------------- Modal Suppression asso ----------------- #}
     <div id="validate-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="message-delete">
-            <div><span class="action"> action </span><b><span class="name"> name </span></b> ?</div>
+            <div>Voulez vous supprimer l'utilisateur : <b><span class="name"></span></b> ?</div>
             <div>
                 <button id="validate" class="btn btn-danger btn-sm">Valider</button>
                 <button id="cancel" class="btn btn-info btn-sm">Annuler</button>
@@ -69,11 +69,13 @@
                 - <span>Total : {{ user.amount }}€</span>
 
                 {# supprimer un utilisateur #}
-                <a href="" class="delete" data-delete-id="" data-delete-name=""
-                    {# Envoi le nom du chemin à suivre (path) de la fonction AJAX afin de mutualiser les scripts #}
-                   data-delete-path="">
-                    <i class="fas fa-trash-alt btn btn-info btn-sm"></i>
-                </a>
+                {% if user.0.username not in app.user.username %}
+                    <a href="" class="delete" data-delete-id="{{ user.0.id }}" data-delete-name="{{ user.0.username }}"
+                        {# Envoi le nom du chemin à suivre (path) de la fonction AJAX afin de mutualiser les scripts #}
+                       data-delete-path="{{ path('admin_users_delete') }}">
+                        <i class="fas fa-trash-alt btn btn-info btn-sm"></i>
+                    </a>
+                {% endif %}
             </div>
         {% else %}
             <div class="assos">
@@ -82,4 +84,8 @@
         {% endfor %}
     </div>
 
+{% endblock %}
+
+{% block scripts %}
+    {% include 'includes/js_ajax_delete.html.twig' %}
 {% endblock %}

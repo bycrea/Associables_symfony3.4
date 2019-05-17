@@ -54,4 +54,13 @@ class UsersController extends Controller
             'users' => $users
         ]);
     }
+
+
+    /**
+     * @Route("/delete/users/}", name="admin_users_delete")
+     */
+    public function deleteAction()
+    {
+        dump('coucou'); die;
+    }
 }
