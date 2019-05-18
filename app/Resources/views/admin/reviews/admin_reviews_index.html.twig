@@ -7,7 +7,61 @@
 
 {% block content %}
 
-    {# ----------------- Avis ----------------- #}
-    <h2 class="title dons">Historiques des Avis (ADMIN)</h2>
+    {# message d'erreur et loading AJAX #}
+    <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <p></p>
+    </div>
+    <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <i class="fas fa-spinner fa-3x"></i>
+    </div>
 
+    {# ----------------- Modal Suppression Review ----------------- #}
+    <div id="validate-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="message-delete">
+            <div>Etes vous sûr de vouloir supprimer votre avis sur l'association :
+                <b><span class="name"></span></b> ?</div>
+            <div>
+                <button id="validate" class="btn btn-danger btn-sm">Valider</button>
+                <button id="cancel" class="btn btn-info btn-sm">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    {# ----------------- Historiques des avis ----------------- #}
+    <div class="title-page">
+        <h2>Historiques des avis (ADMIN)</h2>
+    </div>
+
+    {# ----------------- Reviews Utilisateur ----------------- #}
+    <div class="reviews">
+        <h4>Vos Avis</h4>
+        {% for review in reviews %}
+            <div class="review-asso">
+                <a href="{{ path('association_id', {id: review.assos.id}) }}">{{ review.assos.name }}</a>
+                <p>{{ review.comment }}</p>
+                <p>Note :
+                    <span>
+                        {% for i in range(1, 5) %}
+                            {% if review.mark >= i %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                <p>{{ review.user.username }} - le : {{ review.createdAt | date('d-m-y') }} à {{ review.createdAt | date('H:i:s') }}</p>
+            </div>
+
+            {# Supprimer une review #}
+            <a href="" class="delete btn btn-danger btn-sm"
+               data-delete-id="{{ review.id }}" data-delete-name="{{ review.assos.name }}"
+               data-delete-path="{{ path('user_ajax_reviews_delete') }}">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {% include 'includes/js_ajax_delete.html.twig' %}
 {% endblock %}

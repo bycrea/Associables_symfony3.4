@@ -10,6 +10,7 @@
             <i class="fas fa-spinner fa-3x"></i>
         </div>
 
+        {# ----------------- Panier utilisateur ----------------- #}
         <h2 class="title-page">panier public</h2>
 
         <div class="basket">
@@ -40,7 +41,8 @@
                                     value="{{ amount }}">{{ amount }}</option>
                             {% endfor %}
                         </select>
-                        <a href="#" class="delete-donation" data-donation-id="{{ donation.id }}" data-association-id="{{ donation.assos.id }}">
+                        <a href="" data-donation-id="{{ donation.id }}"
+                           data-association-id="{{ donation.assos.id }}" class="delete-donation btn btn-danger btn-sm">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>

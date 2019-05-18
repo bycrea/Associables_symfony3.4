@@ -2,9 +2,7 @@
 
 namespace AppBundle\Controller\User;
 
-use AppBundle\Entity\Category;
 use AppBundle\Entity\Review;
-use AppBundle\Form\CategoryType;
 use AppBundle\Form\ReviewType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +20,7 @@ class ReviewController extends Controller
 
         return $this->render('user/reviews.dashboard.html.twig', [
             'title' => 'Mon Compte - Mes Avis',
-            'reviews' => $reviews
+            'reviews' => d$reviews
         ]);
     }
 
@@ -45,7 +43,7 @@ class ReviewController extends Controller
             $entityManager->persist($review);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre avis à bien été modifié');
+            $this->addFlash('success', 'Votre avis à bien été modifié.');
             return $this->redirectToRoute('user_reviews');
         }
 
@@ -59,8 +57,19 @@ class ReviewController extends Controller
     /**
      * @Route("/_ajax/delete/reviews", name="user_ajax_reviews_delete")
      */
-    public function deleteReviewsAction()
+    public function deleteReviewsAction(Request $request)
     {
+        $id = $request->request->get('id');
+        $review = $this->getDoctrine()->getRepository(Review::class)->find($id);
 
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($review);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Votre avis a bien été supprimé.');
+        return $this->json([
+            'status' => true,
+            'url' => $this->generateUrl('user_reviews')
+        ]);
     }
 }

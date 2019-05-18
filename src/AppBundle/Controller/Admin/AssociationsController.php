@@ -111,7 +111,7 @@ class AssociationsController extends Controller
         }
 
         return $this->render('admin/associations/admin_associations_edit.html.twig', [
-            'title' => 'Creation assos',
+            'title' => 'Edition Asso Admin',
             'form' => $form->createView()
         ]);
     }
@@ -159,7 +159,7 @@ class AssociationsController extends Controller
         }
 
         return $this->render('admin/associations/admin_associations_edit.html.twig', [
-            'title' => 'Creation assos',
+            'title' => 'Creation Asso Admin',
             'form' => $form->createView()
         ]);
     }
@@ -170,8 +170,8 @@ class AssociationsController extends Controller
      */
     public function _ajaxDeleteAction(Request $request)
     {
-        $asso_id = $request->request->get('id');
-        $association = $this->getDoctrine()->getRepository(Assos::class)->find($asso_id);
+        $id = $request->request->get('id');
+        $association = $this->getDoctrine()->getRepository(Assos::class)->find($id);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($association);

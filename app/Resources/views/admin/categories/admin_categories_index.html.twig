@@ -6,11 +6,15 @@
 {% endblock %}
 
 {% block content %}
-
-    {# ----------------- Modal Suppression categories ----------------- #}
+    {# message d'erreur et loading AJAX #}
     <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <p></p>
     </div>
+    <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <i class="fas fa-spinner fa-3x"></i>
+    </div>
+
+    {# ----------------- Modal Suppression categories ----------------- #}
     <div id="validate-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="message-delete">
             <div>Etes vous sûr de vouloir supprimer la catégorie <b><span class="name"></span></b> ?</div>

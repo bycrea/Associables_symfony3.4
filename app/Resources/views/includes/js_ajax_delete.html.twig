@@ -5,6 +5,11 @@
     {# On attend que la page est fini de charger #}
     $(document).ready( function () {
 
+        {# affiche la modal loading-modal pendant le chargement AJAX #}
+        $(document).ajaxStart(function(){
+            $('#loading-modal').removeClass('d-none')
+        });
+
         {# Ecoute le click sur l'icone delete #}
         $('.delete').on('click', function (e) {
             e.preventDefault()
@@ -60,12 +65,11 @@
                     $('#validate-modal').addClass('d-none')
                 }
             })
-
-            {# Ecoute le click sur tout la page (document) #}{#
-            $('#cancel').on('click', function (e) {
-                e.preventDefault()
-                $('#validate-modal').addClass('d-none')
-            })#}
         })
+
+        {# cache la modal loading-modal après le chargement AJAX #}
+        $(document).ajaxStop(function(){
+            $('#loading-modal').addClass('d-none')
+        });
     })
 </script>
