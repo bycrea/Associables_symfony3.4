@@ -1,0 +1,44 @@
+
+@import "variables";
+@import "modals";
+@import "anims";
+@import "header";
+@import "homepage";
+
+* {
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #F8F9FA;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-page {
+  text-align: center;
+  width: 100%;
+}
+
+.btn-info {
+  background-color: $info;
+}
+
+.btn-warning {
+  background-color: $warning;
+}
+
+.btn-danger {
+  background-color: $danger;
+}
