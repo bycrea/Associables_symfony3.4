@@ -1,0 +1,22 @@
+
+@import "variables";
+
+.filters {
+  width: 80%;
+  
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#search {
+  width: 50%;
+}
+
+#search-btn {
+  cursor: pointer;
+
+  &:hover {
+    color: $warning;
+  }
+}

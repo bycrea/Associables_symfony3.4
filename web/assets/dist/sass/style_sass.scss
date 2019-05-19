@@ -4,6 +4,7 @@
 @import "anims";
 @import "header";
 @import "homepage";
+@import "associations";
 
 * {
   font-family: Arial, sans-serif;
@@ -29,17 +30,16 @@ main {
 }
 
 .title-page {
-  text-align: center;
   width: 100%;
+  text-align: center;
 }
 
 
 .custom-select {
-  width: 80px;
   padding: 5px;
 
   font-size: 0.9rem;
-  height: calc(1.2em + .75rem + 2px);
+  height: calc(1.3em + .75rem + 2px);
   color: black;
 }
 

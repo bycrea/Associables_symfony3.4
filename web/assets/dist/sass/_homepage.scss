@@ -4,6 +4,7 @@
 .welcome {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 
   width: 80%;
@@ -16,10 +17,14 @@
   margin: auto;
 }
 
-#donation {
-  margin-bottom: 4px;
+.calc {
+  width: 40%;
 }
 
+#donation {
+  bottom: 3px;
+  margin: 0% 2% 0% 2%;
+}
 
 /*  associations  */
 
