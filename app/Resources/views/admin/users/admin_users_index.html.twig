@@ -7,7 +7,7 @@
 
 {% block content %}
     {# --------------- message d'erreur et loading AJAX --------------- #}
-    <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div id="flash-ajax" tabindex="-1" role="alert" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <p></p>
     </div>
     <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -75,7 +75,7 @@
                     {# Suppression utilisateur #}
                     <a href="" class="delete btn btn-danger btn-sm" data-delete-id="{{ user.0.id }}" data-delete-name="{{ user.0.username }}"
                         {# Envoi le nom du chemin à suivre (path) de la fonction AJAX afin de mutualiser les scripts #}
-                       data-delete-path="{{ path('admin_users_delete') }}">
+                       data-delete-path="{{ path('admin_ajax_users_delete') }}">
                         <i class="fas fa-trash-alt"></i>
                     </a>
                 {% else %}

@@ -173,15 +173,25 @@ class AssociationsController extends Controller
         $id = $request->request->get('id');
         $association = $this->getDoctrine()->getRepository(Assos::class)->find($id);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($association);
-        $entityManager->flush();
+        try {
 
-        $this->addFlash('success', 'L\'association a bien été supprimé.');
-        return $this->json([
-            'status' => true,
-            'url' => $this->generateUrl('admin_associations')
-        ]);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($association);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'L\'association a bien été supprimé.');
+            return $this->json([
+                'status' => true,
+                'url' => $this->generateUrl('admin_associations')
+            ]);
+
+        } catch (\Exception $e) {
+
+            return $this->json([
+            'status' => false,
+            'message' => 'L\'association ne peut pas être supprimé.'
+            ]);
+        }
     }
 
 

@@ -46,7 +46,7 @@
                         } else {
 
                             {#   Affiche un message d'erreur en cas d'échec   #}
-                            $('#flash-ajax p').text('une erreur est survenue, veuillez réessayer.')
+                            $('#flash-ajax p').text(response.message)
                         }
                     },
                     {# Type de réponse attendu #}

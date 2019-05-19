@@ -3,8 +3,22 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+    <p>
+        {{ 'registration.confirmed'|trans({'%username%': user.username}) }}
+        <br>
+        Vous allez être redirigé dans quelques secondes.
+    </p>
     {% if targetUrl %}
     <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
     {% endif %}
 {% endblock content %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                window.location = '/users/redirect';
+            }, 5000)
+        })
+    </script>
+{% endblock %}

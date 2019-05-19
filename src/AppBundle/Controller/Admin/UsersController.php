@@ -2,9 +2,11 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\Assos;
 use AppBundle\Entity\Donation;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UsersController extends Controller
@@ -76,10 +78,41 @@ class UsersController extends Controller
 
 
     /**
-     * @Route("/delete/users}", name="admin_users_delete")
+     * @Route("/_ajax/delete/users", name="admin_ajax_users_delete")
      */
-    public function deleteAction()
+    public function deleteAction(Request $request)
     {
-        dump('Pas eu le temps de gérer ça... déso.'); die;
+        $id = $request->request->get('id');
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+        $donations = $this->getDoctrine()->getRepository(Donation::class)
+            ->findBy(['user' => $user, 'paymentStatus' => Donation::PAY_BASKET]);
+
+        try
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+
+            foreach ($donations as $donation)
+            {
+                $entityManager->remove($donation);
+                $entityManager->flush();
+            }
+
+            $entityManager->remove($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
+            return $this->json([
+                'status' => true,
+                'url' => $this->generateUrl('admin_users')
+            ]);
+
+        } catch (\Exception $e) {
+
+            return $this->json([
+                'status' => false,
+                'message' => 'L\'utilisateur ne peut pas être supprimé, car celui-ci possède des dons.'
+            ]);
+        }
     }
 }
