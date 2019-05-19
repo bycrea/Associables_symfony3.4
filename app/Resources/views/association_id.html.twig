@@ -74,7 +74,6 @@
                 <h5>Vous aimez cette association? Donnez votre Avis.</h5>
                 {% for review in association.reviews %}
                     <div class="review-asso">
-                        <p>{{ review.user }}</p>
                         <p>{{ review.comment }}</p>
                         <p>Note :
                             <span>
@@ -86,7 +85,7 @@
                                 {% endif %}
                             {% endfor %}
                             </span>
-                        <p>le : {{ review.createdAt | date('d-m-y') }} à {{ review.createdAt | date('H:i:s') }}</p>
+                        <p>{{ review.user }}, le : {{ review.createdAt | date('d-m-y') }} à {{ review.createdAt | date('H:i:s') }}</p>
                     </div>
                 {% endfor %}
                 {% if app.user %}

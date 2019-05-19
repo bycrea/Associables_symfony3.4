@@ -5,6 +5,7 @@ namespace AppBundle\EventListener;
 use AppBundle\Entity\Donation;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListener
@@ -17,8 +18,10 @@ class LoginListener
      * identifier ces dons à l'utilisateur et non plus au cookie
      * On crée pour cela un service qui va écouter l'évènement 'security.interactive_login'
      * (ou l'authentification d'un uttilisateur)
-     * et ainsi déclencher la méthode 'onSecurityInteractiveLogin' qui elle se chargera de
+     * 'onLogin' va ainsi déclencher la méthode 'fromCookieToUser' qui elle se chargera de
      * définir l'utilisateur lié à la donation et de redéfinir $cookieId = null
+     * Pareil pour une registration avec 'onRegistration'
+     *
      *
      * NB: Si une donation $cookie pour une association existe déjà dans le panier $user
      * on remplace seulement la valeur de $amount de celle-ci
@@ -29,11 +32,13 @@ class LoginListener
      */
     private $entityManager;
 
+
     /**
      * LoginListener constructor.
      * @param RegistryInterface $entityManager
      */
-    public function __construct(RegistryInterface $entityManager){
+    public function __construct(RegistryInterface $entityManager)
+    {
         $this->entityManager = $entityManager;
     }
 
@@ -53,6 +58,7 @@ class LoginListener
 
     /**
      * @param FilterUserResponseEvent $event
+     * @throws \Exception
      */
     public function onRegistration(FilterUserResponseEvent $event)
     {
@@ -64,6 +70,11 @@ class LoginListener
     }
 
 
+    /**
+     * @param $user
+     * @param $id_cookie
+     * @throws \Exception
+     */
     private function fromCookieToUser($user, $id_cookie)
     {
         // Récupère les donations liées au cookie

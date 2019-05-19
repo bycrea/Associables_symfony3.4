@@ -28,17 +28,17 @@ class PaymentController extends Controller
 
         // Récupère les donations liées à l'utilisateur
         $donations = $this->getDoctrine()->getRepository(Donation::class)
-            ->findBy(['user' => $user]);
+            ->findBy(['user' => $user, 'paymentStatus' => Donation::PAY_BASKET]);
 
         // Récupère le montant total
         $totalAmount = $this->getDoctrine()->getRepository(Donation::class)
-            ->getBasketTotal($user->getId())['amount'];
+            ->getBasketTotal($user->getId());
 
         // Verifie que le montant soit supérieur à zéro avant de lancer une transaction
         if ($totalAmount != null && $totalAmount > 0)
         {
             // Création d'une nouvelle entity Transaction
-            $transaction = new Transaction($totalAmount);
+            $transaction = new Transaction($totalAmount['amount']);
 
         } else {
 
@@ -111,7 +111,7 @@ class PaymentController extends Controller
 
         // Récupère les donations liées à l'utilisateur
         $donations = $this->getDoctrine()->getRepository(Donation::class)
-            ->findBy(['user' => $user]);
+            ->findBy(['user' => $user, 'paymentStatus' => Donation::PAY_BASKET]);
 
         // Transmettre les détails de la transaction pour getItems
         $transaction->setDonations($donations);
@@ -145,6 +145,6 @@ class PaymentController extends Controller
         }
         $entityManager->flush();
 
-        return $this->redirectToRoute('user_dashboard');
+        return $this->redirectToRoute('user_donations');
     }
 }

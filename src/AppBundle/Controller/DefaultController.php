@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Assos;
+use AppBundle\Entity\Donation;
+use AppBundle\Entity\Review;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,24 +16,53 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        // Récupère les associations récement solicitées
         $associations = $this->getDoctrine()->getRepository(Assos::class)
-            ->findMostRecent(5);
+            ->findMostRecent(4);
+
+        // Récupère les avis utilisateur récents ou la note n'est pas en dessous de $minMark
+        $reviews = $this->getDoctrine()->getRepository(Review::class)
+            ->findHomePageReviews(6, 2);
 
         return $this->render('index.html.twig', [
             'title' => 'accueil',
-            'associations' => $associations
+            'associations' => $associations,
+            'reviews' => $reviews
         ]);
     }
 
 
     /**
-     * @Route("/mentions", name="mentions")
+     * 'user_redirect' permet de rediriger l'utilsateur en fonction de son ROLE
+     * de son panier et du referer (voir security.yml => default_target_path: /users/redirect)
+     *
+     * @Route("/users/redirect", name="user_redirect")
      */
-    public function mentionsAction(Request $request)
+    public function usersRedirectAction(Request $request)
     {
+        // Récupère l'utilisateur
+        $user = $this->getUser();
 
-        return $this->render('mentions.html.twig', [
-            'title' => 'mentions'
-        ]);
+        // Si le 'ROLE_ADMIN' existe pour cet Utilisateur
+        if(false !== array_search('ROLE_ADMIN', $user->getRoles(), true))
+        {
+            return $this->redirectToRoute('admin_donations');
+
+        } else {
+
+            // Sinon on verifi si l'utilisateur a des dons en attente
+            $donInBasket = $this->getDoctrine()->getRepository(Donation::class)
+                ->findBy(['user' => $user, 'paymentStatus' => Donation::PAY_BASKET]);
+
+            // Si oui on le redirige vers le Panier
+            if(!empty($donInBasket))
+            {
+                return $this->redirectToRoute('basket');
+            }
+
+            // Sinon on redirige vers le Dashboard
+            return $this->redirectToRoute('user_donations');
+        }
     }
+
 }

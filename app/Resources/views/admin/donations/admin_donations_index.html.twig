@@ -67,12 +67,12 @@
                 <div class="donation">
                     <a href="{{ path('association_id', {id: don.assos.id}) }}"><span>{{ don.assos.name }}</span></a>
                     - <span>le: {{ don.createdAt | date("d.m.y H:i:s") }}</span>
-                    - <span>user : {{ don.user.username }}</span>
-                    - <span>montant : {{ don.amount }}€</span>
+                    - <span>User : {{ don.user.username }}</span>
+                    - <span>{{ don.amount }}€</span>
                     {% if don.paymentMode == 1 %}
-                        - <span>moyen : <i class="fab fa-paypal"></i></span>
+                        - <i class="fab fa-paypal"></i>
                     {% endif %}
-                    - <span>{{ paymentStatus[don.paymentStatus] }}</span>
+                    / <span>{{ paymentStatus[don.paymentStatus] }}</span>
                 </div>
             {% else %}
                 <div class="donation">

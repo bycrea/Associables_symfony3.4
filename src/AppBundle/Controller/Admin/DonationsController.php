@@ -20,9 +20,15 @@ class DonationsController extends Controller
         $year = $request->query->get('year');
         if(empty($year)) {$year = 2019;}
 
+        // Affichage de tous les utilisateurs
+        $allUser = $this->getDoctrine()->getRepository(User::class)
+            ->findAll();
+
         // Affichage de toutes les Associations
         $allAssos = $this->getDoctrine()->getRepository(Assos::class)
             ->findAll();
+
+
         // Récupère le filtre des associations $asso
         if(null != $request->query->get('asso'))
         {
@@ -30,9 +36,6 @@ class DonationsController extends Controller
                 ->find($request->query->get('asso'));
         } else { $asso = null; }
 
-        // Affichage de tous les utilisateurs
-        $allUser = $this->getDoctrine()->getRepository(User::class)
-            ->findAll();
         // Récupère le filtre des utilisateurs $user
         if(null != $request->query->get('user'))
         {

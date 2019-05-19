@@ -41,6 +41,7 @@
                 <p>{{ review.comment }}</p>
                 <p>Note :
                     <span>
+                        {# transformation des notes en étoiles #}
                         {% for i in range(1, 5) %}
                             {% if review.mark >= i %}
                                 <i class="fas fa-star"></i>
@@ -55,7 +56,7 @@
             {# Supprimer une review #}
             <a href="" class="delete btn btn-danger btn-sm"
                data-delete-id="{{ review.id }}" data-delete-name="{{ review.assos.name }}"
-               data-delete-path="{{ path('user_ajax_reviews_delete') }}">
+               data-delete-path="{{ path('admin_ajax_reviews_delete') }}">
                 <i class="fas fa-trash-alt"></i>
             </a>
         {% endfor %}

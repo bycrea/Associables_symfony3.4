@@ -61,6 +61,13 @@ class Payment
     /**
      * @var int
      *
+     * @ORM\Column(name="amount", type="integer")
+     */
+    private $amount;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="payment_status", type="integer")
      */
     private $paymentStatus;
@@ -91,6 +98,7 @@ class Payment
     {
         // On défini la date à l'intant T ou l'on crée notre notre nouvelle Payment
         $this->createdAt = new DateTime();
+        $this->paymentStatus = self::PAY_PROCESSED;
     }
 
     /**
@@ -207,5 +215,29 @@ class Payment
     public function getDonations()
     {
         return $this->donations;
+    }
+
+    /**
+     * Set amount
+     *
+     * @param integer $amount
+     *
+     * @return Payment
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Get amount
+     *
+     * @return integer
+     */
+    public function getAmount()
+    {
+        return $this->amount;
     }
 }

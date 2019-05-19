@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Traits\CreatedAtTrait;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,16 +14,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Payment
 {
+    // On défini la date à l'intant T ou l'on crée notre notre nouvelle Donation
     use CreatedAtTrait;
 
-    // Constantes des status de paiement des dons
+    // Constantes des status de paiement des transferts aux associations
     const PAY_BASKET = 0;
     const PAY_ERROR = 1;
     const PAY_REFUSED = 2;
     const PAY_CANCEL = 3;
-    // Constantes des status de paiement des dons et de paiement aux assos
     const PAY_IN_TRANSFER = 4;
     const PAY_PROCESSED = 5;
+    // Tableau des constantes
     const PAYEMENT_STATUS = [
         self::PAY_BASKET => 'Panier',
         self::PAY_ERROR => 'Erreur de paiement',
@@ -32,12 +34,13 @@ class Payment
         self::PAY_PROCESSED => 'Transfert effectué'
     ];
 
-    // Constantes des modes de paiment des dons et des transferts aux associations
+    // Constantes des modes de paiment des transferts aux associations
     const PAY_STRIPE = 0;
     const PAY_PAYPAL = 1;
     const PAY_CARD = 2;
     const PAY_WIRETRANS = 3;
     const PAY_CHECK = 4;
+    // Tableau des constantes
     const PAYEMENT_MODE = [
         self::PAY_STRIPE => 'Stripe',
         self::PAY_PAYPAL => 'PayPal',
@@ -54,6 +57,13 @@ class Payment
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="amount", type="integer")
+     */
+    private $amount;
 
     /**
      * @var int
@@ -86,8 +96,147 @@ class Payment
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        // On défini la date à l'intant T ou l'on crée notre notre nouvelle Payment
+        $this->createdAt = new DateTime();
     }
 
-}
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    /**
+     * Set paymentStatus
+     *
+     * @param integer $paymentStatus
+     *
+     * @return Payment
+     */
+    public function setPaymentStatus($paymentStatus)
+    {
+        $this->paymentStatus = $paymentStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentStatus
+     *
+     * @return integer
+     */
+    public function getPaymentStatus()
+    {
+        return $this->paymentStatus;
+    }
+
+    /**
+     * Set paymentMode
+     *
+     * @param integer $paymentMode
+     *
+     * @return Payment
+     */
+    public function setPaymentMode($paymentMode)
+    {
+        $this->paymentMode = $paymentMode;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentMode
+     *
+     * @return integer
+     */
+    public function getPaymentMode()
+    {
+        return $this->paymentMode;
+    }
+
+    /**
+     * Set association
+     *
+     * @param \AppBundle\Entity\Assos $association
+     *
+     * @return Payment
+     */
+    public function setAssociation(\AppBundle\Entity\Assos $association = null)
+    {
+        $this->association = $association;
+
+        return $this;
+    }
+
+    /**
+     * Get association
+     *
+     * @return \AppBundle\Entity\Assos
+     */
+    public function getAssociation()
+    {
+        return $this->association;
+    }
+
+    /**
+     * Add donation
+     *
+     * @param \AppBundle\Entity\Donation $donation
+     *
+     * @return Payment
+     */
+    public function addDonation(\AppBundle\Entity\Donation $donation)
+    {
+        $this->donations[] = $donation;
+
+        return $this;
+    }
+
+    /**
+     * Remove donation
+     *
+     * @param \AppBundle\Entity\Donation $donation
+     */
+    public function removeDonation(\AppBundle\Entity\Donation $donation)
+    {
+        $this->donations->removeElement($donation);
+    }
+
+    /**
+     * Get donations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDonations()
+    {
+        return $this->donations;
+    }
+
+    /**
+     * Set amount
+     *
+     * @param integer $amount
+     *
+     * @return Payment
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Get amount
+     *
+     * @return integer
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+}

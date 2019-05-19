@@ -4,6 +4,7 @@ namespace AppBundle\Controller\User;
 
 use AppBundle\Entity\Review;
 use AppBundle\Form\ReviewType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +21,7 @@ class ReviewController extends Controller
 
         return $this->render('user/reviews.dashboard.html.twig', [
             'title' => 'Mon Compte - Mes Avis',
-            'reviews' => d$reviews
+            'reviews' => $reviews
         ]);
     }
 
@@ -40,6 +41,8 @@ class ReviewController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager = $this->getDoctrine()->getManager();
+
+            $review->setCreatedAt(new DateTime());
             $entityManager->persist($review);
             $entityManager->flush();
 

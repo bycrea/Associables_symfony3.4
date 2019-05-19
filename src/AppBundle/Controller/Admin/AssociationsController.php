@@ -27,7 +27,7 @@ class AssociationsController extends Controller
         {
             // Récupère les associations lié a la catégorie grâce à la méthode créé dans 'AssosRepository'
             $associations = $this->getDoctrine()->getRepository(Assos::class)
-                ->getByCategory($getCategory);
+                ->findByCategory($getCategory);
 
             // Si la catégorie n'existe pas ou qu'aucunes associations n'est lié à celle-ci
             // la collection d'objet retourné sera vide

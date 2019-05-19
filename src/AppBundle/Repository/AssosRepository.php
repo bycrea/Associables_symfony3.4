@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Donation;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * AssosRepository
@@ -18,7 +19,7 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
      *
      * Retourne les associations liées à une catégorie
      */
-    public function getByCategory($id)
+    public function findByCategory($id)
     {
         $queryBuilder = $this->createQueryBuilder('assos');
 
@@ -130,9 +131,12 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
 
     /**
      * @param $limit //max results
-     * @return array
+     * @return Paginator
      *
-     * Retourne le nombre $limit d'assciations trié du don le plus récent au moins récent.
+     * Retourne le nombre $limit d'associations triées du don le plus récent au moins récent.
+     *
+     * NB: avec une jointure OneToMany dans notre queryBuilder, setMaxResult n'a plus le même comportement
+     * On utilise donc new Paginator pour palier au problème
      */
     public function findMostRecent($limit)
     {
@@ -142,6 +146,28 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('assos.donations', 'don')
             ->orderBy('don.createdAt', 'DESC')
             ->setMaxResults($limit);
+
+        return new Paginator($queryBuilder);
+    }
+
+
+    /**
+     * @return array
+     *
+     * Retourne l'entity Assos et le total dons en attente de transfert (amount)
+     * Groupé par nom d'association et trié par date d'ancienneté (DESC)
+     */
+    public function findAwaitingPayments()
+    {
+        $queryBuilder = $this->createQueryBuilder('a');
+
+        $queryBuilder
+            ->innerJoin('a.donations', 'don')
+            ->addSelect('SUM(don.amount) AS amount')
+            ->where('don.paymentStatus = :status')
+            ->setParameter('status', Donation::PAY_IN_TRANSFER)
+            ->groupBy('a.name')
+            ->orderBy('don.createdAt');
 
         return $queryBuilder->getQuery()->getResult();
     }

@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Donation;
 use DateTime;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * DonationRepository
@@ -224,5 +225,4 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
 
         return $totalAmount;
     }
-
 }

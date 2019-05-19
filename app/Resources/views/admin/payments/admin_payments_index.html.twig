@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {# ----------------- Menu dashboard ----------------- #}
+    {% include 'includes/menu_admin_dashboard.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    {# ----------------- Message d'erreur et loading AJAX ----------------- #}
+    <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <p></p>
+    </div>
+    <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <i class="fas fa-spinner fa-3x"></i>
+    </div>
+
+    {# ----------------- Modal annulation paiment ----------------- #}
+    <div id="validate-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="message-delete">
+            <div>Etes vous sûr de vouloir annuler le paiement N° <b><span class="name"></span></b> ?</div>
+            <div>
+                <button id="validate" class="btn btn-danger btn-sm">Valider</button>
+                <button id="cancel" class="btn btn-info btn-sm">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    {# ----------------- Paiement en attente ----------------- #}
+    <h2 class="title dons">Paiement en Attente (ADMIN)</h2>
+
+    {% for pay in awaitPayments %}
+        <div class="payment">
+            <form action="{{ path('admin_payments') }}" method="POST">
+                - Montant total à régler pour l'association
+                <a href="{{ path('association_id', {id: pay.0.id}) }}"><span>{{ pay.0.name }} :</span></a>
+                <span>{{ pay.amount }}</span>€
+                <select name="mode">
+                    {% for key, mode in paymentMode %}
+                        <option
+                                {{ ( key == 3 )? 'selected' : '' }} value="{{ key }}">{{ mode }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="id_asso" value="{{ pay.0.id }}">
+                <input type="hidden" name="amount" value="{{ pay.amount }}">
+                <a href="" class="arrow btn btn-info btn-sm" data-arrow-id="{{ pay.0.id }}" data-display="false">
+                    <i class="fas fa-caret-square-down"></i>
+                </a>
+                <button type="submit" name="submit" class="btn btn-danger btn-sm" value="submit">Payé</button>
+            </form>
+        </div>
+        {# ----------------- Modal des donnations ----------------- #}
+        <div class="don-payment-{{ pay.0.id }} d-none">
+            <span>donations concernés par le paiement</span>
+            {% for don in pay.0.donations %}
+                <div class="donation">
+                    <span>{{ don.amount }}€</span>
+                    {% if don.paymentMode == 1 %}
+                        - <i class="fab fa-paypal"></i>
+                    {% endif %}
+                    - <span>le: {{ don.createdAt | date("d.m.y H:i:s") }}</span>
+                    - <span>User : {{ don.user.username }}</span>
+                    - <span>{{ paymentStatus[don.paymentStatus] }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    {# ----------------- Historique des paiement ----------------- #}
+    <h2 class="title dons">Historiques des Paiements</h2>
+
+    {% for pay in oldPayments %}
+        <div class="payment">
+            <span>{{ pay.id }}</span>. Le <span>{{ pay.createdAt | date('d-m-y H:i:s') }}</span>
+            - bénéficière: <a href="{{ path('association_id', {id: pay.association.id}) }}"><span>{{ pay.association.name }}</span></a>
+            - Montant réglé: <span class="amount">{{ pay.amount }}</span>€
+            / <span class="status-{{ pay.paymentStatus }}">{{ paymentStatus[pay.paymentStatus] }}</span>
+            {% if pay.paymentStatus != 3 %}
+                <a href="" class="arrow btn btn-info btn-sm" data-arrow-id="{{ pay.id }}" data-display="false">
+                    <i class="fas fa-caret-square-down"></i>
+                </a>
+                <a href="" class="delete btn btn-danger btn-sm"
+                   data-delete-id="{{ pay.id }}" data-delete-name="{{ pay.id }}"
+                   data-delete-path="{{ path('admin_ajax_payments_cancel') }}">
+                    <i class="fas fa-times"></i>
+                </a>
+            {% endif %}
+        </div>
+
+        {# ----------------- Modal des donnations ----------------- #}
+        <div class="don-payment-{{ pay.id }} d-none">
+            <span>donations concernés par le paiement</span>
+            {% for don in pay.donations %}
+                <div class="donation">
+                    <span>{{ don.amount }}€</span>
+                    {% if don.paymentMode == 1 %}
+                        - <i class="fab fa-paypal"></i>
+                    {% endif %}
+                    - <span>le: {{ don.createdAt | date("d.m.y H:i:s") }}</span>
+                    - <span>User : {{ don.user.username }}</span>
+                    - <span>{{ paymentStatus[don.paymentStatus] }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+{% endblock %}
+
+{% block scripts %}
+    {% include 'includes/js_ajax_delete.html.twig' %}
+
+    <script>
+        $(document).ready(function () {
+
+            $('.arrow').on('click', function (e) {
+                e.preventDefault()
+
+                var id = $(this).data('arrow-id')
+                var display = $(this).data('display')
+
+                if (!display) {
+                    $('.don-payment-'+id).removeClass('d-none')
+                    $(this).data('display', true)
+                } else {
+                    $('.don-payment-'+id).addClass('d-none')
+                    $(this).data('display', false)
+                }
+            })
+
+        })
+    </script>
+{% endblock %}

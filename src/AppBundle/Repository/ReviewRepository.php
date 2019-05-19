@@ -10,4 +10,23 @@ namespace AppBundle\Repository;
  */
 class ReviewRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $limit
+     * @param $minMark
+     * @return array
+     *
+     * Retourne le nombre $limit de Reviews, les plus récentes, ayant une note suppérieur à $minMark
+     */
+    public function findHomePageReviews($limit, $minMark)
+    {
+        $queryBuilder = $this->createQueryBuilder('r');
+
+        $queryBuilder
+            ->where('r.mark >= :minMark')
+            ->setParameter('minMark', $minMark)
+            ->orderBy('r.createdAt', 'DESC')
+            ->setMaxResults($limit);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

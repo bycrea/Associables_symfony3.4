@@ -6,7 +6,6 @@ use AppBundle\Entity\Assos;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Donation;
 use AppBundle\Entity\Review;
-use AppBundle\Form\CategoryType;
 use AppBundle\Form\ReviewType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +28,7 @@ class AssociationsController extends Controller
         {
             // Récupère les associations lié a la catégorie grâce à la méthode créé dans 'AssosRepository'
             $associations = $this->getDoctrine()->getRepository(Assos::class)
-                ->getByCategory($getCategory);
+                ->findByCategory($getCategory);
 
             // Si la catégorie n'existe pas ou qu'aucunes associations n'est lié à celle-ci
             // la collection d'objet retourné sera vide
@@ -51,9 +50,6 @@ class AssociationsController extends Controller
         return $this->render('associations.html.twig', [
             'title' => 'associations',
             'categories' => $categories,
-            // '$getCategory' provenant du $_GET de l'url
-            // il faut la convertir en 'int' pour la tester avec category.id
-            'getCategory' => intval($getCategory),
             'associations' => $associations
         ]);
     }
@@ -64,22 +60,28 @@ class AssociationsController extends Controller
      */
     public function associationIdAction(Request $request, $id)
     {
+        // Récupère l'association via l'id en paramètre
         $association = $this->getDoctrine()->getRepository(Assos::class)->find($id);
 
+        // Création du formulaire de 'Review' (les avis utilisateur)
         $review = new Review();
         $form = $this->createForm(ReviewType::class, $review);
 
         $form->handleRequest($request);
 
+        // Si un avis enregistré via le formulaire
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Déclare l'utilisateur et l'association concerné
             $review->setUser($this->getUser());
             $review->setAssos($association);
 
+            // Persist / Flush
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($review);
             $entityManager->flush();
 
+            // Redirige sur la même page avec un message de validation
             $this->addFlash('success', 'Votre avis à bien été ajouté, merci!');
             return $this->redirectToRoute('association_id', ['id' => $id]);
         }
@@ -95,18 +97,22 @@ class AssociationsController extends Controller
     /**
      * @Route("/_ajax/search", name="_ajax_search")
      *
-     * Retourne, sous forme de vue, les associations qui contiennent
+     * Retourne, sous forme de vue html, les associations qui contiennent
      * les caractères entrés en POST 'Request' via la barre de recherche
+     * cumulé à la filtration par catégories
      */
     public function _ajaxSearchAction(Request $request)
     {
+        // Récupère les lettres tapées dans la bar de recherche et la catégorie
         $search = $request->request->get('search');
         $catg = intval($request->request->get('catg'));
 
+        // la méthode 'findBySearchBar' du répository va chercher les assciations
+        // de la catégorie commencent par '$serch'
         $associations = $this->getDoctrine()->getRepository(Assos::class)
             ->findBySearchBar($search, $catg);
 
-
+        // Retourne une vue html à la fonction success de la méthode AJAX
         return $this->render('ajax/associations_search.html.twig', [
             'associations' => $associations
         ]);
@@ -116,7 +122,9 @@ class AssociationsController extends Controller
     /**
      * @Route("/search/donation", name="_search_donation")
      *
-     * Validation de donations liées aux formulaires de Dons de la vue 'associations_search.html.twig'
+     * Une fois affiché via la méthode _ajax_search, la vue 'associations_search.html.twig'
+     * ne peut fonctionner avec les scripts d'ajout au panier de la page 'associations'
+     * On utilise donc un formulaire POST traditionnel pour créer un nouveau don
      * Redirection vers le panier après validation OU vers les associations en cas d'echec
      */
     public function searchDonationAction(Request $request)

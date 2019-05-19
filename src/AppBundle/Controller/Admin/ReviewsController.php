@@ -36,7 +36,7 @@ class ReviewsController extends Controller
         $entityManager->remove($review);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Votre avis a bien été supprimé.');
+        $this->addFlash('success', 'L\'avis a bien été supprimé.');
         return $this->json([
             'status' => true,
             'url' => $this->generateUrl('admin_reviews')
