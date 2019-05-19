@@ -1,7 +1,10 @@
 
 {#              Bar de Navigation            #}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
+
+    <img src="{{ asset('assets/images/logo.png') }}" class="nav-logo" alt="logo navigation les associables.org">
+
     <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
         <ul class="navbar-nav">
 
@@ -22,9 +25,12 @@
             <li class="nav-item {{ ('basket' in route) ? 'active' : '' }}">
                 <a class="nav-link" id="basket-link" href="{{ path('basket') }}">Panier
 
-                    {#   Appel la fonction 'getBasketTotal' avec en paramètre  #}
-                    {# 'app.request' afin de pouvoir récupérer la requête HTTP #}
-                    <span>{{ getBasketTotal( app.request ) }}</span>
+                {# Appel la fonction Twig 'getBasketTotal' de la class AppExtention.php #}
+                {# elle prend en paramètre 'app.request' afin de pouvoir récupérer la requête HTTP #}
+                    {# On n'affiche le résultat uniquement s'il est supérieur à zéro #}
+                    <span class="basket-tick" data-basket-quantity="{{ getBasketTotal( app.request ) }}">
+                       {{ getBasketTotal( app.request ) }}
+                    </span>
                 </a>
             </li>
         </ul>

@@ -18,7 +18,7 @@ class DefaultController extends Controller
     {
         // Récupère les associations récement solicitées
         $associations = $this->getDoctrine()->getRepository(Assos::class)
-            ->findMostRecent(4);
+            ->findMostRecent(6);
 
         // Récupère les avis utilisateur récents ou la note n'est pas en dessous de $minMark
         $reviews = $this->getDoctrine()->getRepository(Review::class)

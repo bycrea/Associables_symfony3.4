@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller\Admin;
 
-use AppBundle\Entity\Assos;
 use AppBundle\Entity\Donation;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

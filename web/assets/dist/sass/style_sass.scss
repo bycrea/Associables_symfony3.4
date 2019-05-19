@@ -17,6 +17,8 @@ body {
 main {
   width: 100vw;
   height: 100vh;
+
+  margin-top: 100px;
 }
 
 .container {
@@ -31,8 +33,23 @@ main {
   width: 100%;
 }
 
+
+.custom-select {
+  width: 80px;
+  padding: 5px;
+
+  font-size: 0.9rem;
+  height: calc(1.2em + .75rem + 2px);
+  color: black;
+}
+
+
 .btn-info {
   background-color: $info;
+
+  &:hover {
+    background-color: $warning;
+  }
 }
 
 .btn-warning {

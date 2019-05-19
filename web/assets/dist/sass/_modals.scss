@@ -2,21 +2,23 @@
 // ------------- MODAL ------------- //
 */
 
+@import "variables";
+
 /* VALIDATION */
 
 #loading-modal, #validate-modal {
-  position: absolute;
+  position: fixed;
   top: 0px;
   width: 100vw;
-  height: 200%;
+  height: 100vh;
 
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.3);
 }
 
 /* LOADING */
 
 #loading-modal i {
-  position: sticky;
+  position: relative;
   top: 40%;
   left: calc(50vw - 34px);
 

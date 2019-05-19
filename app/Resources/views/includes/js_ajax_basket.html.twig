@@ -10,6 +10,14 @@
             $('#loading-modal').removeClass('d-none')
         })
 
+        {# Récupère data-basket-quantity pour afficher ou cacher la bulle Panier (basket-tick) #}
+        if($('.basket-tick').data('basket-quantity') > 0)
+        {
+            $('.basket-tick').removeClass('d-none')
+        } else {
+            $('.basket-tick').addClass('d-none')
+        }
+
         {# On écoute l'évènement 'click' sur le bouton donation #}
         $('.donation-button').on('click', function (e) {
             e.preventDefault()
@@ -37,7 +45,15 @@
                     if(response.status === true)
                     {
                         {# raffraichi le nombre de dons en cas de succès #}
-                        $('#basket-link span').text(response.quantity)
+                        if(response.quantity > 0)
+                        {
+                            $('.basket-tick').removeClass('d-none')
+                            $('.basket-tick').text(response.quantity)
+
+                        } else {
+
+                            $('.basket-tick').addClass('d-none')
+                        }
                         $('#flash-ajax p').text('')
                     }
                     else if(response.status === false)

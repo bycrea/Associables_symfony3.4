@@ -2,11 +2,12 @@
 
 {% block content %}
     <main>
+
         {# message d'erreur et loading AJAX #}
         <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
             <p></p>
         </div>
-        <div id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
             <i class="fas fa-spinner fa-3x"></i>
         </div>
 
@@ -15,46 +16,46 @@
 
         <div class="basket">
             <form action="{{ path('user_payment') }}" method="post">
-            {% for donation in donations %}
-                    {# ----------------- block donation ----------------- #}
-                <div class="donation" id="{{ donation.id }}">
-                    <div class="image-asso-basket">
-                        {% if donation.assos.image is null %}
-                            <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
-                        {% else %}
-                            <img src="{{ asset(ImgAssosFolder ~ donation.assos.image) }}" alt="{{ donation.assos.name }}" style="width: 10%;">
-                        {% endif %}
-                    </div>
-                    <div class="name-asso">
-                        <a href="{{ path('association_id', {id: donation.assos.id}) }}"><p>{{ donation.assos.name }}</p></a>
-                    </div>
+                {% for donation in donations %}
+                        {# ----------------- block donation ----------------- #}
+                    <div class="donation" id="{{ donation.id }}">
+                        <div class="image-asso-basket">
+                            {% if donation.assos.image is null %}
+                                <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
+                            {% else %}
+                                <img src="{{ asset(ImgAssosFolder ~ donation.assos.image) }}" alt="{{ donation.assos.name }}" style="width: 10%;">
+                            {% endif %}
+                        </div>
+                        <div class="name-asso">
+                            <a href="{{ path('association_id', {id: donation.assos.id}) }}"><p>{{ donation.assos.name }}</p></a>
+                        </div>
 
-                    {# ----------------- modifier / supprimer un don ----------------- #}
-                    <div>
-                        <select name="donation_{{ donation.id }}" class="donation-select" data-association-id="{{ donation.assos.id }}">
-                            {% for amount in array_amount %}
-                                <option
-                                    {% if amount == donation.amount %}
-                                        {# détecte le montant selectionné par défaut #}
-                                        selected
-                                    {% endif %}
-                                    value="{{ amount }}">{{ amount }}</option>
-                            {% endfor %}
-                        </select>
-                        <a href="" data-donation-id="{{ donation.id }}"
-                           data-association-id="{{ donation.assos.id }}" class="delete-donation btn btn-danger btn-sm">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
+                        {# ----------------- modifier / supprimer un don ----------------- #}
+                        <div>
+                            <select name="donation_{{ donation.id }}" class="donation-select" data-association-id="{{ donation.assos.id }}">
+                                {% for amount in array_amount %}
+                                    <option
+                                        {% if amount == donation.amount %}
+                                            {# détecte le montant selectionné par défaut #}
+                                            selected
+                                        {% endif %}
+                                        value="{{ amount }}">{{ amount }}</option>
+                                {% endfor %}
+                            </select>
+                            <a href="" data-donation-id="{{ donation.id }}"
+                               data-association-id="{{ donation.assos.id }}" class="delete-donation btn btn-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
                     </div>
+                {% endfor %}
+                {# ----------------- Total / Paiement ----------------- #}
+                <div class="total-amount" id="total-amount">
+                    <b>Total : <span id="amount" data-total-amount="{{ total_amount }}">{{ total_amount }}</span>€</b>
+                    <span>soit <i id="result"></i> après réduction d'impôts</span>
+                    <button type="submit" id="submit" class="btn btn-info">Payer</button>
                 </div>
-            {% endfor %}
-                <button type="submit" id="submit" class="btn btn-info">Payer</button>
             </form>
-        </div>
-
-        {# ----------------- Total / Paiement ----------------- #}
-        <div class="total-amount" id="total-amount">
-            <p>Total : <span id="amount" data-total-amount="{{ total_amount }}">{{ total_amount }}</span>€</p>
         </div>
 
     </main>
@@ -66,20 +67,24 @@
         {# On attend que la page est fini de charger #}
         $(document).ready(function() {
 
-            $('#loading-modal').hide()
+            {# Récupère data-basket-quantity pour afficher ou cacher la bulle Panier (basket-tick) #}
+            if($('.basket-tick').data('basket-quantity') > 0)
+            {
+                $('.basket-tick').removeClass('d-none')
+            } else {
+                $('.basket-tick').addClass('d-none')
+            }
 
             {# Désactive le bouton 'payer' si le montant est <= 0 #}
             var total_amount = $('#amount').data('total-amount')
             if (total_amount <= 0)
             {
                 $('#submit').prop('disabled', true)
-            } /*else {
-                $('#submit').prop('disabled', false)
-            }*/
+            }
 
             {# affiche la modal loading-modal pendant le chargement AJAX #}
             $(document).ajaxStart(function(){
-                $('#loading-modal').show()
+                $('#loading-modal').removeClass('d-none')
             });
 
             {# On écoute l'évènement 'change' sur le select donation #}
@@ -107,8 +112,16 @@
                     {
                         if(response.status === true)
                         {
-                            {# Raffraichi le nombre de dons et le montant total en cas de succès #}
-                            $('#basket-link span').text(response.quantity)
+                            {# raffraichi le nombre de dons en cas de succès #}
+                            if(response.quantity > 0)
+                            {
+                                $('.basket-tick').removeClass('d-none')
+                                $('.basket-tick').text(response.quantity)
+
+                            } else {
+
+                                $('.basket-tick').addClass('d-none')
+                            }
                             $('#amount').text(response.amount)
                             $('#flash-ajax p').text('')
                         }
@@ -151,16 +164,19 @@
                             {# Retire la donation correspondant à l'id #}
                             $('#' + id_don).remove()
 
-                            {# Raffraichi le nombre de dons et le montant total en cas de succès #}
-                            $('#basket-link span').text(response.quantity)
-                            $('#amount').text(response.amount)
-
-                            {# Désactive le bouton 'payer' si le montant est <= 0 #}
-                            if (response.amount <= 0)
+                            {# raffraichi le nombre de dons en cas de succès #}
+                            if(response.quantity > 0)
                             {
+                                $('.basket-tick').removeClass('d-none')
+                                $('.basket-tick').text(response.quantity)
+
+                            } else {
+
+                                {# Désactive le bouton 'payer' si le montant est <= 0 #}
+                                $('.basket-tick').addClass('d-none')
                                 $('#submit').prop('disabled', true)
                             }
-
+                            $('#amount').text(response.amount)
                             $('#flash-ajax p').text('')
                         }
                         else if(response.status === false)
@@ -176,8 +192,18 @@
 
             {# cache la modal loading-modal après le chargement AJAX #}
             $(document).ajaxStop(function(){
-                $('#loading-modal').hide()
+                $('#loading-modal').addClass('d-none')
             });
+
+
+            calc()
+
+            function calc() {
+                var amount = $('#amount').data('total-amount')
+                var result = amount - (amount * 75 / 100)
+
+                $('#result').text(result + '€')
+            }
         })
     </script>
 {% endblock %}

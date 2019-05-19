@@ -1,0 +1,239 @@
+/*
+// ------------- MODAL ------------- //
+*/
+/* VALIDATION */
+#loading-modal, #validate-modal {
+  position: fixed;
+  top: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* LOADING */
+#loading-modal i {
+  position: relative;
+  top: 40%;
+  left: calc(50vw - 34px);
+  color: white;
+  -webkit-animation: spin 1s infinite linear;
+  -moz-animation: spin 1s infinite linear;
+  animation: spin 1s infinite linear;
+}
+
+/* DELETE */
+.message-delete {
+  position: sticky;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100px;
+  text-align: center;
+  box-shadow: 5px 5px 10px darkslategrey;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/*
+// ------------- ANIMATIONS ------------- //
+*/
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.nav-logo {
+  width: 8%;
+}
+
+.basket-tick {
+  position: relative;
+  right: 2px;
+  bottom: 8px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  box-shadow: -2px 2px 5px #b7b8b8;
+  font-size: 0.8em;
+  color: darkslategrey;
+  background-color: #FAC715;
+}
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
+.main-logo {
+  width: 50%;
+  margin: auto;
+}
+
+#donation {
+  margin-bottom: 4px;
+}
+
+/*  associations  */
+.home-assos {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: auto;
+}
+.home-assos .asso {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 32%;
+  min-height: 400px;
+  padding: 10px 30px;
+  background-color: white;
+  box-shadow: 1px 1px 5px #b7b8b8;
+}
+.home-assos .link-asso {
+  color: #4b7196;
+}
+.home-assos .link-asso:hover {
+  color: #FAC715;
+  text-decoration: none;
+}
+.home-assos .asso h4 {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: left;
+}
+.home-assos .image-asso {
+  width: 100%;
+  min-height: 220px;
+  max-height: 220px;
+}
+.home-assos .image-asso img {
+  width: 100%;
+}
+.home-assos .descript {
+  text-align: justify;
+}
+.home-assos .catg {
+  font-size: 0.8em;
+  color: #4b7196;
+}
+.home-assos .form-don {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/*  reviews */
+.home-reviews {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 79%;
+  margin: auto;
+}
+.home-reviews .review-asso {
+  padding: 10px;
+  margin-top: 10px;
+  background-color: white;
+  box-shadow: 1px 1px 5px #b7b8b8;
+}
+.home-reviews .review-asso p {
+  margin-bottom: 0px;
+}
+.home-reviews .review-asso .link-asso {
+  font-size: 1.2em;
+  color: #4b7196;
+}
+.home-reviews .review-asso .link-asso:hover {
+  color: #FAC715;
+  text-decoration: none;
+}
+.home-reviews .review-asso .fas {
+  color: #FAC715;
+}
+.home-reviews .review-asso .far {
+  color: #4b7196;
+}
+.home-reviews .review-asso .sign {
+  font-size: 0.8em;
+  color: #4b7196;
+}
+
+* {
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #F8F9FA;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
+  margin-top: 100px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-page {
+  text-align: center;
+  width: 100%;
+}
+
+.custom-select {
+  width: 80px;
+  padding: 5px;
+  font-size: 0.9rem;
+  height: calc(1.2em + .75rem + 2px);
+  color: black;
+}
+
+.btn-info {
+  background-color: #5690B6;
+}
+.btn-info:hover {
+  background-color: #FAC715;
+}
+
+.btn-warning {
+  background-color: #FAC715;
+}
+
+.btn-danger {
+  background-color: #DC4700;
+}
+
+/*# sourceMappingURL=style_master.css.map */

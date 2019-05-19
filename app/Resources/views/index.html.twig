@@ -12,27 +12,27 @@
             {#<p>veuillez patienter</p>#}
         </div>
 
-        <h1 class="title-page">Les Associables</h1>
+        {#<h1 class="title-page">Les Associables</h1>#}
 
         <div class="welcome">
+            <img src="{{ asset('assets/images/logo.png') }}" class="main-logo" alt="logo les associables.org">
             <p class="header">
-                Bienvenue sur le site des Associables.org.<br>
-                Donnez en quelques cliques aux associations de votre choix<br>
+                Donnez en quelques cliques aux associations de votre choix
                 et déduisez vos dons de votre impôt sur le revenu.
             </p>
             <div class="calc">
-                <label for="donation">Je donne:</label>
-                <select name="donation" id="donation">
+                <label for="donation">Je donne</label>
+                <select name="donation" id="donation" class="donation custom-select">
                     {% for amount in array_amount %}
                         <option
                                 {% if amount == default_amount %}
                                     {# détecte le montant selectionné par défaut #}
                                     selected
                                 {% endif %}
-                                value="{{ amount }}">{{ amount }}</option>
+                                value="{{ amount }}">{{ amount }}€</option>
                     {% endfor %}
                 </select>
-                <span>Je paie: <i id="result"></i></span>
+                <span>soit <b><i id="result"></i></b> après réduction d'impôts</span>
             </div>
             <p>
                 Vous pouvez déduire 75 % de votre don à hauteur de 546 € par an. <br>
@@ -40,43 +40,28 @@
             </p>
         </div>
 
-        <h4 class="title-page">Les assciations récemment ajoutées</h4>
+        <div class="container">
+            <h5 class="title-page mt-5 mb-4">Les associations qui ont reçu des dons récemment</h5>
 
-        <div class="home-assos">
-            {% for association in associations %}
-                <div>
-                    <h3>{{ association.name }}</h3>
+            <div class="home-assos">
+                {% for association in associations %}
+                    <div class="asso mb-3">
+                        <a href="{{ path('association_id', {id: association.id}) }}" class="link-asso">
+                            {# ----------------- Images des associations ----------------- #}
+                            <div class="image-asso d-flex align-items-center">
+                                {% if association.image is null %}
+                                    <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut">
+                                {% else %}
+                                    <img src="{{ asset(ImgAssosFolder ~ association.image) }}" alt="{{ association.name }}">
+                                {% endif %}
+                            </div>
+                            <h4>{{ association.name }}</h4>
+                        </a>
 
-                    {# ----------------- Images des associations ----------------- #}
-                    <div>
-                        {% if association.image is null %}
-                            <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
-                        {% else %}
-                            <img src="{{ asset(ImgAssosFolder ~ association.image) }}" alt="{{ association.name }}" style="width: 10%;">
-                        {% endif %}
-                    </div>
+                        <p class="descript">{{ association.description |length > 50 ? association.description |slice(0, 50) ~ '...' : association.description  }}</p>
 
-                    <a href="{{ path('association_id', {id: association.id}) }}">Voir l'association</a>
-
-                    {# ----------------- Dons aux associations ----------------- #}
-                    <div>
-                        <select name="donation" class="donation">
-                            {% for amount in array_amount %}
-                                <option
-                                    {% if amount == default_amount %}
-                                        {# détecte le montant selectionné par défaut #}
-                                        selected
-                                    {% endif %}
-                                    value="{{ amount }}">{{ amount }}</option>
-                            {% endfor %}
-                        </select>
-                        <button class="donation-button btn btn-info btn-sm" data-association-id="{{ association.id }}">Donner</button>
-                    </div>
-
-                    {# ----------------- Catégories des associations ----------------- #}
-                    <div>
-                        <p>
-                            categories :
+                        {# ----------------- Catégories des associations ----------------- #}
+                        <p class="catg">
                             {% for category in association.categories %}
                                 {{ category.name }}
                                 {% if loop.index < association.categories | length %}
@@ -84,31 +69,47 @@
                                 {% endif %}
                             {% endfor %}
                         </p>
+
+                        {# ----------------- Dons aux associations ----------------- #}
+                        <div class="form-don">
+                            <select name="donation" id="don" class="donation custom-select mr-2">
+                                {% for amount in array_amount %}
+                                    <option
+                                        {% if amount == default_amount %}
+                                            {# détecte le montant selectionné par défaut #}
+                                            selected
+                                        {% endif %}
+                                        value="{{ amount }}">{{ amount }}€</option>
+                                {% endfor %}
+                            </select>
+                            <button class="donation-button btn btn-info btn-sm" data-association-id="{{ association.id }}">Donner</button>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+                <a href="{{ path('associations') }}" class="btn btn-info mt-3">Toutes les Assos</a>
+            </div>
 
-        <h4 class="title-page">Les avis utilisateurs</h4>
+            <h5 class="title-page mt-5 mb-3">Les avis utilisateurs récents</h5>
 
-        <div class="home-reviews">
-            {% for review in reviews %}
-                <div class="review-asso">
-                    <a href="{{ path('association_id', {id: review.assos.id}) }}">{{ review.assos.name }}</a>
-                    <p>{{ review.comment }}</p>
-                    <p>Note :
+            <div class="home-reviews">
+                {% for review in reviews %}
+                    <div class="review-asso">
+                        <a href="{{ path('association_id', {id: review.assos.id}) }}" class="link-asso">{{ review.assos.name }}</a>
+                        <p>{{ review.comment }}</p>
                         <span>
-                    {% for i in range(1, 5) %}
-                        {% if review.mark >= i %}
-                            <i class="fas fa-star"></i>
-                        {% else %}
-                            <i class="far fa-star"></i>
-                        {% endif %}
-                    {% endfor %}
-                    </span>
-                    <p>{{ review.user }}, le : {{ review.createdAt | date('d-m-y') }} à {{ review.createdAt | date('H:i:s') }}</p>
-                </div>
-            {% endfor %}
+                            {% for i in range(1, 5) %}
+                                {% if review.mark >= i %}
+                                    <i class="fas fa-star"></i>
+                                {% else %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                        <p class="sign">{{ review.user }}, le : {{ review.createdAt | date('d-m-y') }} à {{ review.createdAt | date('H:i:s') }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <a href="{{ path('fos_user_registration_register') }}" class="btn btn-info mt-3 mb-5">S'inscrire</a>
         </div>
 
     </main>
