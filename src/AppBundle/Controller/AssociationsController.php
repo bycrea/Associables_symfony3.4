@@ -137,6 +137,7 @@ class AssociationsController extends Controller
             // Si l'utilisateur est connecté on récupère son Id
             $id_user = $this->getUser()->getId();
             $id_cookie = null;
+
         } else {
             // Sinon on utilise la valeur du coockie enregistré
             $id_cookie = $request->cookies->get('associables_basket');
@@ -145,6 +146,7 @@ class AssociationsController extends Controller
 
         // Si post['submit'] est défini
         if (!empty($request->request->get('submit'))) {
+
 
             // Un try/catch permettra de détecter d'éventuelles erreurs dans le déroulement du code
             // et ainsi de transmettre un message en Front (return false or true)
@@ -156,12 +158,14 @@ class AssociationsController extends Controller
                 $donationExists = $this->getDoctrine()->getRepository(Donation::class)
                     ->existingBasketDonation($id_asso, $id_user, $id_cookie);
 
+
                 if ($donationExists)
                 {
                     // Si le don existe déjà, on enregistre le nouveau montant (celui-ci peut être le même)
                     $donationExists->setAmount($request->request->get('amount'));
                     $donationExists->setCreatedAt(new DateTime());
                     $entityManager->persist($donationExists);
+                    $entityManager->flush();
 
                 } else {
 
@@ -190,10 +194,8 @@ class AssociationsController extends Controller
                     }
 
                     $entityManager->persist($donation);
+                    $entityManager->flush();
                 }
-
-                // Inscription en bdd
-                $entityManager->flush();
 
                 // Success
                 $this->addFlash('success', 'Votre don a bien été ajouté.');

@@ -22,25 +22,40 @@ class AppExtension extends AbstractExtension
      */
     private $tokenStorage;
 
-    // Un service symfony appelle le constructeur automatiquement et applique l'injection de dépendance.
-    // Ici nous injectons RegistryInterface pour avoir access aux méthodes de $entityManager
-    // et TokenStorageInterface pour la méthodes $user = $this->tokenStorage->getToken()->getUser();
+
+    /**
+     * AppExtension constructor.
+     * @param RegistryInterface $entityManager
+     * @param TokenStorageInterface $tokenStorage
+     *
+     * Un service symfony appelle le constructeur automatiquement et applique l'injection de dépendance.
+     * Ici nous injectons RegistryInterface pour avoir access aux méthodes de $entityManager
+     * et TokenStorageInterface pour la méthodes $user = $this->tokenStorage->getToken()->getUser();
+     */
     public function __construct(RegistryInterface $entityManager, TokenStorageInterface $tokenStorage)
     {
         $this->entityManager = $entityManager;
         $this->tokenStorage = $tokenStorage;
     }
 
+
     // Méthode inhérente à Twig pour appeler les fonctions créés pour Twig
     public function getFunctions()
     {
         return [
-            new TwigFunction('getBasketTotal', [$this, 'getBasketTotal'])
+            new TwigFunction('getBasketTotal', [$this, 'getBasketTotal']),
+            new TwigFunction('textSlice', [$this, 'textSlice'])
         ];
     }
 
-    // Fonctions Twig personalisées
-    // Récupère le nombre de dons dans le panier
+
+    /**
+     * @param Request $request
+     * @return mixed
+     *
+     * Fonctions Twig personalisée,
+     * Récupère le nombre de dons dans le panier
+     */
     public function getBasketTotal (Request $request)
     {
         // Initialise les variables
@@ -63,5 +78,30 @@ class AppExtension extends AbstractExtension
             ->getBasketTotal($id_user, $id_cookie);
 
         return $basketTotal['quantity'];
+    }
+
+
+    /**
+     * @param $text
+     * @param $length
+     * @return bool|string
+     *
+     * Fonctions Twig personalisée,
+     * Retourne un texte $text limité à un nombre de de caractères prédéfini avec $length
+     */
+    public function textSlice($text, $length)
+    {
+        // Si la taille du $text est supérieur à $length
+        if(strlen($text) > $length)
+        {
+            // On limite la taille du $text à $length
+            $sliceText = substr($text, 0, $length).'...';
+
+        } else {
+
+            return $text;
+        }
+
+        return $sliceText;
     }
 }

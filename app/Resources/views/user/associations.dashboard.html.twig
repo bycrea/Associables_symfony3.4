@@ -3,32 +3,78 @@
 {% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_user_dashboard.html.twig' %}
+    <h4 class="title-page mb-4">Liste de mes Associations</h4>
 {% endblock %}
 
 {% block content %}
+<main id="dashboard">
+    {% include 'includes/flash_load_ajax.html.twig' %}
 
-    {# ----------------- Historique des Dons aux associations ----------------- #}
-    <h2 class="title-page">Historiques des associations</h2>
+    <div class="container mb-5">
 
-    <div class="box-assos">
-        {% for asso in userAssosAmount %}
-            <div class="assos">
-                <a href="{{ path('association_id', {id: asso[0].id}) }}">
-                    {% if asso[0].image is null %}
-                        <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
-                    {% else %}
-                        <img src="{{ asset(ImgAssosFolder ~ asso[0].image) }}" alt="{{ asso[0].name }}" style="width: 10%;">
-                    {% endif %}
-                    <span>{{ asso[0].name }}</span>
-                </a>
-                - <span>Total des Dons : {{ asso[1] }}€</span>
-            </div>
-        {% else %}
-            <div class="assos">
-                <span>Vous n'avez pas encore donné à une association</span>
-            </div>
-        {% endfor %}
+        {# ----------------- Liste des associations ----------------- #}
+        <div class="associations-dash">
+            {% for association in userAssosAmount %}
+                <div class="asso-asso">
+
+                    {# ----------------- Images des associations ----------------- #}
+                    <div class="image-asso box">
+                        <a href="{{ path('association_id', {id: association.0.id}) }}" class="link-asso">
+                            {% if association.0.image is null %}
+                                <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut">
+                            {% else %}
+                                <img src="{{ asset(ImgAssosFolder ~ association.0.image) }}" alt="{{ association.0.name }}">
+                            {% endif %}
+                        </a>
+                    </div>
+
+                    <div class="text-asso box">
+                        <a href="{{ path('association_id', {id: association.0.id}) }}" class="link-asso">
+                            <h3>{{ association.0.name }}</h3>
+                        </a>
+                        <p class="descript">{{ textSlice(association.0.description, 75) }}</p>
+
+                        {# ----------------- Catégories des associations ----------------- #}
+                        <p class="catg">
+                            {% for category in association.0.categories %}
+                                <a href="{{ path('associations', {getCategory: category.id}) }}" class="link-asso">
+                                    {{ category.name }}
+                                </a>
+                                {% if loop.index < association.0.categories | length %}
+                                    {# détecte la dernière catégories #} <b>/</b>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                    </div>
+
+                    {# ----------------- stats pour cette association ----------------- #}
+                    <div class="stat-asso box">
+                        Total de mes dons <br>à cette association: <b>{{ association.amount }}€</b>
+                    </div>
+
+                    {# ----------------- Dons aux associations ----------------- #}
+                    <form action="{{ path('_search_donation') }}" method="POST" class="form-don box">
+                        <label for="donation" style="font-size: small;">Donner à nouveau</label>
+                        <select name="amount" id="donation" class="donation custom-select">
+                            {% for amount in array_amount %}
+                                <option
+                                    {% if amount == default_amount %}
+                                        {# détecte le montant selectionné par défaut #}
+                                        selected
+                                    {% endif %}
+                                    value="{{ amount }}">{{ amount }}</option>
+                            {% endfor %}
+                        </select>
+                        <button name="submit" value="{{ association.0.id }}"
+                                class="donation btn btn-info btn-sm mt-2" type="submit">Donner</button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="no-infos">
+                    <span>Aucunes associations trouvées</span>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-
+</main>
 {% endblock %}
-

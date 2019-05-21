@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Assos;
 use AppBundle\Entity\Category;
+use AppBundle\Entity\Donation;
 use AppBundle\Form\AssociationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
@@ -51,9 +52,6 @@ class AssociationsController extends Controller
         return $this->render('admin/associations/admin_associations_index.html.twig', [
             'title' => 'Associations Admin',
             'categories' => $categories,
-            // '$getCategory' provenant du $_GET de l'url
-            // il faut la convertir en 'int' pour la tester avec category.id
-            'getCategory' => intval($getCategory),
             'assosAmount' => $assosAmount
         ]);
     }
@@ -248,13 +246,14 @@ class AssociationsController extends Controller
             foreach ($associations as $association)
             {
                 $amount = $this->getDoctrine()->getRepository(Assos::class)
-                    ->getGivenAmount($association, null);
+                    ->getGivenAmount($association);
 
                 if($amount == null) { $amount = 0; }
 
-                // Renvoi un tableau [objet 'Assos', total des dons]
+                // Renvoi un tableau multidimensionnel [objet 'Assos', total des dons]
                 $assosAmount[] = [$association, $amount];
             }
+
         } else {
 
             return $assosAmount = [];

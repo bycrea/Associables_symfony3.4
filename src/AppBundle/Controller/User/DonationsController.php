@@ -19,6 +19,7 @@ class DonationsController extends Controller
 
         // Recupère la variable GET['year'] si elle existe
         $year = $request->query->get('year');
+
         if(empty($year)) {$year = 2019;}
 
         // Récupère les dons de l'utilisateur, par année et paymentStatus = 4 et 5 avec la méthode 'findDonationsByYear'

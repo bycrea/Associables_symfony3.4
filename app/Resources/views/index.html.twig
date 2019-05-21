@@ -3,16 +3,7 @@
 {% block content %}
     <main>
 
-        {# ----------------- message d'erreur et loading AJAX ----------------- #}
-        <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-            <p></p>
-        </div>
-        <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-            <i class="fas fa-spinner fa-3x"></i>
-            {#<p>veuillez patienter</p>#}
-        </div>
-
-        {#<h1 class="title-page">Les Associables</h1>#}
+        {% include 'includes/flash_load_ajax.html.twig' %}
 
         <div class="welcome">
             <img src="{{ asset('assets/images/logo.png') }}" class="main-logo" alt="logo les associables.org">
@@ -20,19 +11,19 @@
                 Donnez en quelques cliques aux associations de votre choix
                 et déduisez vos dons de votre impôt sur le revenu.
             </p>
-            <div class="calc">
-                <label for="donation">Je donne</label>
+            <div class="calc input-group mb-3">
+                <label for="donation" class="mr-2">Je donne</label>
                 <select name="donation" id="donation" class="donation custom-select">
                     {% for amount in array_amount %}
                         <option
-                                {% if amount == default_amount %}
-                                    {# détecte le montant selectionné par défaut #}
-                                    selected
-                                {% endif %}
-                                value="{{ amount }}">{{ amount }}€</option>
+                            {% if amount == default_amount %}
+                                {# détecte le montant selectionné par défaut #}
+                                selected
+                            {% endif %}
+                            value="{{ amount }}">{{ amount }}€</option>
                     {% endfor %}
                 </select>
-                <span>soit <b><i id="result"></i></b> après réduction d'impôts</span>
+                <span class="ml-2">Soit <b><i id="result"></i></b> après réduction</span>
             </div>
             <p>
                 Vous pouvez déduire 75 % de votre don à hauteur de 546 € par an. <br>
@@ -58,12 +49,14 @@
                             <h4>{{ association.name }}</h4>
                         </a>
 
-                        <p class="descript">{{ association.description |length > 50 ? association.description |slice(0, 50) ~ '...' : association.description  }}</p>
+                        <p class="descript">{{ textSlice(association.description, 75) }}</p>
 
                         {# ----------------- Catégories des associations ----------------- #}
                         <p class="catg">
                             {% for category in association.categories %}
-                                {{ category.name }}
+                                <a href="{{ path('associations', {getCategory: category.id}) }}" class="link-asso">
+                                    {{ category.name }}
+                                </a>
                                 {% if loop.index < association.categories | length %}
                                     {# détecte la dernière catégories #} <b>/</b>
                                 {% endif %}
@@ -72,7 +65,7 @@
 
                         {# ----------------- Dons aux associations ----------------- #}
                         <div class="form-don">
-                            <select name="donation" id="don" class="donation custom-select mr-2">
+                            <select name="donation" class="donation custom-select mr-2">
                                 {% for amount in array_amount %}
                                     <option
                                         {% if amount == default_amount %}
@@ -116,8 +109,6 @@
 {% endblock %}
 
 {% block scripts %}
-    {% include 'includes/js_ajax_basket.html.twig' %}
-
     <script>
 
         calc()

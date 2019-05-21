@@ -1,0 +1,35 @@
+
+@import "variables";
+
+/*    ADMIN   */
+
+#dashboard {
+
+  .amount {
+    padding: 5px 10px;
+    border-radius: 3px;
+    box-shadow: $box-shadow;
+
+    font-size: 1.1em;
+    background-color: $warning;
+  }
+
+  .donations {
+    width: 80%;
+    margin: auto;
+
+    h5 {
+      border-bottom: 1px solid $shadow;
+    }
+  }
+}
+
+/*    USER   */
+
+#dashboard {
+
+  .filters-user {
+    width: 15%;
+  }
+
+}

@@ -20,7 +20,7 @@
         {% endblock %}
 
         {# Permet d'affciher les messages envoyé avec la méthode symfony 'addFlash()' et contenu dans app.flashes
-        doc : https://symfony.com/doc/3.4/controller.html#flash-messages #}
+            doc : https://symfony.com/doc/3.4/controller.html#flash-messages #}
         {% for key, messages in app.flashes %}
             {% for message in messages %}
                 <div class="alert alert-{{ key }}" role="alert">
@@ -36,6 +36,20 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    {% block scripts_basket %}
+        <script>
+            {# Récupère data-basket-quantity pour afficher ou cacher la bulle Panier (basket-tick) #}
+            if($('.basket-tick').data('basket-quantity') > 0)
+            {
+                $('.basket-tick').removeClass('d-none')
+            } else {
+                $('.basket-tick').addClass('d-none')
+            }
+        </script>
+        {% include 'includes/js_ajax_basket.html.twig' %}
+    {% endblock %}
+
     {% block scripts %}
     {% endblock %}
 

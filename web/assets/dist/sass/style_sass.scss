@@ -2,9 +2,12 @@
 @import "variables";
 @import "modals";
 @import "anims";
+
+@import "fosuser";
 @import "header";
 @import "homepage";
 @import "associations";
+@import "donations";
 
 * {
   font-family: Arial, sans-serif;
@@ -17,9 +20,12 @@ body {
 
 main {
   width: 100vw;
-  height: 100vh;
-
   margin-top: 100px;
+}
+
+#dashboard {
+  width: 100vw;
+  margin-top: 40px;
 }
 
 .container {
@@ -29,11 +35,16 @@ main {
   align-items: center;
 }
 
+.nav-user, .nav-admin {
+  border-bottom: 1px solid $shadow;
+}
+
 .title-page {
   width: 100%;
   text-align: center;
 }
 
+/*  Select  */
 
 .custom-select {
   padding: 5px;
@@ -43,6 +54,38 @@ main {
   color: black;
 }
 
+/*  Infos  */
+
+#flash-ajax p {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.no-infos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-height: 100px;
+
+  text-align: center;
+  background-color: white;
+}
+
+/*  Links  */
+
+.link-asso {
+  color: $bluetext;
+
+  &:hover {
+    color: $warning;
+    text-decoration: none;
+  }
+}
+
+/*  boutons  */
 
 .btn-info {
   background-color: $info;
@@ -54,8 +97,16 @@ main {
 
 .btn-warning {
   background-color: $warning;
+
+  &:hover {
+    background-color: $danger;
+  }
 }
 
 .btn-danger {
   background-color: $danger;
+
+  &:hover {
+    background-color: $shadow;
+  }
 }

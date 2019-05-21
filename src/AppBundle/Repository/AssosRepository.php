@@ -34,27 +34,30 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
 
 
     /**
-     * @param $user //utilisateur connecté
+     * @param $search //caractères recherchés
+     * @param $catg //tri par catégorie
      * @return array
      *
-     * Retourne les associtations auquelles un utilisateur à donné
-     * paymentStatus = en attente de transfert OU transféré
+     * Retourne les associations contenant les caractères '$search'
+     * En fonction, aussi, de la catégorie sélectionné
      */
-    public function getByUserDonation($user)
+    public function findBySearchBar($search, $catg)
     {
         $queryBuilder = $this->createQueryBuilder('assos');
 
         $queryBuilder
-            ->leftJoin('assos.donations', 'don')
-            ->leftJoin('don.user', 'user')
+            ->where('assos.name LIKE :search')
+            ->setParameter('search', '%' . $search . '%');
 
-            ->where('don.user = :user')
-            ->setParameter('user', $user)
+        if (null != $catg) {
+            $queryBuilder
+                ->leftJoin('assos.categories', 'catg')
+                ->andWhere('catg.id = :catg')
+                ->setParameter('catg', $catg);
+        }
 
-            ->andWhere('don.paymentStatus IN (:status)')
-            ->setParameter('status', [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED])
-
-            ->orderBy('don.createdAt', 'DESC');
+        $queryBuilder
+            ->orderBy('assos.name', 'ASC');
 
         return $queryBuilder->getQuery()->getResult();
     }
@@ -71,61 +74,20 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
      * paymentStatus = en attente de transfert OU transféré
      * NB: peut être trié pour UN utilisateur OU TOUS utilisateur confondus
      */
-    public function getGivenAmount($association, $user = null)
+    public function getGivenAmount($association)
     {
-        $queryBuilder = $this->createQueryBuilder('assos');
+        $queryBuilder = $this->createQueryBuilder('a');
 
         $queryBuilder
             ->select('SUM(don.amount)')
-            ->leftJoin('assos.donations', 'don')
-
+            ->leftJoin('a.donations', 'don')
             ->where('don.assos = :asso')
-            ->setParameter('asso', $association);
-
-        // Si on ne précise pas l'utilisateur, le montant sera calculé sur tous les dons confondus
-        if(!empty($user))
-        {
-            $queryBuilder
-                ->andWhere('don.user = :user')
-                ->setParameter('user', $user);
-        }
-
-        $queryBuilder
+            ->setParameter('asso', $association)
             ->andWhere('don.paymentStatus IN (:status)')
             ->setParameter('status', [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED]);
 
 
         return $queryBuilder->getQuery()->getSingleScalarResult();
-    }
-
-
-    /**
-     * @param $search //caractères recherchés
-     * @param $catg //tri par catégorie
-     * @return array
-     *
-     * Retourne les associations commencant par les caractères '$search'
-     * En fonction, aussi, de la catégorie sélectionné
-     */
-    public function findBySearchBar($search, $catg)
-    {
-        $queryBuilder = $this->createQueryBuilder('assos');
-
-        $queryBuilder
-            ->where('assos.name LIKE :search')
-            ->setParameter('search', $search.'%');
-
-        if (null != $catg) {
-            $queryBuilder
-                ->leftJoin('assos.categories', 'catg')
-                ->andWhere('catg.id = :catg')
-                ->setParameter('catg', $catg);
-        }
-
-        $queryBuilder
-         ->orderBy('assos.name', 'ASC');
-
-        return $queryBuilder->getQuery()->getResult();
     }
 
 
@@ -152,6 +114,31 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
 
 
     /**
+     * @param $user //utilisateur connecté
+     * @return array
+     *
+     * Retourne les associtations auquelles un utilisateur à donné
+     * paymentStatus = en attente de transfert OU transféré
+     */
+    public function findUserAssosAndAmount($user)
+    {
+        $queryBuilder = $this->createQueryBuilder('a');
+
+        $queryBuilder
+            ->leftJoin('a.donations', 'don')
+            ->addSelect('SUM(don.amount) AS amount')
+            ->where('don.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('don.paymentStatus IN (:status)')
+            ->setParameter('status', [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED])
+            ->groupBy('a.name')
+            ->orderBy('amount', 'DESC');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+
+    /**
      * @return array
      *
      * Retourne l'entity Assos et le total dons en attente de transfert (amount)
@@ -167,7 +154,7 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
             ->where('don.paymentStatus = :status')
             ->setParameter('status', Donation::PAY_IN_TRANSFER)
             ->groupBy('a.name')
-            ->orderBy('don.createdAt');
+            ->orderBy('amount', 'DESC');
 
         return $queryBuilder->getQuery()->getResult();
     }

@@ -1,0 +1,16 @@
+
+@import "variables";
+
+.login {
+  width: 30%;
+  margin: auto;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn-login {
+    margin: auto;
+  }
+}

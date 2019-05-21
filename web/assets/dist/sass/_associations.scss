@@ -3,7 +3,7 @@
 
 .filters {
   width: 80%;
-  
+
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -18,5 +18,138 @@
 
   &:hover {
     color: $warning;
+  }
+}
+
+/*  liste associations public  */
+
+.associations {
+  width: 80%;
+  margin: auto;
+
+  .asso-asso {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+
+    width: 100%;
+    margin-bottom: 10px;
+
+    background-color: white;
+    box-shadow: $box-shadow;
+
+    .image-asso {
+      width: 25%;
+    }
+    .image-asso img {
+      width: 100%;
+    }
+    .text-asso {
+      width: 60%;
+    }
+    .form-don {
+      width: 15%;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .box {
+      padding: 10px;
+    }
+
+    .link-asso {
+      color: $bluetext;
+
+      &:hover {
+        color: $warning;
+        text-decoration: none;
+      }
+    }
+
+    h3 {
+      font-size: 1.5em;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+
+    .donation-button {
+      width: 100%;
+      align-self: center;
+    }
+  }
+}
+
+
+/*  liste associations user  */
+
+.associations-dash {
+  width: 80%;
+  margin: auto;
+
+  .asso-asso {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+
+    width: 100%;
+    margin-bottom: 10px;
+
+    background-color: white;
+    box-shadow: $box-shadow;
+
+    .image-asso {
+      width: 20%;
+    }
+    .image-asso img {
+      width: 100%;
+    }
+    .text-asso {
+      width: 35%;
+    }
+    .stat-asso {
+      width: 30%;
+    }
+    .form-don {
+      width: 15%;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .box {
+      padding: 10px;
+    }
+
+    .link-asso {
+      color: $bluetext;
+
+      &:hover {
+        color: $warning;
+        text-decoration: none;
+      }
+    }
+
+    h3 {
+      font-size: 1.5em;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+
+    .donation {
+      width: 100%;
+      align-self: center;
+    }
   }
 }

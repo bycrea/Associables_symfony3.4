@@ -10,14 +10,6 @@
             $('#loading-modal').removeClass('d-none')
         })
 
-        {# Récupère data-basket-quantity pour afficher ou cacher la bulle Panier (basket-tick) #}
-        if($('.basket-tick').data('basket-quantity') > 0)
-        {
-            $('.basket-tick').removeClass('d-none')
-        } else {
-            $('.basket-tick').addClass('d-none')
-        }
-
         {# On écoute l'évènement 'click' sur le bouton donation #}
         $('.donation-button').on('click', function (e) {
             e.preventDefault()

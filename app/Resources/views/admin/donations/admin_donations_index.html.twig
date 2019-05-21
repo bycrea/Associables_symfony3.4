@@ -3,32 +3,33 @@
 {% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_admin_dashboard.html.twig' %}
+    <h4 class="title-page mb-4">Administration des dons</h4>
 {% endblock %}
 
 {% block content %}
+<main id="dashboard">
+    {# ----------------- Administration des donations ----------------- #}
+    <div class="container mb-5">
 
-    {# ----------------- Historique des dons ----------------- #}
-    <h2 class="title-page">Historiques des donations (ADMIN)</h2>
-    <div class="dashboard">
+        {# Récupère les paramètre GET afin de définir les options à sélectionner #}
+        {% set getYear = app.request.get('year') %}
+        {% set getAsso = app.request.get('asso') %}
+        {% set getUser = app.request.get('user') %}
+        {% set getStatus = app.request.get('status') %}
 
         {# ----------------- Form Filtres ----------------- #}
-        <form action="{{ path('admin_donations') }}" method="GET">
+        <form action="{{ path('admin_donations') }}" method="GET" class="filters input-group">
 
-            {# Récupère les paramètre GET afin de définir les options à sélectionner #}
-            {% set getYear = app.request.get('year') %}
-            {% set getAsso = app.request.get('asso') %}
-            {% set getUser = app.request.get('user') %}
-            {% set getStatus = app.request.get('status') %}
-
-            <label for="year">Trier par : </label>
+            <label hidden for="year">années</label>
             {# Filtre années #}
-            <select name="year" id="year">
+            <select name="year" id="year" class="years custom-select">
                 <option {{ ('2019' in getYear) ? 'selected' : ''  }} value="2019">2019</option>
                 <option {{ ('2018' in getYear) ? 'selected' : ''  }} value="2018">2018</option>
             </select>
 
             {# Filtre Asso #}
-            <select name="asso" id="asso">
+            <label hidden for="asso">associations</label>
+            <select name="asso" id="asso" class="asso custom-select">
                 <option value="null">associations</option>
                 {% for asso in allAsso %}
                     <option {{ (asso.id in getAsso) ? 'selected' : ''  }} value="{{ asso.id }}">{{ asso.name }}</option>
@@ -36,7 +37,8 @@
             </select>
 
             {# Filtre User #}
-            <select name="user" id="user">
+            <label hidden for="user">utilisateurs</label>
+            <select name="user" id="user" class="user custom-select">
                 <option value="null">utilisateurs</option>
                 {% for user in allUser %}
                     <option {{ (user.id in getUser) ? 'selected' : ''  }} value="{{ user.id }}">{{ user.username }}</option>
@@ -44,42 +46,57 @@
             </select>
 
             {# Filtre paymentStatus #}
-            <select name="status" id="status">
+            <label hidden for="status">Paiement Status</label>
+            <select name="status" id="status" class="status custom-select">
                 <option {{ (1 in getStatus) ? '' : 'selected'  }} value="">Sauf Panier</option>
                 <option {{ (1 in getStatus) ? 'selected' : ''  }} value="1">Panier</option>
             </select>
 
             <button type="submit" class="btn btn-info btn-sm">Filtrer</button>
-
+            <a href="{{ path('admin_donations', {'year' : '2019'}) }}" class="btn btn-info btn-sm">Reset</a>
         </form>
 
         {# ----------------- Total des dons ----------------- #}
-        <div class="amount">
-            Total des Dons en {{ getYear }} : {{ totalAmount }}€
-        </div>
-    </div>
-
-    {# ----------------- Affichage des dons ----------------- #}
-    <div class="donations">
-        <h3 class="sub-title dons">Donations</h3>
-        <div class="box-dons">
-            {% for don in donations %}
-                <div class="donation">
-                    <a href="{{ path('association_id', {id: don.assos.id}) }}"><span>{{ don.assos.name }}</span></a>
-                    - <span>le: {{ don.createdAt | date("d.m.y H:i:s") }}</span>
-                    - <span>User : {{ don.user.username }}</span>
-                    - <span>{{ don.amount }}€</span>
-                    {% if don.paymentMode == 1 %}
-                        - <i class="fab fa-paypal"></i>
-                    {% endif %}
-                    / <span>{{ paymentStatus[don.paymentStatus] }}</span>
-                </div>
+        <div class="amount mt-3">
+            {% if getStatus != 1 %}
+                Total des dons en {{ (getYear is null) ? '2019' : getYear }} : {{ totalAmount }}€
             {% else %}
-                <div class="donation">
-                    <span>Aucunes donations en attente de transfert</span>
-                </div>
-            {% endfor %}
+                Total des dons en panier : {{ totalAmount }}€
+            {% endif %}
+        </div>
+
+        {# ----------------- Affichage des dons ----------------- #}
+        <div class="donations">
+            <h5 class="mt-3 mb-0">Liste des donations</h5>
+            <table class="table table-responsive-sm">
+                <thead>
+                <tr>
+                    <th scope="col">Association</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Utilisateur</th>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Mode</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for don in donations %}
+                <tr>
+                    <th scope="row"><a href="{{ path('association_id', {id: don.assos.id}) }}" class="link-asso">{{ don.assos.name }}</a></th>
+                    <td>{{ don.createdAt | date("d.m.y H:i:s") }}</td>
+                    <td>{{ don.user.username }}</td>
+                    <td>{{ don.amount }}€</td>
+                    <td>{% if don.paymentMode == 1 %}<i class="fab fa-paypal"></i>{% else %} - {% endif %}</td>
+                    <td>{{ paymentStatus[don.paymentStatus] }}</td>
+                </tr>
+                {% else %}
+                    <tr scope="row">
+                        <td colspan="6" style="text-align: center;">Aucunes donations trouvées</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-
+</main>
 {% endblock %}

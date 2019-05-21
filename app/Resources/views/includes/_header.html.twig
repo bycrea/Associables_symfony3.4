@@ -16,11 +16,11 @@
             <li class="nav-item {{ ('home' in route) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ path('home') }}">Accueil</a>
             </li>
-            <li class="nav-item {{ ('mentions' in route) ? 'active' : '' }}">
-                <a class="nav-link" href="{{ path('mentions') }}">Mentions</a>
-            </li>
             <li class="nav-item {{ ('associations' in route) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ path('associations') }}">Associations</a>
+            </li>
+            <li class="nav-item {{ ('mentions' in route) ? 'active' : '' }}">
+                <a class="nav-link" href="{{ path('mentions') }}">Mentions</a>
             </li>
             <li class="nav-item {{ ('basket' in route) ? 'active' : '' }}">
                 <a class="nav-link" id="basket-link" href="{{ path('basket') }}">Panier
