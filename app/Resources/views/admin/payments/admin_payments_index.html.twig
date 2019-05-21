@@ -3,16 +3,12 @@
 {% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_admin_dashboard.html.twig' %}
+    <h4 class="title-page mb-4">Administration des Paiements</h4>
 {% endblock %}
 
 {% block content %}
-    {# ----------------- Message d'erreur et loading AJAX ----------------- #}
-    <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <p></p>
-    </div>
-    <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <i class="fas fa-spinner fa-3x"></i>
-    </div>
+<main id="dashboard">
+    {% include 'includes/flash_load_ajax.html.twig' %}
 
     {# ----------------- Modal annulation paiment ----------------- #}
     <div id="validate-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -25,85 +21,157 @@
         </div>
     </div>
 
-    {# ----------------- Paiement en attente ----------------- #}
-    <h2 class="title dons">Paiement en Attente (ADMIN)</h2>
-
-    {% for pay in awaitPayments %}
-        <div class="payment">
+    <div class="container mb-5">
+        {# ----------------- Paiement en attente ----------------- #}
+        <div class="await-payments">
             <form action="{{ path('admin_payments') }}" method="POST">
-                - Montant total à régler pour l'association
-                <a href="{{ path('association_id', {id: pay.0.id}) }}"><span>{{ pay.0.name }} :</span></a>
-                <span>{{ pay.amount }}</span>€
-                <select name="mode">
-                    {% for key, mode in paymentMode %}
-                        <option
-                                {{ ( key == 3 )? 'selected' : '' }} value="{{ key }}">{{ mode }}
-                        </option>
+            <table class="table table-responsive-sm">
+                <thead>
+                <tr>
+                    <td colspan="6" style="text-align: left; padding: 2px">Associations en attente de paiement</td>
+                </tr>
+                <tr>
+                    <th colspan="2" scope="col">Association</th>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Mode</th>
+                    <th scope="col">Dons</th>
+                    <th scope="col">Payer</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for pay in awaitPayments %}
+                        <tr>
+                            <td colspan="2">
+                                <a href="{{ path('association_id', {id: pay.0.id}) }}" class="link-asso">{{ pay.0.name }}
+                                </a>
+                            </td>
+                            <td>{{ pay.amount }}€</td>
+                            <td>
+                                <label hidden for="mode">mode de paiement</label>
+                                <select name="mode" id="mode" class="custom-select">
+                                    {% for key, mode in paymentMode %}
+                                        <option
+                                            {{ ( key == 3 )? 'selected' : '' }} value="{{ key }}">{{ mode }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <input type="hidden" name="id_asso" value="{{ pay.0.id }}">
+                                <input type="hidden" name="amount" value="{{ pay.amount }}">
+                            </td>
+                            <td>
+                                <a href="" class="arrow btn btn-info btn-sm"
+                                    {# data envoyé au JS pour les ouverture de pop-up DONS #}
+                                   data-btn="{{ pay.0.id }}" data-display="false" data-class=".await_">
+                                    <i class="fas fa-caret-square-down"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <button type="submit" name="submit"
+                                    class="btn btn-danger btn-sm" value="submit">Payer
+                                </button>
+                            </td>
+                        </tr>
+
+                        {# ----------------- Modal des donnations ----------------- #}
+                        <tr class="await_{{ pay.0.id }} d-none">
+                            <td colspan="6" style="text-align: left; padding: 2px">Donations liées</td>
+                        </tr>
+                        {% for don in pay.0.donations %}
+                            {% if don.paymentStatus == 4 %}
+                                <tr class="await_{{ pay.0.id }} d-none">
+                                    <td colspan="2">{{ don.createdAt |date('d/m/y') }}</td>
+                                    <td>{{ don.amount }}€</td>
+                                    <td>
+                                        {% if don.paymentMode == 1 %}
+                                            <i class="fab fa-paypal"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td colspan="2">{{ don.user.username }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
                     {% endfor %}
-                </select>
-                <input type="hidden" name="id_asso" value="{{ pay.0.id }}">
-                <input type="hidden" name="amount" value="{{ pay.amount }}">
-                <a href="" class="arrow btn btn-info btn-sm" data-arrow-id="{{ pay.0.id }}" data-display="false">
-                    <i class="fas fa-caret-square-down"></i>
-                </a>
-                <button type="submit" name="submit" class="btn btn-danger btn-sm" value="submit">Payé</button>
+                    {% if awaitPayments is empty %}
+                        <tr>
+                            <td colspan="6" style="text-align: center;">Aucun paiement en attente</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
             </form>
         </div>
-        {# ----------------- Modal des donnations ----------------- #}
-        <div class="don-payment-{{ pay.0.id }} d-none">
-            <span>donations concernés par le paiement</span>
-            {% for don in pay.0.donations %}
-                <div class="donation">
-                    <span>{{ don.amount }}€</span>
-                    {% if don.paymentMode == 1 %}
-                        - <i class="fab fa-paypal"></i>
-                    {% endif %}
-                    - <span>le: {{ don.createdAt | date("d.m.y H:i:s") }}</span>
-                    - <span>User : {{ don.user.username }}</span>
-                    - <span>{{ paymentStatus[don.paymentStatus] }}</span>
-                </div>
-            {% endfor %}
+
+        {# ----------------- Historique des paiement ----------------- #}
+        <div class="old-payments">
+            <table class="table table-responsive-sm">
+                <thead>
+                <tr>
+                    <td colspan="6" style="text-align: left; padding: 2px">Associations en attente de paiement</td>
+                </tr>
+                <tr>
+                    <th colspan="2" scope="col">Association</th>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Mode</th>
+                    <th scope="col">Dons</th>
+                    <th scope="col">Annuler</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for pay in oldPayments %}
+                    <tr class="{{ (pay.paymentStatus != 3) ? '' : 'canceled' }}">
+                        <td colspan="2">
+                            <a href="{{ path('association_id', {id: pay.association.id}) }}" class="link-asso">{{ pay.association.name }}
+                            </a>
+                        </td>
+                        <td>{{ pay.amount }}€</td>
+                        <td>{{ paymentMode[pay.paymentMode] }}</td>
+                        {% if pay.paymentStatus != 3 %}
+                            <td>
+                                <a href="" class="arrow btn btn-info btn-sm"
+                                    {# data envoyé au JS pour les ouverture de pop-up DONS #}
+                                   data-btn="{{ pay.id }}" data-display="false" data-class=".old_">
+                                    <i class="fas fa-caret-square-down"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="" class="delete btn btn-danger btn-sm"
+                                   data-delete-id="{{ pay.id }}" data-delete-name="{{ pay.id }}"
+                                   data-delete-path="{{ path('admin_ajax_payments_cancel') }}">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </td>
+                        {% else %}
+                            <td colspan="2">{{ paymentStatus[pay.paymentStatus] }}</td>
+                        {% endif %}
+                    </tr>
+
+                    {# ----------------- Modal des donnations ----------------- #}
+                    <tr class="old_{{ pay.id }} d-none">
+                        <td colspan="6" style="text-align: left; padding: 2px">Donations liées</td>
+                    </tr>
+                    {% for don in pay.donations %}
+                        <tr class="old_{{ pay.id }} d-none">
+                            <td colspan="2">{{ don.createdAt |date('d/m/y') }}</td>
+                            <td>{{ don.amount }}€</td>
+                            <td>
+                                {% if don.paymentMode == 1 %}
+                                    <i class="fab fa-paypal"></i>
+                                {% endif %}
+                            </td>
+                            <td colspan="2">{{ don.user.username }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                {% if awaitPayments is empty %}
+                    <tr>
+                        <td colspan="6" style="text-align: center;">Aucun paiement effectués</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
         </div>
-    {% endfor %}
-
-    {# ----------------- Historique des paiement ----------------- #}
-    <h2 class="title dons">Historiques des Paiements</h2>
-
-    {% for pay in oldPayments %}
-        <div class="payment">
-            <span>{{ pay.id }}</span>. Le <span>{{ pay.createdAt | date('d-m-y H:i:s') }}</span>
-            - bénéficière: <a href="{{ path('association_id', {id: pay.association.id}) }}"><span>{{ pay.association.name }}</span></a>
-            - Montant réglé: <span class="amount">{{ pay.amount }}</span>€
-            / <span class="status-{{ pay.paymentStatus }}">{{ paymentStatus[pay.paymentStatus] }}</span>
-            {% if pay.paymentStatus != 3 %}
-                <a href="" class="arrow btn btn-info btn-sm" data-arrow-id="{{ pay.id }}" data-display="false">
-                    <i class="fas fa-caret-square-down"></i>
-                </a>
-                <a href="" class="delete btn btn-danger btn-sm"
-                   data-delete-id="{{ pay.id }}" data-delete-name="{{ pay.id }}"
-                   data-delete-path="{{ path('admin_ajax_payments_cancel') }}">
-                    <i class="fas fa-times"></i>
-                </a>
-            {% endif %}
-        </div>
-
-        {# ----------------- Modal des donnations ----------------- #}
-        <div class="don-payment-{{ pay.id }} d-none">
-            <span>donations concernés par le paiement</span>
-            {% for don in pay.donations %}
-                <div class="donation">
-                    <span>{{ don.amount }}€</span>
-                    {% if don.paymentMode == 1 %}
-                        - <i class="fab fa-paypal"></i>
-                    {% endif %}
-                    - <span>le: {{ don.createdAt | date("d.m.y H:i:s") }}</span>
-                    - <span>User : {{ don.user.username }}</span>
-                    - <span>{{ paymentStatus[don.paymentStatus] }}</span>
-                </div>
-            {% endfor %}
-        </div>
-    {% endfor %}
-
+    </div>
+</main>
 {% endblock %}
 
 {% block scripts %}
@@ -112,18 +180,24 @@
     <script>
         $(document).ready(function () {
 
+            {# Permet d'ouvrir ou de fermer les modals de donations #}
             $('.arrow').on('click', function (e) {
                 e.preventDefault()
 
-                var id = $(this).data('arrow-id')
+                var id = $(this).data('btn')
                 var display = $(this).data('display')
+                var aim_class = $(this).data('class')
 
                 if (!display) {
-                    $('.don-payment-'+id).removeClass('d-none')
+
+                    $(aim_class + id).removeClass('d-none')
                     $(this).data('display', true)
+
                 } else {
-                    $('.don-payment-'+id).addClass('d-none')
+
+                    $(aim_class + id).addClass('d-none')
                     $(this).data('display', false)
+
                 }
             })
 

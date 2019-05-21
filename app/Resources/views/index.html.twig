@@ -79,9 +79,9 @@
                         </div>
                     </div>
                 {% endfor %}
-                <a href="{{ path('associations') }}" class="btn btn-info mt-3">Toutes les Assos</a>
             </div>
 
+            <a href="{{ path('associations') }}" class="btn btn-info mt-3">Toutes les Assos</a>
             <h5 class="title-page mt-5 mb-3">Les avis utilisateurs récents</h5>
 
             <div class="home-reviews">
@@ -92,19 +92,19 @@
                         <span>
                             {% for i in range(1, 5) %}
                                 {% if review.mark >= i %}
-                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star full-star"></i>
                                 {% else %}
-                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star empty-star"></i>
                                 {% endif %}
                             {% endfor %}
                         </span>
-                        <p class="sign">{{ review.user }}, le : {{ review.createdAt | date('d-m-y') }} à {{ review.createdAt | date('H:i:s') }}</p>
+                        <p class="sign">{{ review.user }}, le {{ review.createdAt | date('d-m-y') }} à {{ review.createdAt | date('H:i:s') }}</p>
                     </div>
                 {% endfor %}
             </div>
+
             <a href="{{ path('fos_user_registration_register') }}" class="btn btn-info mt-3 mb-5">S'inscrire</a>
         </div>
-
     </main>
 {% endblock %}
 

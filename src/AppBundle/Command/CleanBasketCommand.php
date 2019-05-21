@@ -21,7 +21,7 @@ class CleanBasketCommand extends Command
      */
 
     // Défini le nom de la Command
-    protected static $defaultName = 'app:clean:basket';
+    protected static $defaultName = 'app:clean:baskets';
 
     /**
      * @var RegistryInterface
@@ -45,10 +45,11 @@ class CleanBasketCommand extends Command
     {
         $this
             // Description court de la Command pour "php bin/console list"
-            ->setDescription('Clean donation from basket')
+            ->setDescription('Retire les donations expirées de tous les paniers')
 
             // Description complète de la Command "--help" option
-            ->setHelp('This command allows you to clean the basket from all donations')
+            ->setHelp('Cette commande symfony permet de retirer tous les dons en panier pour tous autilisateurs confondu. L\'argument :day: permet de choisir la date d\'expiration (today - day)')
+
 
             // Ajout d'arguments à InputIterface ($input)
             ->addArgument('day', InputArgument::OPTIONAL, 'nombre de jours','10')
@@ -62,17 +63,32 @@ class CleanBasketCommand extends Command
     {
         // Récupère les arguments ajouté en paramètre de $input
         $day = $input->getArgument('day');
+        $count = null;
 
         // Récupère les donations concernées grâce à la méthode 'getExpiredDonations'
         $donations = $this->entityManager->getRepository(Donation::class)
             ->getExpiredDonations($day);
 
-        foreach ($donations as $donation)
+        if($donations)
         {
-            // Supprime chaque donation une par une
-            $this->entityManager->getManager()->remove($donation);
-        }
+            // Si des donations existent
+            foreach ($donations as $donation)
+            {
+                // Supprime chaque donation une par une
+                $this->entityManager->getManager()->remove($donation);
 
-        $this->entityManager->getManager()->flush();
+                // dump pour voir le nombre donations supprimées dans le terminal
+                $output->writeln('id: '.$donation->getId().' | amount: '.$donation->getAmount());
+                $count ++;
+            }
+
+            $this->entityManager->getManager()->flush();
+            $output->writeln($count.' donations ont été supprimées.');
+
+        } else {
+
+            // On averti que rien n'a été suprimé
+            $output->writeln('Aucunes donations de plus de '.$day.' jours dans les paniers.');
+        }
     }
 }

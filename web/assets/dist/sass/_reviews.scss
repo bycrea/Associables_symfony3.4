@@ -1,0 +1,103 @@
+
+@import "variables";
+
+
+/*  reviews home */
+
+.home-reviews {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  width: 79%;
+  margin: auto;
+
+  .review-asso {
+    padding: 10px;
+    margin-top: 10px;
+
+    background-color: white;
+    box-shadow: $box-shadow;
+
+    p {
+      margin-bottom: 0px;
+    }
+
+    .link-asso {
+      font-size: 1.2em;
+      color: $bluetext;
+
+      &:hover {
+        color: $warning;
+        text-decoration: none;
+      }
+    }
+
+    .full-star {
+      color: $warning;
+    }
+    .empty-star{
+      color: $bluetext;
+    }
+
+    .sign {
+      font-size: 0.8em;
+      color: $bluetext;
+    }
+  }
+}
+
+
+/*  reviews user */
+
+.home-reviews {
+  width: 80%;
+  margin: auto;
+
+  .review-dash {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px;
+    margin-top: 10px;
+
+    background-color: white;
+    box-shadow: $box-shadow;
+
+    .info-review {
+      width: 90%;
+    }
+
+    .form-review {
+      width: 10%;
+      text-align: center;
+    }
+
+    p {
+      margin-bottom: 0px;
+    }
+
+    .link-asso {
+      font-size: 1.2em;
+      color: $bluetext;
+
+      &:hover {
+        color: $warning;
+        text-decoration: none;
+      }
+    }
+
+    .full-star {
+      color: $warning;
+    }
+    .empty-star{
+      color: $bluetext;
+    }
+
+    .sign {
+      font-size: 0.8em;
+      color: $bluetext;
+    }
+  }
+}

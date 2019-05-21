@@ -1,0 +1,74 @@
+
+@import "variables";
+
+.basket {
+  width: 60vw;
+  height: 50vh;
+  margin: auto;
+  padding: 20px;
+
+  overflow: scroll;
+
+  border: 1px solid $shadow;
+  background-color: white;
+
+  .basket-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    box-shadow: $list-shadow;
+    border-bottom: 1px solid $info;
+  }
+
+  .image-asso-basket {
+    width: 15%;
+  }
+  .image-asso-basket img {
+    width: 100%;
+  }
+
+  .name-asso-basket {
+    text-align: center;
+    width: 70%;
+
+    .mid-text {
+      display: block;
+    }
+  }
+
+  .don-asso-basket {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 15%;
+    .don-asso {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+
+      width: 100%;
+    }
+  }
+
+  .link-asso {
+    color: $bluetext;
+
+    &:hover {
+      color: $warning;
+      text-decoration: none;
+    }
+  }
+}
+
+.total-amount {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

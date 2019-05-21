@@ -94,7 +94,6 @@ class UsersController extends Controller
             foreach ($donations as $donation)
             {
                 $entityManager->remove($donation);
-                $entityManager->flush();
             }
 
             $entityManager->remove($user);

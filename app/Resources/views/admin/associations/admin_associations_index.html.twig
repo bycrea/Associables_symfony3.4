@@ -15,8 +15,8 @@
         <div class="message-delete">
             <div>Etes vous sûr de vouloir supprimer l'association <b><span class="name"></span></b> ?</div>
             <div>
-                <button id="validate" class="btn btn-danger btn-sm">Valider</button>
-                <button id="cancel" class="btn btn-info btn-sm">Annuler</button>
+                <button id="validate" class="btn btn-danger">Valider</button>
+                <button id="cancel" class="btn btn-info">Annuler</button>
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@
         </div>
 
         {# ----------------- Historique des Dons aux associations ----------------- #}
-        <div class="associations">
+        <div class="associations-dash">
             {% for association in assosAmount %}
                 <div class="asso-asso">
 
@@ -86,12 +86,14 @@
 
                     <div class="form-don box">
                         {# Editer une association #}
-                        <a href="{{ path('admin_associations_edit', {id: association.0.id }) }}" class="edit btn btn-info btn-sm">
+                        <a href="{{ path('admin_associations_edit', {id: association.0.id }) }}"
+                           class="edit btn btn-info btn-sm m-1">
                             <i class="far fa-edit"></i>
                         </a>
 
                         {# Supprimer une categorie #}
-                        <a href="" class="delete btn btn-danger btn-sm" data-delete-id="{{ association.0.id }}" data-delete-name="{{ association.0.name }}"
+                        <a href="" class="delete btn btn-danger btn-sm m-1"
+                           data-delete-id="{{ association.0.id }}" data-delete-name="{{ association.0.name }}"
                             {# Envoi le nom du chemin à suivre (path) de la fonction AJAX afin de mutualiser les scripts #}
                             data-delete-path="{{ path('admin_ajax_associations_delete') }}">
                             <i class="fas fa-trash-alt"></i>

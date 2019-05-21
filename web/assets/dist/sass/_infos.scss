@@ -1,0 +1,42 @@
+
+@import "variables";
+
+
+/*    Infos User    */
+
+.infos {
+  width: 40%;
+  padding: 2%;
+  margin: auto;
+
+  box-shadow: $box-shadow;
+  background-color: white;
+
+  .info {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .ln {
+    border-bottom: 1px solid $shadow;
+  }
+
+  .t-left {
+    width: 50%;
+    color: $info;
+    text-align: left;
+  }
+
+  .t-rigth {
+    width: 50%;
+    text-align: right;
+  }
+
+  .modif {
+    margin-top: 10px;
+  }
+
+  .btn {
+    width: 50%;
+  }
+}

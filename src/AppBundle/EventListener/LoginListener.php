@@ -5,7 +5,6 @@ namespace AppBundle\EventListener;
 use AppBundle\Entity\Donation;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListener
@@ -27,6 +26,7 @@ class LoginListener
      * on remplace seulement la valeur de $amount de celle-ci
      */
 
+
     /**
      * @var RegistryInterface
      */
@@ -42,6 +42,7 @@ class LoginListener
         $this->entityManager = $entityManager;
     }
 
+
     /**
      * @param InteractiveLoginEvent $event
      * @throws \Exception
@@ -53,6 +54,7 @@ class LoginListener
         $id_cookie = $event->getRequest()->cookies->get('associables_basket');
 
         $this->fromCookieToUser($user, $id_cookie);
+
     }
 
 

@@ -1,0 +1,28 @@
+
+@import "variables";
+
+/*    ADMIN   */
+
+#dashboard {
+
+  .await-payments {
+    width: 80%;
+    margin: auto;
+  }
+
+  .old-payments {
+    width: 80%;
+    margin: auto;
+  }
+
+  .table td, .table th {
+    padding: 0.5em;
+    text-align: center;
+    vertical-align: middle;
+    width: calc(100% / 6);
+  }
+
+  .canceled {
+    background-color: $danger_op;
+  }
+}

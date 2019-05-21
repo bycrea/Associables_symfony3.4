@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Assos;
 use AppBundle\Entity\Donation;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
@@ -149,11 +150,11 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
         $queryBuilder = $this->createQueryBuilder('a');
 
         $queryBuilder
-            ->innerJoin('a.donations', 'don')
+            ->leftJoin('a.donations', 'don')
             ->addSelect('SUM(don.amount) AS amount')
-            ->where('don.paymentStatus = :status')
-            ->setParameter('status', Donation::PAY_IN_TRANSFER)
-            ->groupBy('a.name')
+            ->where('don.paymentStatus IN (:status)')
+            ->setParameter('status', [Donation::PAY_IN_TRANSFER])
+            ->groupBy('a.id')
             ->orderBy('amount', 'DESC');
 
         return $queryBuilder->getQuery()->getResult();

@@ -38,31 +38,34 @@ class DefaultController extends Controller
      *
      * @Route("/users/redirect", name="user_redirect")
      */
-    public function usersRedirectAction(Request $request)
+    public function usersRedirectAction()
     {
         // Récupère l'utilisateur
-        $user = $this->getUser();
-
-        // Si le 'ROLE_ADMIN' existe pour cet Utilisateur
-        if(false !== array_search('ROLE_ADMIN', $user->getRoles(), true))
+        if($user = $this->getUser())
         {
-            return $this->redirectToRoute('admin_donations');
-
-        } else {
-
-            // Sinon on verifi si l'utilisateur a des dons en attente
-            $donInBasket = $this->getDoctrine()->getRepository(Donation::class)
-                ->findBy(['user' => $user, 'paymentStatus' => Donation::PAY_BASKET]);
-
-            // Si oui on le redirige vers le Panier
-            if(!empty($donInBasket))
+            // Si le 'ROLE_ADMIN' existe pour cet Utilisateur
+            if(false !== array_search('ROLE_ADMIN', $user->getRoles(), true))
             {
-                return $this->redirectToRoute('basket');
+                return $this->redirectToRoute('admin_donations');
+
+            } else {
+
+                // Sinon on verifi si l'utilisateur a des dons en attente
+                $donInBasket = $this->getDoctrine()->getRepository(Donation::class)
+                    ->findBy(['user' => $user, 'paymentStatus' => Donation::PAY_BASKET]);
+
+                // Si oui on le redirige vers le Panier
+                if(!empty($donInBasket))
+                {
+                    return $this->redirectToRoute('basket');
+                } else {
+                    // Sinon on redirige vers le Dashboard
+                    return $this->redirectToRoute('user_donations');
+                }
             }
-
-            // Sinon on redirige vers le Dashboard
-            return $this->redirectToRoute('user_donations');
         }
-    }
 
+        // Sinon on redirige home
+        return $this->redirectToRoute('home');
+    }
 }

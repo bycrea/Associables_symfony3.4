@@ -101,6 +101,7 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
         return $resultArray[0];
     }
 
+
     /**
      * @param $day
      * @return array

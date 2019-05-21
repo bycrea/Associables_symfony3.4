@@ -57,7 +57,7 @@
         </form>
 
         {# ----------------- Total des dons ----------------- #}
-        <div class="amount mt-3">
+        <div class="amount mt-3 mb-3">
             {% if getStatus != 1 %}
                 Total des dons en {{ (getYear is null) ? '2019' : getYear }} : {{ totalAmount }}€
             {% else %}
@@ -67,7 +67,6 @@
 
         {# ----------------- Affichage des dons ----------------- #}
         <div class="donations">
-            <h5 class="mt-3 mb-0">Liste des donations</h5>
             <table class="table table-responsive-sm">
                 <thead>
                 <tr>

@@ -4,6 +4,7 @@
 
 @import "variables";
 
+
 /* VALIDATION */
 
 #loading-modal, #validate-modal {
@@ -31,10 +32,11 @@
   animation: spin 1s infinite linear;
 }
 
+
 /* DELETE */
 
 .message-delete {
-  position: sticky;
+  position: relative;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -45,9 +47,35 @@
   align-items: center;
 
   width: 50%;
-  height: 100px;
+  height: 150px;
 
   text-align: center;
-  box-shadow: 5px 5px 10px darkslategrey;
+  border-radius: 5px;
+  box-shadow: $box-shadow;
   background-color: rgba(255,255,255,0.9);
+
+  div {
+    margin: 10px;
+  }
+}
+
+
+/*  Infos  */
+
+#flash-ajax p {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.no-infos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-height: 100px;
+
+  text-align: center;
+  background-color: white;
 }

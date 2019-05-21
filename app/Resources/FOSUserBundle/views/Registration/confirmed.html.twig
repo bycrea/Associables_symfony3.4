@@ -3,17 +3,23 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block content %}
-    <p>
+<main id="dashboard">
+
+    <div class="title-page mt-5 mb-4">
         {{ 'registration.confirmed'|trans({'%username%': user.username}) }}
         <br>
         Vous allez être redirigé dans quelques secondes.
-    </p>
-    {% if targetUrl %}
-    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
-    {% endif %}
+
+        {#{% if targetUrl %}
+            <a href="{{ targetUrl }}" class="link-asso mt-4">{{ 'registration.back'|trans }}</a>
+        {% endif %}#}
+    </div>
+
+</main>
 {% endblock content %}
 
 {% block scripts %}
+    {# Permet de rediriger vers /users/redirect après un delay de 5000ms (5s) #}
     <script>
         $(document).ready(function () {
             setTimeout(function () {
