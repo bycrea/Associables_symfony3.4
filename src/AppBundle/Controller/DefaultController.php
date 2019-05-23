@@ -6,7 +6,6 @@ use AppBundle\Entity\Assos;
 use AppBundle\Entity\Donation;
 use AppBundle\Entity\Review;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller

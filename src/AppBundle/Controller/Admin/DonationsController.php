@@ -34,6 +34,7 @@ class DonationsController extends Controller
         {
             $asso = $this->getDoctrine()->getRepository(Assos::class)
                 ->find($request->query->get('asso'));
+
         } else { $asso = null; }
 
         // Récupère le filtre des utilisateurs $user
@@ -41,14 +42,24 @@ class DonationsController extends Controller
         {
             $user = $this->getDoctrine()->getRepository(User::class)
                 ->find($request->query->get('user'));
+
         } else { $user = null; }
 
         // Récupère le filtre des paiement $paymentStatus
-        if(empty($request->query->get('status')))
+        switch ($request->query->get('status'))
         {
-            $paymentStatus = [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED];
-        } else { $paymentStatus = [Donation::PAY_BASKET]; }
+            case null: $paymentStatus = [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED]; break;
 
+            case 0: $paymentStatus = [Donation::PAY_BASKET]; break;
+
+            case 3: $paymentStatus = [Donation::PAY_ERROR, Donation::PAY_REFUSED, Donation::PAY_CANCEL]; break;
+
+            case 4: $paymentStatus = [Donation::PAY_IN_TRANSFER]; break;
+
+            case 5: $paymentStatus = [Donation::PAY_PROCESSED]; break;
+
+            default: $paymentStatus = [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED];
+        }
 
 
         // Récupère les donations par $year/$user/$paymentStatus avec la méthode 'findDonationsByYear'

@@ -2,8 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Assos;
-use AppBundle\Entity\Donation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

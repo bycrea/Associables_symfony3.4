@@ -33,7 +33,7 @@
             <select name="categories" id="categories" class="custom-select"
                     onchange="window.location.href = this.value">
 
-                <option value="{{ path('admin_associations', {getCategory: null}) }}">Toutes</option>
+                <option value="{{ path('admin_associations', {getCategory: null}) }}">Categories</option>
                 {% for category in categories %}
                     <option
                         {{ (category.id in getCategory) ? 'selected' : '' }}

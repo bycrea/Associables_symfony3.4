@@ -17,32 +17,38 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CategoriesController extends Controller
 {
+
     /**
      * @Route("/", name="admin_categories")
      */
     public function indexAction(Request $request)
     {
-        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        if (!empty($request->request->get('submit'))) {
 
-        $category = new Category();
-        $form = $this->createForm(CategoryType::class, $category);
+            if(!empty($id = $request->request->get('id')))
+            {
+                $category = $this->getDoctrine()->getRepository(Category::class)
+                    ->find($id);
+                $this->addFlash('success', 'La categorie a bien été modifié.');
 
-        $form->handleRequest($request);
+            } else {
 
-        if ($form->isSubmitted() && $form->isValid()) {
+                $category = new Category();
+                $this->addFlash('success', 'La categorie a bien été ajouté.');
+            }
+
+            $category->setName($request->request->get('name'));
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
             $entityManager->flush();
-
-            $this->addFlash('success', 'La categorie a bien été ajouté.');
-            return $this->redirectToRoute('admin_categories');
         }
+
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
         return $this->render('admin/categories/admin_categories_index.html.twig', [
             'title' => 'Categories',
             'categories' => $categories,
-            'form' => $form->createView()
         ]);
     }
 
@@ -72,6 +78,7 @@ class CategoriesController extends Controller
             'form' => $form->createView()
         ]);
     }
+
 
     /**
      * @Route("/delete", name="admin_ajax_categories_delete")

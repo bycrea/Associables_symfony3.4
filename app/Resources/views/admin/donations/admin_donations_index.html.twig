@@ -30,18 +30,18 @@
             </select>
 
             {# Filtre Asso #}
-            <label hidden for="asso">associations</label>
+            <label hidden for="asso">Associations</label>
             <select name="asso" id="asso" class="asso custom-select">
-                <option value="null">associations</option>
+                <option value="null">Associations</option>
                 {% for asso in allAsso %}
                     <option {{ (asso.id in getAsso) ? 'selected' : ''  }} value="{{ asso.id }}">{{ asso.name }}</option>
                 {% endfor %}
             </select>
 
             {# Filtre User #}
-            <label hidden for="user">utilisateurs</label>
+            <label hidden for="user">Utilisateurs</label>
             <select name="user" id="user" class="user custom-select">
-                <option value="null">utilisateurs</option>
+                <option value="null">Utilisateurs</option>
                 {% for user in allUser %}
                     <option {{ (user.id in getUser) ? 'selected' : ''  }} value="{{ user.id }}">{{ user.username }}</option>
                 {% endfor %}
@@ -50,8 +50,11 @@
             {# Filtre paymentStatus #}
             <label hidden for="status">Paiement Status</label>
             <select name="status" id="status" class="status custom-select">
-                <option {{ (1 in getStatus) ? '' : 'selected'  }} value="">Sauf Panier</option>
-                <option {{ (1 in getStatus) ? 'selected' : ''  }} value="1">Panier</option>
+                <option {{ (getStatus is null) ? 'selected' : ''  }} value="null">Att./Trans.</option>
+                <option {{ (4 in getStatus) ? 'selected' : ''  }} value="4">En attente</option>
+                <option {{ (5 in getStatus) ? 'selected' : ''  }} value="5">Transférés</option>
+                <option {{ (0 in getStatus) ? 'selected' : ''  }} value="0">En panier</option>
+                <option {{ (3 in getStatus) ? 'selected' : ''  }} value="3">Annulés</option>
             </select>
 
             <button type="submit" class="btn btn-info btn-sm">Filtrer</button>

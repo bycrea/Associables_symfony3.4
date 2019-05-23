@@ -22,15 +22,13 @@
     </div>
 
     <div class="container">
-
         {# ----------------- Ajouter une Categories ----------------- #}
-        {{ form_start(form) }}
-            {{ form_errors(form) }}
+        <form action="{{ path('admin_categories') }}" method="POST">
             <div class="form-catg mb-4">
-                {{ form_widget(form.name) }}
-                <button type="submit" class="btn btn-warning ml-3">Ajouter</button>
+                <input type="text" name="name" id="appbundle_category_name" required>
+                <button type="submit" name="submit" value="true" class="submit btn btn-warning ml-3">Ajouter</button>
             </div>
-        {{ form_end(form) }}
+        </form>
 
         {# ----------------- Categories ----------------- #}
         <div class="categories">
@@ -40,7 +38,8 @@
 
                     <div class="btn-catg">
                         {# Editer une categorie #}
-                        <a href="{{ path('admin_categories_update', {id: category.id}) }}" class="edit btn btn-info btn-sm">
+                        <a href="" class="edit btn btn-info btn-sm"
+                           data-id-catg="{{ category.id }}" data-name-catg="{{ category.name }}">
                             <i class="far fa-edit"></i>
                         </a>
                         {# Supprimer une categorie #}
@@ -61,6 +60,48 @@
 </main>
 {% endblock %}
 
+
+{#<a href="{{ path('admin_categories', {id: category.id}) }}" class="edit btn btn-info btn-sm">
+    <i class="far fa-edit"></i>
+</a>#}
+
 {% block scripts %}
     {% include 'includes/js_ajax_delete.html.twig' %}
+    <script>
+        $(document).ready(function () {
+
+            $('.edit').on('click', function (e) {
+                e.preventDefault()
+
+                var id = $(this).data('id-catg')
+                var name = $(this).data('name-catg')
+                var hidden = $('.hidden-id').val()
+
+                $('#appbundle_category_name').val(name)
+                $('.submit').text('Modifier')
+
+                if(hidden)
+                {
+                    $('.hidden-id').val(id)
+                    console.log('if')
+
+                } else {
+
+                    $('.form-catg').append("<input hidden name='id' class='hidden-id' type='number' value='"+ id +"'/>")
+                    console.log('else')
+                }
+            })
+
+            $('#appbundle_category_name').on('input', function () {
+
+                var isEmpty = $(this).val()
+
+                if(!isEmpty)
+                {
+                    $('.hidden-id').val(null)
+                    $('.submit').text('Ajouter')
+                }
+            })
+        })
+    </script>
 {% endblock %}
