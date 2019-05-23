@@ -58,7 +58,9 @@ class PaymentController extends Controller
 
             // Redirige vers l'url de PayPal généré par le Service
             return $this->redirect($response->getRedirectUrl());
+
         } catch (Exception $e) {
+
             throw new HttpException(503, 'Erreur de paiement', $e);
         }
     }

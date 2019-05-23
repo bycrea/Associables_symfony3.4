@@ -97,7 +97,8 @@
   bottom: 8px;
   padding: 2px 6px;
   border-radius: 50%;
-  box-shadow: -2px 2px 5px #b7b8b8;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  box-shadow: 1px 2px 5px #b7b8b8;
   font-size: 0.8em;
   color: darkslategrey;
   background-color: #FAC715;
@@ -161,6 +162,9 @@
   margin: auto;
   text-align: center;
 }
+.welcome .donation {
+  max-width: 100px;
+}
 
 .main-logo {
   width: 50%;
@@ -168,63 +172,8 @@
 }
 
 .calc {
-  width: 40%;
+  width: 100%;
   justify-content: center;
-}
-
-#donation {
-  max-width: 100px;
-  bottom: 3px;
-}
-
-/*  associations  */
-.home-assos {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  width: 80%;
-  margin: auto;
-}
-.home-assos .asso {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 32%;
-  min-height: 400px;
-  padding: 10px 30px;
-  background-color: white;
-  box-shadow: 1px 1px 5px #b7b8b8;
-}
-.home-assos .link-asso {
-  color: #4b7196;
-}
-.home-assos .link-asso:hover {
-  color: #FAC715;
-  text-decoration: none;
-}
-.home-assos .asso h4 {
-  font-size: 1.5em;
-  font-weight: bold;
-  text-align: left;
-}
-.home-assos .image-asso {
-  width: 100%;
-  min-height: 220px;
-  max-height: 220px;
-}
-.home-assos .image-asso img {
-  width: 100%;
-}
-.home-assos .descript {
-  text-align: justify;
-}
-.home-assos .catg {
-  font-size: 0.8em;
-  color: #4b7196;
-}
-.home-assos .form-don {
-  display: flex;
-  justify-content: flex-end;
   align-items: center;
 }
 
@@ -389,9 +338,11 @@
   color: #FAC715;
   text-decoration: none;
 }
+.association_id .descript .donation {
+  width: 100%;
+}
 .association_id .descript .donation-button {
   width: 100%;
-  align-self: center;
 }
 .association_id .retour {
   width: 100%;
@@ -663,9 +614,6 @@
   text-align: center;
   vertical-align: middle;
 }
-#dashboard .date {
-  font-size: small;
-}
 #dashboard .online {
   background-color: rgba(255, 0, 0, 0.2);
 }
@@ -731,6 +679,11 @@ main {
   width: 80%;
   text-align: center;
   border-bottom: 1px solid #b7b8b8;
+}
+
+/*  Dates   */
+.date {
+  font-size: small;
 }
 
 /*  Select  */

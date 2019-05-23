@@ -24,15 +24,16 @@
                 et déduisez vos dons de votre impôt sur le revenu.
             </p>
             <div class="calc input-group mb-2">
-                <label for="donation" class="mr-2">Je donne</label>
+                <span class="mr-2">Je donne</span>
+                <label hidden for="donation" class="mr-2">Je donne</label>
                 <select name="donation" id="donation" class="donation custom-select">
                     {% for amount in array_amount %}
                         <option
-                            {% if amount == default_amount %}
-                                {# détecte le montant selectionné par défaut #}
-                                selected
-                            {% endif %}
-                            value="{{ amount }}">{{ amount }}€</option>
+                                {% if amount == default_amount %}
+                                    {# détecte le montant selectionné par défaut #}
+                                    selected
+                                {% endif %}
+                                value="{{ amount }}">{{ amount }}€</option>
                     {% endfor %}
                 </select>
                 <span class="ml-2">Soit <b><i id="result"></i></b> après réduction</span>

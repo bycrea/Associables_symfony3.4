@@ -85,7 +85,7 @@
                         {% for don in pay.0.donations %}
                             {% if don.paymentStatus == 4 %}
                                 <tr class="await_{{ pay.0.id }} d-none td-don">
-                                    <td colspan="2">{{ don.createdAt |date('d/m/y') }}</td>
+                                    <td colspan="2" class="date">{{ don.createdAt |date('d/m/y H:i:s') }}</td>
                                     <td>{{ don.amount }}€</td>
                                     <td>
                                         {% if don.paymentMode == 1 %}
@@ -163,7 +163,7 @@
                     </tr>
                     {% for don in pay.donations %}
                         <tr class="old_{{ pay.id }} d-none td-don">
-                            <td colspan="2">{{ don.createdAt |date('d/m/y') }}</td>
+                            <td colspan="2" class="date">{{ don.createdAt |date('d/m/y H:i:s') }}</td>
                             <td>{{ don.amount }}€</td>
                             <td>
                                 {% if don.paymentMode == 1 %}

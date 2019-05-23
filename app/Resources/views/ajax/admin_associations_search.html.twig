@@ -18,7 +18,7 @@
             <a href="{{ path('association_id', {id: association.0.id}) }}" class="link-asso">
                 <h3>{{ association.0.name }}</h3>
             </a>
-            <p>Inscription le {{ association.0.createdAt | date("d/m/y") }}</p>
+            <p>Inscription le {{ association.0.createdAt | date("d/m/y") }} à {{ association.0.createdAt | date("H:i:s") }}</p>
             <p>Contact: {{ association.0.contactInfo }}</p>
         </div>
 

@@ -10,6 +10,10 @@
   width: 80%;
   margin: auto;
   text-align: center;
+
+  .donation {
+    max-width: 100px;
+  }
 }
 
 .main-logo {
@@ -18,77 +22,10 @@
 }
 
 .calc {
-  width: 40%;
+  width: 100%;
   justify-content: center;
+  align-items: center;
 }
 
-#donation {
-  max-width: 100px;
-  bottom: 3px;
-}
-
-/*  associations  */
-
-.home-assos {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-
-  width: 80%;
-  margin: auto;
-
-  .asso {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    width: 32%;
-    min-height: 400px;
-    padding: 10px 30px;
-
-    background-color: white;
-    box-shadow: $box-shadow;
-  }
-
-  .link-asso {
-    color: $bluetext;
-
-    &:hover {
-      color: $warning;
-      text-decoration: none;
-    }
-  }
-
-  .asso h4 {
-    font-size: 1.5em;
-    font-weight: bold;
-    text-align: left;
-  }
-
-  .image-asso {
-    width: 100%;
-    min-height: 220px;
-    max-height: 220px;
-  }
-
-  .image-asso img {
-    width: 100%;
-  }
-
-  .descript {
-    text-align: justify;
-  }
-
-  .catg {
-    font-size: 0.8em;
-    color: $bluetext;
-  }
-
-  .form-don {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-}
 
 

@@ -85,7 +85,7 @@
                             {% endif %}
                         {% endfor %}
                         </span>
-                    <p class="sign">{{ review.user }}, le : {{ review.createdAt | date('d-m-y') }} à {{ review.createdAt | date('H:i:s') }}</p>
+                    <p class="sign">{{ review.user }}, le {{ review.createdAt | date('d/m/y') }} à {{ review.createdAt | date('H:i:s') }}</p>
                 </div>
             </div>
             {% else %}

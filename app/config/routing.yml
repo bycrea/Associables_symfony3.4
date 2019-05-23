@@ -16,6 +16,7 @@ admin:
     type: annotation
     prefix: 'admin'
 
+
 #fos_user:
 #    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 

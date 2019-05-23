@@ -50,7 +50,7 @@
                     {% if don.paymentStatus == 4 %}
                     <tr>
                         <th scope="row"><a href="{{ path('association_id', {id: don.assos.id}) }}" class="link-asso">{{ don.assos.name }}</a></th>
-                        <td>{{ don.createdAt | date("d.m.y H:i:s") }}</td>
+                        <td class="date">{{ don.createdAt | date("d/m/y H:i:s") }}</td>
                         <td>{{ don.amount }}€</td>
                         <td>{% if don.paymentMode == 1 %}<i class="fab fa-paypal"></i>{% else %} - {% endif %}</td>
                         <td>{{ paymentStatus[don.paymentStatus] }}</td>
@@ -64,7 +64,7 @@
                     {% if don.paymentStatus == 5 %}
                         <tr>
                             <th scope="row"><a href="{{ path('association_id', {id: don.assos.id}) }}" class="link-asso">{{ don.assos.name }}</a></th>
-                            <td>{{ don.createdAt | date("d.m.y H:i:s") }}</td>
+                            <td class="date">{{ don.createdAt | date("d/m/y H:i:s") }}</td>
                             <td>{{ don.amount }}€</td>
                             <td>{% if don.paymentMode == 1 %}<i class="fab fa-paypal"></i>{% else %} - {% endif %}</td>
                             <td>{{ paymentStatus[don.paymentStatus] }}</td>

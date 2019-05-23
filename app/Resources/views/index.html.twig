@@ -11,7 +11,8 @@
             et déduisez vos dons de votre impôt sur le revenu.
         </p>
         <div class="calc input-group mb-2">
-            <label for="donation" class="mr-2">Je donne</label>
+            <span class="mr-2">Je donne</span>
+            <label hidden for="donation" class="mr-2">Je donne</label>
             <select name="donation" id="donation" class="donation custom-select">
                 {% for amount in array_amount %}
                     <option
@@ -106,7 +107,7 @@
                             {% endif %}
                         {% endfor %}
                     </span>
-                    <p class="sign">{{ review.user }}, le {{ review.createdAt | date('d-m-y') }} à {{ review.createdAt | date('H:i:s') }}</p>
+                    <p class="sign">{{ review.user }}, le {{ review.createdAt | date('d/m/y') }} à {{ review.createdAt | date('H:i:s') }}</p>
                 </div>
             {% endfor %}
         </div>
