@@ -3,18 +3,12 @@
 {% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_user_dashboard.html.twig' %}
-    <h4 class="title-page mb-4">Mes avis utilisateur</h4>
+    <h5 class="title-page mb-4">Mes avis utilisateur</h5>
 {% endblock %}
 
 {% block content %}
 <main id="dashboard">
-    {# message d'erreur et loading AJAX #}
-    <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <p></p>
-    </div>
-    <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <i class="fas fa-spinner fa-3x"></i>
-    </div>
+    {% include 'includes/flash_load_ajax.html.twig' %}
 
     {# ----------------- Modal Suppression Review ----------------- #}
     <div id="validate-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">

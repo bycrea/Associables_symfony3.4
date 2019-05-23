@@ -1,0 +1,81 @@
+
+@import "variables";
+
+.association_id {
+  width: 80%;
+  margin: auto;
+
+  .descript {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+
+    width: 100%;
+    padding: 1em;
+
+    background-color: white;
+    box-shadow: $box-shadow;
+
+    .image-asso {
+      width: 100%;
+    }
+    .image-asso img {
+      width: 50%;
+      margin-left: 25%;
+    }
+
+    .catg-box {
+      width: 85%;
+    }
+
+    .don-asso {
+      width: 15%;
+    }
+
+    .link-asso {
+      color: $bluetext;
+
+      &:hover {
+        color: $warning;
+        text-decoration: none;
+      }
+    }
+
+    .donation-button {
+      width: 100%;
+      align-self: center;
+    }
+  }
+
+  .retour {
+    width: 100%;
+    margin-left: 1em;
+    text-align: left;
+  }
+
+  .review-add, .reviews {
+    width: 100%;
+    padding: 1em;
+
+    box-shadow: $box-shadow;
+    background-color: white;
+
+
+    .note {
+      width: 132px;
+    }
+  }
+
+  .full-star {
+    color: $warning;
+  }
+  .empty-star{
+    color: $bluetext;
+  }
+
+  .sign {
+    font-size: 0.9em;
+    color: $bluetext;
+  }
+}

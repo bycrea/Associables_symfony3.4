@@ -3,15 +3,20 @@
 @import "modals";
 @import "anims";
 
-@import "fosuser";
 @import "header";
+
+@import "fosuser";
+@import "infos";
+
 @import "homepage";
 @import "associations";
+@import "association_id";
 @import "donations";
+@import "category";
 @import "basket";
 @import "reviews";
+@import "users";
 @import "payments";
-@import "infos";
 
 
 * {
@@ -30,7 +35,7 @@ main {
 
 #dashboard {
   width: 100vw;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .container {
@@ -47,6 +52,12 @@ main {
 .title-page {
   width: 100%;
   text-align: center;
+}
+
+.title-page-home {
+  width: 80%;
+  text-align: center;
+  border-bottom: 1px solid $shadow;
 }
 
 /*  Select  */

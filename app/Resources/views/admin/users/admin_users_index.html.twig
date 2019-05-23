@@ -3,16 +3,12 @@
 {% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_admin_dashboard.html.twig' %}
+    <h5 class="title-page mb-4">Administration des utilisateurs</h5>
 {% endblock %}
 
 {% block content %}
-    {# --------------- message d'erreur et loading AJAX --------------- #}
-    <div id="flash-ajax" tabindex="-1" role="alert" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <p></p>
-    </div>
-    <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <i class="fas fa-spinner fa-3x"></i>
-    </div>
+<main id="dashboard">
+    {% include 'includes/flash_load_ajax.html.twig' %}
 
     {# ----------------- Modal Suppression asso ----------------- #}
     <div id="validate-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -25,72 +21,107 @@
         </div>
     </div>
 
-    {# ----------------- Liste et historique des utilisateurs ----------------- #}
-    <h2 class="title-page">Liste des utilisateurs (ADMIN)</h2>
+    <div class="container mb-5">
 
-    <div>
-        {# ----------------- Ajouter une Suppression asso ----------------- #}
-        <div>
-            <a href="{{ path('fos_user_registration_register') }}">créer un utilisateur</a>
+        {# ----------------- Menu déroulant des filtres ----------------- #}
+        <div class="filters-users input-group mb-3">
+
+            {# Récupère la variable GET[filter] afin de sélectionné le filtre concerné #}
+            {% set filter = app.request.get('filter') %}
+
+            <label for="filtre" class="mr-3 mb-0">Trier par </label>
+
+            {#    La méthode JS 'onchange="window.location.href' = this.value"
+            permet de recharger la page en dès la sélection d'une l'option    #}
+            <select name="categories" id="filtre" onchange="window.location.href = this.value"
+                    class="custom-select mr-3">
+                <option {{ (filter is null)? 'selected' : '' }}
+                    value="{{ path('admin_users', {filter: 'id'}) }}">Id utilisateur</option>
+                <option {{ ('username' in filter)? 'selected' : '' }}
+                    value="{{ path('admin_users', {filter: 'username'}) }}">Username</option>
+                <option {{ ('created' in filter)? 'selected' : '' }}
+                    value="{{ path('admin_users', {filter: 'created'}) }}">Date d'inscription</option>
+                <option {{ ('lastLog' in filter)? 'selected' : '' }}
+                    value="{{ path('admin_users', {filter: 'lastLog'}) }}">Dernière connexion</option>
+                <option {{ ('nb' in filter)? 'selected' : '' }}
+                    value="{{ path('admin_users', {filter: 'nb'}) }}">Nombre de dons</option>
+                <option {{ ('amount' in filter)? 'selected' : '' }}
+                    value="{{ path('admin_users', {filter: 'amount'}) }}">Montant total des dons</option>
+                <option {{ ('roles' in filter)? 'selected' : '' }}
+                        value="{{ path('admin_users', {filter: 'roles'}) }}">Roles utilistaeur</option>
+            </select>
+            {# --------- Ajouter un utilisateur ---------- #}
+            <div>
+                <a href="{{ path('fos_user_registration_register') }}" class="btn btn-info btn-sm pl-2 pr-2">
+                    Ajouter un utilisateur <i class="fas fa-plus-circle"></i>
+                </a>
+            </div>
         </div>
 
-        {# ----------------- Filtres ----------------- #}
-        {% set filter = app.request.get('filter') %}
+        {# ----------------- Liste et historique des utilisateurs ----------------- #}
+        <div class="users">
+            <table class="table table-responsive-sm">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Mail</th>
+                    <th scope="col">Date Inscrpt.</th>
+                    <th scope="col">Dern. Connex.</th>
+                    <th scope="col">Nb de Dons</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Role</th>
+                    <th scope="col" class="td-btn">Changer</th>
+                    <th scope="col" class="td-btn">Supprimer</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr class="{{ (user.0.username not in app.user.username)? '' : 'online' }}">
+                        <td>{{ user.0.id }}</td>
+                        <td>{{ user.0.username }}</td>
+                        <td>{{ user.0.email }}</td>
+                        <td class="date">{{ user.0.createdAt |date("d/m/y H:i:s") }}</td>
+                        <td class="date">{{ user.0.lastLogin |date("d/m/y H:i:s") }}</td>
+                        <td>{{ user.nb }}</td>
+                        <td><b>{{ user.amount }}€</b></td>
+                        {# Si l'utilisateur n'est pas connecté #}
+                        {% if user.0.username not in app.user.username %}
+                            <td>
+                                {# Role utilisateur #}
+                                <b>{{ ('ROLE_ADMIN' in user.0.roles.0)? 'Admin' : 'User' }}</b>
+                            </td>
+                            <td class="td-btn">
+                                <a href="{{ path('admin_users_roles', {id: user.0.id}) }}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-sync"></i>
+                                </a>
+                            </td>
+                            <td class="td-btn">
+                                {# Suppression utilisateur #}
+                                <a href="" class="delete btn btn-danger btn-sm" data-delete-id="{{ user.0.id }}" data-delete-name="{{ user.0.username }}"
+                                    {# Envoi le nom du chemin à suivre (path) de la fonction AJAX afin de mutualiser les scripts #}
+                                   data-delete-path="{{ path('admin_ajax_users_delete') }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        {% else %}
+                            <td>
+                                {# Role utilisateur #}
+                                <b>{{ ('ROLE_ADMIN' in user.0.roles.0)? 'Admin' : 'User' }}</b>
+                            </td>
+                            <td colspan="2">
+                                {# Suppression impossible #}
+                                <i>Connecté</i>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-        <label for="filtre">Trier par : </label>
-        <select name="categories" id="filtre" onchange="window.location.href = this.value">
-            <option {{ ('id' in filter)? 'selected' : '' }}
-                value="{{ path('admin_users', {filter: 'id'}) }}">id</option>
-            <option {{ ('username' in filter)? 'selected' : '' }}
-                value="{{ path('admin_users', {filter: 'username'}) }}">Username</option>
-            <option {{ ('created' in filter)? 'selected' : '' }}
-                value="{{ path('admin_users', {filter: 'created'}) }}">Date Inscrpt.</option>
-            <option {{ ('connexion' in filter)? 'selected' : '' }}
-                value="{{ path('admin_users', {filter: 'lastLog'}) }}">Date Connex.</option>
-            <option {{ ('nb' in filter)? 'selected' : '' }}
-                value="{{ path('admin_users', {filter: 'nb'}) }}">Nb Dons</option>
-            <option {{ ('amount' in filter)? 'selected' : '' }}
-                value="{{ path('admin_users', {filter: 'amount'}) }}">Total Dons</option>
-            <option {{ ('roles' in filter)? 'selected' : '' }}
-                    value="{{ path('admin_users', {filter: 'roles'}) }}">Roles</option>
-        </select>
     </div>
-
-    <div class="users">
-        {% for key, user in users %}
-            <div class="user-line">
-                {# info utilisateur #}
-                {{ user.0.id }}. <span>{{ user.0.username }}</span>
-                - <span>{{ user.0.email }}</span>
-                / <span>Membre : {{ user.0.createdAt | date("d/m/y H:i:s") }}</span>
-                - <span>Connexion : {{ user.0.lastLogin | date("d/m/y H:i:s") }}</span>
-                / <span>Nb de Dons : {{ user.nb }}</span>
-                - <span>Total : {{ user.amount }}€</span>
-
-                {% if user.0.username not in app.user.username %}
-                    {# Role utilisateur #}
-                    / Role : <b><span class="roles">{{ ('ROLE_ADMIN' in user.0.roles.0)? 'Admin' : 'User' }} </span></b>
-                    <a href="{{ path('admin_users_roles', {id: user.0.id}) }}" class="btn btn-info btn-sm"><i class="fas fa-sync"></i></a>
-
-                    {# Suppression utilisateur #}
-                    <a href="" class="delete btn btn-danger btn-sm" data-delete-id="{{ user.0.id }}" data-delete-name="{{ user.0.username }}"
-                        {# Envoi le nom du chemin à suivre (path) de la fonction AJAX afin de mutualiser les scripts #}
-                       data-delete-path="{{ path('admin_ajax_users_delete') }}">
-                        <i class="fas fa-trash-alt"></i>
-                    </a>
-                {% else %}
-                    {# Role utilisateur #}
-                    / Role : <b><span class="roles">{{ ('ROLE_ADMIN' in user.0.roles.0)? 'Admin' : 'User' }} </span></b>
-                    <i>(Connecté)</i>
-                {% endif %}
-            </div>
-        {% else %}
-            <div class="assos">
-                <span>Aucun utilisateur trouvé, ce qui est bien mais pas top.</span>
-            </div>
-        {% endfor %}
-    </div>
-
+</main>
 {% endblock %}
 
 {% block scripts %}

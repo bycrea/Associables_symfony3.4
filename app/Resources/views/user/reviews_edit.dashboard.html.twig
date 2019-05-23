@@ -3,22 +3,30 @@
 {% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_user_dashboard.html.twig' %}
+    <h5 class="title-page">Modifier mon avis</h5>
 {% endblock %}
 
 {% block content %}
+<main id="dashboard">
 
+    <div class="container mb-5">
     {# ----------------- Historiques des avis ----------------- #}
-    <div class="title-page">
-        <h2>Modifier mon avis</h2>
+        <div class="review-edit">
+            <div class="review-add">
+                {{ form_start(form) }}
+                {{ form_row(form.comment) }}
+                <div class="note mb-4">
+                    {{ form_label(form.mark) }}
+                    {{ form_errors(form.mark) }}
+                    {{ form_widget(form.mark, {'attr': {'class': 'custom-select'}}) }}
+                </div>
+                <button type="submit" class="btn btn-warning btn-sm">Valider</button>
+                <a href="{{ path('associations') }}" class="btn btn-danger btn-sm">Annuler</a>
+                {{ form_end(form) }}
+            </div>
+        </div>
     </div>
 
-    <div class="review-add">
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button type="submit" class="btn btn-warning btn-sm">Valider</button>
-        <a href="{{ path('user_reviews') }}" class="btn btn-danger btn-sm">Annuler</a>
-        {{ form_end(form) }}
-    </div>
-
+</main>
 {% endblock %}
 

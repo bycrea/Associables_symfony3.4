@@ -3,7 +3,7 @@
 {% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_admin_dashboard.html.twig' %}
-    <h4 class="title-page mb-4">Administration des Paiements</h4>
+    <h5 class="title-page mb-4">Administration des Paiements</h5>
 {% endblock %}
 
 {% block content %}
@@ -72,13 +72,19 @@
                             </td>
                         </tr>
 
-                        {# ----------------- Modal des donnations ----------------- #}
+                        {# ----------------- Modal des donnations en attentes ----------------- #}
                         <tr class="await_{{ pay.0.id }} d-none">
-                            <td colspan="6" style="text-align: left; padding: 2px">Donations liées</td>
+                            <td colspan="6" style="text-align: left; padding: 2px">Détail du paiement</td>
+                        </tr>
+                        <tr class="await_{{ pay.0.id }} d-none th-don">
+                            <th colspan="2" scope="col">Date du don</th>
+                            <th scope="col">Montant</th>
+                            <th scope="col">Mode</th>
+                            <th colspan="2" scope="col">Utilisateur</th>
                         </tr>
                         {% for don in pay.0.donations %}
                             {% if don.paymentStatus == 4 %}
-                                <tr class="await_{{ pay.0.id }} d-none">
+                                <tr class="await_{{ pay.0.id }} d-none td-don">
                                     <td colspan="2">{{ don.createdAt |date('d/m/y') }}</td>
                                     <td>{{ don.amount }}€</td>
                                     <td>
@@ -106,7 +112,7 @@
             <table class="table table-responsive-sm">
                 <thead>
                 <tr>
-                    <td colspan="6" style="text-align: left; padding: 2px">Associations en attente de paiement</td>
+                    <td colspan="6" style="text-align: left; padding: 2px">Paiements transférés aux associations</td>
                 </tr>
                 <tr>
                     <th colspan="2" scope="col">Association</th>
@@ -145,12 +151,18 @@
                         {% endif %}
                     </tr>
 
-                    {# ----------------- Modal des donnations ----------------- #}
+                    {# ----------------- Modal des donnations historique ----------------- #}
                     <tr class="old_{{ pay.id }} d-none">
-                        <td colspan="6" style="text-align: left; padding: 2px">Donations liées</td>
+                        <td colspan="6" style="text-align: left; padding: 2px">Détail du paiement</td>
+                    </tr>
+                    <tr class="old_{{ pay.id }} d-none th-don">
+                        <th colspan="2" scope="col">Date du don</th>
+                        <th scope="col">Montant</th>
+                        <th scope="col">Mode</th>
+                        <th colspan="2" scope="col">Utilisateur</th>
                     </tr>
                     {% for don in pay.donations %}
-                        <tr class="old_{{ pay.id }} d-none">
+                        <tr class="old_{{ pay.id }} d-none td-don">
                             <td colspan="2">{{ don.createdAt |date('d/m/y') }}</td>
                             <td>{{ don.amount }}€</td>
                             <td>

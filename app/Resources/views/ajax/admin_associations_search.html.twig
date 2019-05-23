@@ -1,30 +1,50 @@
 
-{# ----------------- Template des recherche Ajax des associations ----------------- #}
+{# ----------------- Template de recherche Ajax des associations Admin ----------------- #}
 
-<div class="associations">
-    {% for asso in assosAmount %}
-        <div class="assos">
-            <a href="{{ path('association_id', {id: asso[0].id}) }}">
-                {% if asso[0].image is null %}
-                    <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
+{% for association in assosAmount %}
+    <div class="asso-asso">
+
+        <div class="image-asso box">
+            <a href="{{ path('association_id', {id: association.0.id}) }}" class="link-asso">
+                {% if association.0.image is null %}
+                    <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut">
                 {% else %}
-                    <img src="{{ asset(ImgAssosFolder ~ asso[0].image) }}" alt="{{ asso[0].name }}" style="width: 10%;">
+                    <img src="{{ asset(ImgAssosFolder ~ association.0.image) }}" alt="{{ association.0.name }}">
                 {% endif %}
-                <span>{{ asso[0].name }}</span>
-            </a>
-            - <span>Depuis le : {{ asso[0].createdAt | date("d/m/y") }}</span>
-            - <span>Contact : {{ asso[0].contactInfo }}</span>
-            - <span>Total des Dons : {{ asso[1] }}€</span>
-            <a href="{{ path('admin_associations_edit', {id: asso[0].id }) }}" class="edit">
-                <i class="far fa-edit btn btn-info btn-sm"></i>
-            </a>
-            <a href="{{ path('admin_associations_delete', {id: asso[0].id }) }}" class="delete">
-                <i class="fas fa-trash-alt btn btn-info btn-sm"></i>
             </a>
         </div>
-    {% else %}
-        <div>
-            <span>Aucunes associations trouvées</span>
+
+        <div class="text-asso box">
+            <a href="{{ path('association_id', {id: association.0.id}) }}" class="link-asso">
+                <h3>{{ association.0.name }}</h3>
+            </a>
+            <p>Inscription le {{ association.0.createdAt | date("d/m/y") }}</p>
+            <p>Contact: {{ association.0.contactInfo }}</p>
         </div>
-    {% endfor %}
-</div>
+
+        {# ----------------- stats pour cette association ----------------- #}
+        <div class="stat-asso box">
+            Total des dons: <b>{{ association.1 }}€</b>
+        </div>
+
+        <div class="form-don box">
+            {# Editer une association #}
+            <a href="{{ path('admin_associations_edit', {id: association.0.id }) }}"
+               class="edit btn btn-info btn-sm m-1">
+                <i class="far fa-edit"></i>
+            </a>
+
+            {# Supprimer une categorie #}
+            <a href="" class="delete btn btn-danger btn-sm m-1"
+               data-delete-id="{{ association.0.id }}" data-delete-name="{{ association.0.name }}"
+                    {# Envoi le nom du chemin à suivre (path) de la fonction AJAX afin de mutualiser les scripts #}
+               data-delete-path="{{ path('admin_ajax_associations_delete') }}">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+        </div>
+    </div>
+{% else %}
+    <div class="no-infos">
+        <span>Aucunes associations trouvées</span>
+    </div>
+{% endfor %}

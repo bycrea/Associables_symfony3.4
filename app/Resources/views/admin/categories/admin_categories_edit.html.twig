@@ -3,9 +3,11 @@
 {% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_admin_dashboard.html.twig' %}
+    <h5 class="title-page mb-4">Editer une catégorie</h5>
 {% endblock %}
 
 {% block content %}
+<main id="dashboard">
 
     {# ----------------- Categories ----------------- #}
     <div class="title-page">
@@ -18,4 +20,5 @@
     <a href="{{ path('admin_categories') }}" class="btn btn-danger btn-sm">Annuler</a>
     {{ form_end(form) }}
 
+</main>
 {% endblock %}

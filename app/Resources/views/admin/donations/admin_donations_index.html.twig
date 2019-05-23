@@ -3,11 +3,13 @@
 {% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_admin_dashboard.html.twig' %}
-    <h4 class="title-page mb-4">Administration des dons</h4>
+    <h5 class="title-page mb-4">Administration des dons</h5>
 {% endblock %}
 
 {% block content %}
 <main id="dashboard">
+    {% include 'includes/flash_load_ajax.html.twig' %}
+
     {# ----------------- Administration des donations ----------------- #}
     <div class="container mb-5">
 

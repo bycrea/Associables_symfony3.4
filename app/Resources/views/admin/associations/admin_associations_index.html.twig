@@ -3,7 +3,7 @@
 {% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_admin_dashboard.html.twig' %}
-    <h4 class="title-page mb-4">Administration des Associations</h4>
+    <h5 class="title-page mb-4">Administration des Associations</h5>
 {% endblock %}
 
 {% block content %}
@@ -30,7 +30,7 @@
             permet de recharger la page en dès la sélection d'une l'option    #}
             {% set getCategory = app.request.get('getCategory') %}
             <label hidden for="categories">Catégories</label>
-            <select name="categories" id="categories" class="donation custom-select"
+            <select name="categories" id="categories" class="custom-select"
                     onchange="window.location.href = this.value">
 
                 <option value="{{ path('admin_associations', {getCategory: null}) }}">Toutes</option>
@@ -57,7 +57,7 @@
         </div>
 
         {# ----------------- Historique des Dons aux associations ----------------- #}
-        <div class="associations-dash">
+        <div class="associations associations-dash">
             {% for association in assosAmount %}
                 <div class="asso-asso">
 

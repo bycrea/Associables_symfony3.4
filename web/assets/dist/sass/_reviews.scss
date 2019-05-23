@@ -9,7 +9,7 @@
   flex-direction: column;
   justify-content: space-around;
 
-  width: 79%;
+  width: 80%;
   margin: auto;
 
   .review-asso {
@@ -20,7 +20,7 @@
     box-shadow: $box-shadow;
 
     p {
-      margin-bottom: 0px;
+      margin-bottom: 0;
     }
 
     .link-asso {
@@ -75,7 +75,7 @@
     }
 
     p {
-      margin-bottom: 0px;
+      margin-bottom: 0;
     }
 
     .link-asso {
@@ -98,6 +98,28 @@
     .sign {
       font-size: 0.8em;
       color: $bluetext;
+    }
+  }
+}
+
+/*  reviews asso_id & edit */
+
+.review-edit {
+  width: 80%;
+
+  .review-add, .reviews {
+    width: 100%;
+    padding: 1em;
+
+    box-shadow: $box-shadow;
+    background-color: white;
+
+    textarea {
+      min-height: 180px!important;
+    }
+
+    .note {
+      width: 132px;
     }
   }
 }

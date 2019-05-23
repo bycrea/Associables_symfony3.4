@@ -5,24 +5,30 @@
 
 #dashboard {
 
-  .await-payments {
+  .await-payments, .old-payments {
     width: 80%;
     margin: auto;
-  }
 
-  .old-payments {
-    width: 80%;
-    margin: auto;
-  }
+    .table td, .table th {
+      padding: 0.5em;
+      text-align: center;
+      vertical-align: middle;
+      width: calc(100% / 6);
+    }
 
-  .table td, .table th {
-    padding: 0.5em;
-    text-align: center;
-    vertical-align: middle;
-    width: calc(100% / 6);
-  }
+    .th-don, .td-don {
 
-  .canceled {
-    background-color: $danger_op;
+      border-left: 1px solid $shadow;
+      border-right: 1px solid $shadow;
+    }
+
+    .td-don {
+
+      background-color: $info_op;
+    }
+
+    .canceled {
+      background-color: $danger_op;
+    }
   }
 }

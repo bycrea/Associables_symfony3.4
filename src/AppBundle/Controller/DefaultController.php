@@ -18,11 +18,11 @@ class DefaultController extends Controller
     {
         // Récupère les associations récement solicitées
         $associations = $this->getDoctrine()->getRepository(Assos::class)
-            ->findMostRecent(6);
+            ->findMostRecent(3);
 
         // Récupère les avis utilisateur récents ou la note n'est pas en dessous de $minMark
         $reviews = $this->getDoctrine()->getRepository(Review::class)
-            ->findHomePageReviews(6, 2);
+            ->findHomePageReviews(3, 2);
 
         return $this->render('index.html.twig', [
             'title' => 'accueil',

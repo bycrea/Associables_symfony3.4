@@ -3,16 +3,12 @@
 {% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_admin_dashboard.html.twig' %}
+    <h5 class="title-page mb-4">Administration des catégories</h5>
 {% endblock %}
 
 {% block content %}
-    {# message d'erreur et loading AJAX #}
-    <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <p></p>
-    </div>
-    <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <i class="fas fa-spinner fa-3x"></i>
-    </div>
+<main id="dashboard">
+    {% include 'includes/flash_load_ajax.html.twig' %}
 
     {# ----------------- Modal Suppression categories ----------------- #}
     <div id="validate-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -25,33 +21,40 @@
         </div>
     </div>
 
+    <div class="container">
+
+        {# ----------------- Ajouter une Categories ----------------- #}
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="form-catg mb-4">
+                {{ form_widget(form.name) }}
+                <button type="submit" class="btn btn-warning ml-3">Ajouter</button>
+            </div>
+        {{ form_end(form) }}
+
         {# ----------------- Categories ----------------- #}
-    <h2 class="title-page">Categories (ADMIN)</h2>
+        <div class="categories">
+            {% for category in categories %}
+                <div class="catg-box">
+                    <div class="name-catg">{{ category.name }}</div>
 
-    {% for category in categories %}
-        <div class="catg-show">
-            <span>{{ category.name }}</span>
-
-            {# Editer une categorie #}
-            <a href="{{ path('admin_categories_update', {id: category.id}) }}" class="edit btn btn-info btn-sm">
-                <i class="far fa-edit"></i>
-            </a>
-
-            {# Supprimer une categorie #}
-            <a href="" class="delete btn btn-danger btn-sm"
-               data-delete-id="{{ category.id }}" data-delete-name="{{ category.name }}"
-               data-delete-path="{{ path('admin_ajax_categories_delete') }}">
-                <i class="fas fa-trash-alt"></i>
-            </a>
+                    <div class="btn-catg">
+                        {# Editer une categorie #}
+                        <a href="{{ path('admin_categories_update', {id: category.id}) }}" class="edit btn btn-info btn-sm">
+                            <i class="far fa-edit"></i>
+                        </a>
+                        {# Supprimer une categorie #}
+                        <a href="" class="delete btn btn-danger btn-sm"
+                           data-delete-id="{{ category.id }}" data-delete-name="{{ category.name }}"
+                           data-delete-path="{{ path('admin_ajax_categories_delete') }}">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-
-    {# ----------------- Ajouter une Categories ----------------- #}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-        <button type="submit">Valider</button>
-    {{ form_end(form) }}
-
+    </div>
+</main>
 {% endblock %}
 
 {% block scripts %}

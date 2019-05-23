@@ -19,7 +19,7 @@ class ReviewType extends AbstractType
         $builder
             ->add('comment', TextareaType::class,
                 [
-                    'label' => 'Votre avis :'
+                    'label' => 'Votre avis'
                 ])
             ->add('mark', ChoiceType::class,
                 [

@@ -1,103 +1,113 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <main>
-        {# message d'erreur et loading AJAX #}
-        <div id="flash-ajax" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-            <p></p>
-        </div>
-        <div id="loading-modal" class="d-none" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-            <i class="fas fa-spinner fa-3x"></i>
-        </div>
+<main>
+    {% include 'includes/flash_load_ajax.html.twig' %}
 
+    <div class="container mb-5">
+        <div class="association_id">
 
-        <h2 class="title-page">{{ association.name }}</h2>
+            <h2 class="title-page">{{ association.name }}</h2>
 
-        <div>
-            {# ----------------- Image de l'association ----------------- #}
-            <div>
-                {% if association.image is null %}
-                    <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut" style="width: 10%;">
+            <div class="descript">
+                {# ----------------- Image de l'association ----------------- #}
+                <div class="image-asso">
+                    {% if association.image is null %}
+                        <img src="{{ asset(ImgAssosDefault) }}" alt="image par défaut">
+                    {% else %}
+                        <img src="{{ asset(ImgAssosFolder ~ association.image) }}" alt="{{ association.name }}">
+                    {% endif %}
+                </div>
+
+                {# ----------------- Détails de l'association ----------------- #}
+
+                <p class="text-descript">{{ association.description }}</p>
+
+                {# ----------------- Catégories de l'associations ----------------- #}
+                <div class="catg-box">
+                    <a href="{{ association.urlAssos }}" target="_blank" class="link-asso mb-3">Site de l'association</a>
+                    <p>
+                        Catégories:<br>
+                        {% for category in association.categories %}
+                            <a href="{{ path('associations', {getCategory: category.id}) }}" class="link-asso">
+                                {{ category.name }}
+                            </a>
+                            {% if loop.index < association.categories | length %}
+                                {# détecte la dernière catégories #} <b>/</b>
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+
+                {# ----------------- Dons a l'associations ----------------- #}
+                <div class="don-asso">
+                    <label for="donation" class="mb-0">Faire un don</label>
+                    <select name="donation" id="donation" class="donation custom-select mb-2">
+                        {% for amount in array_amount %}
+                            <option
+                                {% if amount == default_amount %}
+                                    {# détecte le montant selectionné par défaut #}
+                                    selected
+                                {% endif %}
+                                value="{{ amount }}">{{ amount }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="donation-button btn btn-info btn-sm"
+                            data-association-id="{{ association.id }}">Donner</button>
+                </div>
+            </div>
+
+            <div class="retour mt-3">
+                {# ----------------- Bouton Retour ----------------- #}
+                {# Lien vers la page précédente grace au 'referer' de Twig #}
+                {% set referer = app.request.headers.get('referer') %}
+
+                {% if referer is not null %}
+                    <a href="{{ referer }}" class="btn btn-info btn-sm mt-2 px-4 py-2">Retour</a>
                 {% else %}
-                    <img src="{{ asset(ImgAssosFolder ~ association.image) }}" alt="{{ association.name }}" style="width: 10%;">
+                    <a href="{{ path('associations') }}" class="btn btn-info btn-sm mt-2 p-3">retour</a>
                 {% endif %}
             </div>
-
-            {# ----------------- Détails de l'association ----------------- #}
-
-            <p>{{ association.description }}</p>
-
-            <a href="{{ association.urlAssos }}" target="_blank">Site de l'association</a>
-
-            {# ----------------- Dons a l'associations ----------------- #}
-            <div>
-                <select name="donation" class="donation">
-                    {% for amount in array_amount %}
-                        <option
-                            {% if amount == default_amount %}
-                                {# détecte le montant selectionné par défaut #}
-                                selected
-                            {% endif %}
-                            value="{{ amount }}">{{ amount }}</option>
-                    {% endfor %}
-                </select>
-                <button class="donation-button btn btn-info btn-sm"
-                        data-association-id="{{ association.id }}">Donner</button>
-            </div>
-
-            {# ----------------- Catégories de l'associations ----------------- #}
-            <div>
-                <p>
-                    categories :
-                    {% for category in association.categories %}
-                        {{ category.name }}
-                        {% if loop.index < association.categories | length %}
-                            {# détecte la dernière catégories #} <i>/</i>
-                        {% endif %}
-                    {% endfor %}
-                </p>
-            </div>
-
-            {# ----------------- Bouton Retour ----------------- #}
-
-            {# Lien vers la page précédente grace au 'referer' de Twig #}
-            {% set referer = app.request.headers.get('referer') %}
-
-            {% if referer is not null %}
-                <a href="{{ referer }}">retour</a>
-            {% else %}
-                <a href="{{ path('associations') }}">retour</a>
-            {% endif %}
 
             {# ----------------- Reviews de l'associations ----------------- #}
-            <div class="reviews">
-                <h5>Vous aimez cette association? Donnez votre Avis.</h5>
-                {% for review in association.reviews %}
-                    <div class="review-asso">
-                        <p>{{ review.comment }}</p>
-                        <p>Note :
-                            <span>
-                            {% for i in range(1, 5) %}
-                                {% if review.mark >= i %}
-                                    <i class="fas fa-star"></i>
-                                {% else %}
-                                    <i class="far fa-star"></i>
-                                {% endif %}
-                            {% endfor %}
-                            </span>
-                        <p>{{ review.user }}, le : {{ review.createdAt | date('d-m-y') }} à {{ review.createdAt | date('H:i:s') }}</p>
-                    </div>
-                {% endfor %}
-                {% if app.user %}
-                    <div class="review-add">
-                        {{ form_start(form) }}
-                        {{ form_widget(form) }}
-                        <button type="submit" class="btn btn-warning btn-sm">Valider</button>
-                        <a href="{{ path('associations') }}" class="btn btn-danger btn-sm">Annuler</a>
-                        {{ form_end(form) }}
-                    </div>
-                {% endif %}
+            <h5 class="title-page mt-5">Avis utilisateurs</h5>
+            {% for review in association.reviews %}
+            <div class="reviews mt-3">
+                <div class="review-asso">
+                    <p>{{ review.comment }}</p>
+                    <p>
+                        <span>
+                        {% for i in range(1, 5) %}
+                            {% if review.mark >= i %}
+                                <i class="fas fa-star full-star"></i>
+                            {% else %}
+                                <i class="far fa-star empty-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                        </span>
+                    <p class="sign">{{ review.user }}, le : {{ review.createdAt | date('d-m-y') }} à {{ review.createdAt | date('H:i:s') }}</p>
+                </div>
             </div>
+            {% else %}
+            {% endfor %}
+
+
+            <h6 class="title-page mt-5">Vous aimez cette association? Donnez votre Avis.</h6>
+            {% if app.user %}
+            <div class="review-add mt-3">
+                {{ form_start(form) }}
+                {{ form_row(form.comment) }}
+                <div class="note mb-4">
+                    {{ form_label(form.mark) }}
+                    {{ form_errors(form.mark) }}
+                    {{ form_widget(form.mark, {'attr': {'class': 'custom-select'}}) }}
+                </div>
+                <button type="submit" class="btn btn-warning btn-sm">Valider</button>
+                <a href="{{ path('associations') }}" class="btn btn-danger btn-sm">Annuler</a>
+                {{ form_end(form) }}
+            </div>
+            {% endif %}
         </div>
-    </main>
+    </div>
+</main>
 {% endblock %}

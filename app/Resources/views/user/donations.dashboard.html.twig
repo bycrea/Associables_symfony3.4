@@ -3,7 +3,7 @@
 {% block header %}
     {# ----------------- Menu dashboard ----------------- #}
     {% include 'includes/menu_user_dashboard.html.twig' %}
-    <h4 class="title-page mb-4">Historique de mes dons</h4>
+    <h5 class="title-page mb-4">Historique de mes dons</h5>
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
     <div class="container mb-5">
 
         {# ----------------- Form Filtres ----------------- #}
-        <form action="{{ path('user_donations') }}" method="GET" class="filters-user input-group">
+        <form action="{{ path('user_donations') }}" method="GET" class="form-filters-users input-group">
 
             {# Récupère le paramètre GET['year'] afin de définir quelle option sera sélectionné #}
             {% set getYear = app.request.get('year') %}

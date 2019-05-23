@@ -1,0 +1,36 @@
+
+@import "variables";
+
+#dashboard {
+
+  .form-catg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .categories {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    width: 80%;
+    margin: auto;
+  }
+
+  .catg-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: calc(100% / 3 - 30px);
+    margin: 5px;
+    padding: 10px;
+
+    box-shadow: $box-shadow;
+    background-color: white;
+  }
+}

@@ -1,0 +1,32 @@
+
+@import "variables";
+
+#dashboard {
+
+  .users {
+    width: 90%;
+    margin: auto;
+  }
+
+  .filters-users {
+    width: 40%;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .table td, .table th {
+    padding: 0.5em;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .date {
+    font-size: small;
+  }
+
+  .online {
+    background-color: $danger_op;
+  }
+}
