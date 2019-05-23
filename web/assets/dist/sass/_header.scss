@@ -1,9 +1,19 @@
 
 @import "variables";
 
+/*.navbar {
+  background-color: $info_op !important;
+}*/
 
 .nav-logo {
-  width: 8%;
+  position: absolute;
+  left: 0px;
+  width: 13%;
+}
+
+.btn-group {
+  position: absolute;
+  right: 10px;
 }
 
 .basket-tick {

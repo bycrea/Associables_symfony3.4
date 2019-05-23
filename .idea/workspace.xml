@@ -2,25 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a42e37de-6fef-4343-b1cd-effe2d3cc026" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/associations/admin_associations_index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/associations/admin_associations_index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/donations/admin_donations_index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/donations/admin_donations_index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/payments/admin_payments_index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/payments/admin_payments_index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/reviews/admin_reviews_index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/reviews/admin_reviews_index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/ajax/admin_associations_search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/ajax/admin_associations_search.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/association_id.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/association_id.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/mentions.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/mentions.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/user/donations.dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/user/donations.dashboard.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/user/reviews.dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/user/reviews.dashboard.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/routing.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/routing.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/User/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/User/PaymentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/dist/css/style_master.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/dist/css/style_master.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/dist/css/style_master.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/dist/css/style_master.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/dist/sass/_association_id.scss" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/dist/sass/_association_id.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/assets/dist/sass/_header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/dist/sass/_header.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/dist/sass/_homepage.scss" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/dist/sass/_homepage.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/dist/sass/_users.scss" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/dist/sass/_users.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/assets/dist/sass/style_sass.scss" beforeDir="false" afterPath="$PROJECT_DIR$/web/assets/dist/sass/style_sass.scss" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,7 +33,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>false</find>
       <find>#d</find>
       <find>findByCategory</find>
       <find>switc</find>
@@ -79,6 +62,7 @@
       <find>debug</find>
       <find>{{ review.user }}, le</find>
       <find>createdAt | date(</find>
+      <find>btn-group</find>
     </findStrings>
     <replaceStrings>
       <replace>PAY</replace>
@@ -102,9 +86,9 @@
       <dir>$PROJECT_DIR$/app/Resources/views/admin</dir>
       <dir>$PROJECT_DIR$/app</dir>
       <dir>$PROJECT_DIR$</dir>
-      <dir>$PROJECT_DIR$/web/assets/dist/sass</dir>
       <dir>$PROJECT_DIR$/app/config</dir>
       <dir>$PROJECT_DIR$/app/Resources/views</dir>
+      <dir>$PROJECT_DIR$/web/assets/dist/sass</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -149,7 +133,6 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Admin/AssociationsController.php" />
         <option value="$PROJECT_DIR$/app/config/routing.yml" />
         <option value="$PROJECT_DIR$/web/assets/dist/sass/_association_id.scss" />
-        <option value="$PROJECT_DIR$/web/assets/dist/sass/_header.scss" />
         <option value="$PROJECT_DIR$/web/assets/dist/sass/_homepage.scss" />
         <option value="$PROJECT_DIR$/app/Resources/views/mentions.html.twig" />
         <option value="$PROJECT_DIR$/web/assets/dist/sass/_users.scss" />
@@ -164,6 +147,7 @@
         <option value="$PROJECT_DIR$/app/Resources/views/admin/reviews/admin_reviews_index.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/ajax/admin_associations_search.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/User/PaymentController.php" />
+        <option value="$PROJECT_DIR$/web/assets/dist/sass/_header.scss" />
       </list>
     </option>
   </component>
@@ -257,20 +241,28 @@
             <path>
               <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
               <item name="associables.local" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
+              <item name="associables.local" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
+              <item name="associables.local" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="includes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
               <item name="associables.local" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AppBundle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
-              <item name="associables.local" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AppBundle" type="462c0819:PsiDirectoryNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
@@ -282,6 +274,21 @@
               <item name="associables.local" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
+              <item name="associables.local" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="associables.local" type="b2602c69:ProjectViewProjectNode" />
+              <item name="associables.local" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+              <item name="sass" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -355,15 +362,16 @@
       <workItem from="1558297992455" duration="8663000" />
       <workItem from="1558339920620" duration="73400000" />
       <workItem from="1558504284619" duration="19005000" />
-      <workItem from="1558566177504" duration="25802000" />
+      <workItem from="1558566177504" duration="27445000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="492439000" />
+    <option name="totallyTimeSpent" value="494082000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18497577" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -402,44 +410,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Resources/FOSUserBundle/views/ChangePassword/change_password_content.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/user/reviews_edit.dashboard.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" selection-start-line="8" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/dist/sass/_fosuser.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/dist/sass/_associations.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1042">
-          <caret line="48" column="17" selection-start-line="48" selection-start-column="17" selection-end-line="48" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/categories/admin_categories_edit.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/associations/admin_associations_edit.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -704,13 +674,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/dist/sass/_header.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/donations/admin_donations_index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
@@ -718,13 +681,6 @@
           <folding>
             <element signature="e#12#26#0#Twig" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/dist/sass/style_sass.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="63" selection-start-line="63" selection-end-line="63" />
         </state>
       </provider>
     </entry>
@@ -789,12 +745,68 @@
     <entry file="file://$PROJECT_DIR$/app/config/parameters.yml.dist">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/AppCache.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/AppKernel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+          <folding>
+            <element signature="e#7#66#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/User/PaymentController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="46" column="9" lean-forward="true" selection-start-line="46" selection-start-column="9" selection-end-line="46" selection-end-column="9" />
+        <state relative-caret-position="930">
+          <caret line="62" selection-start-line="62" selection-end-line="62" />
           <folding>
             <element signature="e#45#75#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/dist/sass/_header.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/dist/sass/style_sass.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-299">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/includes/drop_user_option.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/includes/drop_admin_option.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/includes/_header.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="18" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="18" />
+          <folding>
+            <element signature="e#1999#2035#0#Twig" expanded="true" />
+            <element signature="e#2083#2118#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
