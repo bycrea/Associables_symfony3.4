@@ -79,3 +79,19 @@
     color: $bluetext;
   }
 }
+
+
+/*  Formulaire association  */
+
+.form-asso {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+
+  box-shadow: $box-shadow;
+  background-color: white;
+
+  textarea {
+    min-height: 150px;
+  }
+}

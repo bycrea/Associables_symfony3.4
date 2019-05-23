@@ -40,7 +40,7 @@ class DefaultController extends Controller
      */
     public function usersRedirectAction()
     {
-        // Récupère l'utilisateur
+        // Récupère l'utilisateur s'il est connecté
         if($user = $this->getUser())
         {
             // Si le 'ROLE_ADMIN' existe pour cet Utilisateur

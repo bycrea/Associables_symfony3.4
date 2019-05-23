@@ -2,8 +2,12 @@
 @import "variables";
 
 .login {
-  width: 30%;
+  width: 40%;
   margin: auto;
+  padding: 10px 25px;
+
+  box-shadow: $box-shadow;
+  background-color: white;
 
   form {
     display: flex;
@@ -12,5 +16,9 @@
 
   .btn-login {
     margin: auto;
+  }
+
+  .custom-select {
+    min-width: calc(100% / 3);
   }
 }

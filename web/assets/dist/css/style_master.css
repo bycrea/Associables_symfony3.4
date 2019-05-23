@@ -104,8 +104,11 @@
 }
 
 .login {
-  width: 30%;
+  width: 40%;
   margin: auto;
+  padding: 10px 25px;
+  box-shadow: 1px 1px 5px #b7b8b8;
+  background-color: white;
 }
 .login form {
   display: flex;
@@ -113,6 +116,9 @@
 }
 .login .btn-login {
   margin: auto;
+}
+.login .custom-select {
+  min-width: calc(100% / 3);
 }
 
 /*    Infos User    */
@@ -410,6 +416,18 @@
 .association_id .sign {
   font-size: 0.9em;
   color: #4b7196;
+}
+
+/*  Formulaire association  */
+.form-asso {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 1px 1px 5px #b7b8b8;
+  background-color: white;
+}
+.form-asso textarea {
+  min-height: 150px;
 }
 
 /*    ADMIN   */

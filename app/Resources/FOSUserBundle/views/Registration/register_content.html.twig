@@ -2,22 +2,25 @@
 
 {% set referer = app.request.headers.get('referer') %}
 
-<div class="login">
+<main>
+    <div class="container">
+        <div class="login mb-4">
+            <h5 class="title-page mt-2 mb-3">Formulaire d'inscription</h5>
 
-    <h4 class="title-page mt-4 mb-5">Formulaire d'inscription</h4>
+            {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+                {{ form_widget(form) }}
+                <div class="btn-login mb-2">
+                    <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-warning btn-sm"/>
+                    {# Lien vers la page précédente grace au 'referer' de Twig #}
+                    {% set referer = app.request.headers.get('referer') %}
 
-    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-        {{ form_widget(form) }}
-        <div class="mb-5">
-            <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-info btn-sm"/>
-            {# Lien vers la page précédente grace au 'referer' de Twig #}
-            {% set referer = app.request.headers.get('referer') %}
-
-            {% if referer is not null %}
-                <a href="{{ referer }}" class="btn btn-danger btn-sm">Annuler</a>
-            {% else %}
-                <a href="{{ path('home') }}" class="btn btn-danger btn-sm">Annuler</a>
-            {% endif %}
+                    {% if referer is not null %}
+                        <a href="{{ referer }}" class="btn btn-danger btn-sm">Annuler</a>
+                    {% else %}
+                        <a href="{{ path('home') }}" class="btn btn-danger btn-sm">Annuler</a>
+                    {% endif %}
+                </div>
+            {{ form_end(form) }}
         </div>
-    {{ form_end(form) }}
-</div>
+    </div>
+</main>

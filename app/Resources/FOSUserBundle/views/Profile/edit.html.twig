@@ -1,5 +1,17 @@
 {% extends '::base.html.twig' %}
 
+{% block header %}
+    {# ----------------- Menu dashboard ----------------- #}
+    {% include 'includes/menu_user_dashboard.html.twig' %}
+    <h5 class="title-page mb-5">Modifier mon mail</h5>
+{% endblock %}
+
 {% block content %}
-{% include "@FOSUser/Profile/edit_content.html.twig" %}
+    {% include "@FOSUser/Profile/edit_content.html.twig" %}
 {% endblock content %}
+
+{% block scripts %}
+    <script>
+        $('#fos_user_profile_form_username').prop( "disabled", true );
+    </script>
+{% endblock %}

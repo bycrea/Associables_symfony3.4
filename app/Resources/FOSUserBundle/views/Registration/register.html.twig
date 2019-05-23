@@ -3,7 +3,11 @@
 {% extends "::base.html.twig" %}
 
 {% block content %}
-    <main>
-        {% include "@FOSUser/Registration/register_content.html.twig" %}
-    </main>
+    {% include "@FOSUser/Registration/register_content.html.twig" %}
 {% endblock content %}
+
+{% block scripts %}
+    <script>
+        $('select').addClass('custom-select');
+    </script>
+{% endblock %}

@@ -7,41 +7,43 @@
 {% endblock %}
 
 {% block content %}
-
-    {# ----------------- Informations personelles ----------------- #}
-    <div class="infos">
-        <div class="info ln">
-            <span class="t-left">Prénom, Nom</span>
-            <span class="t-rigth">{{ user.firstname |capitalize }}, {{ user.lastname |capitalize }}</span>
-        </div>
-        <div class="info ln">
-            <span class="t-left">Nom d'utilisateur</span>
-            <span class="t-rigth">{{ user.username }}</span>
-        </div>
-        <div class="info ln">
-            <span class="t-left">Mail</span>
-            <span class="t-rigth">{{ user.email }}</span>
-        </div>
-        <div class="info ln">
-            <span class="t-left">Civilité</span>
-            <span class="t-rigth">{{ user.gender }}</span>
-        </div>
-        <div class="info ln">
-            <span class="t-left">Date de naissance</span>
-            <span class="t-rigth">{{ user.birthdayAt | date('d/m/y') }}</span>
-        </div>
-        <div class="info ln mb-2">
-            <span class="t-left">Menbre depuis le</span>
-            <span class="t-rigth">{{ user.createdAt | date('d/m/y') }}</span>
-        </div>
-        <div class="info">
-            <span class="t-left modif">Modifer le mail</span>
-            <span class="t-rigth modif"><a href="{{ path('fos_user_profile_edit') }}" class="btn btn-danger btn-sm">Mail</a></span>
-        </div>
-        <div class="info">
-            <span class="t-left modif">Modifer le mot de passe</span>
-            <span class="t-rigth modif"><a href="{{ path('fos_user_change_password') }}" class="btn btn-danger btn-sm">MDP</a></span>
+<main id="dashboard">
+    <div class="container">
+        {# ----------------- Informations personelles ----------------- #}
+        <div class="infos">
+            <div class="info ln">
+                <span class="t-left">Prénom, Nom</span>
+                <span class="t-rigth">{{ user.firstname |capitalize }}, {{ user.lastname |capitalize }}</span>
+            </div>
+            <div class="info ln">
+                <span class="t-left">Nom d'utilisateur</span>
+                <span class="t-rigth">{{ user.username }}</span>
+            </div>
+            <div class="info ln">
+                <span class="t-left">Mail</span>
+                <span class="t-rigth">{{ user.email }}</span>
+            </div>
+            <div class="info ln">
+                <span class="t-left">Civilité</span>
+                <span class="t-rigth">{{ user.gender }}</span>
+            </div>
+            <div class="info ln">
+                <span class="t-left">Date de naissance</span>
+                <span class="t-rigth">{{ user.birthdayAt | date('d/m/y') }}</span>
+            </div>
+            <div class="info ln mb-2">
+                <span class="t-left">Menbre depuis le</span>
+                <span class="t-rigth">{{ user.createdAt | date('d/m/y') }}</span>
+            </div>
+            <div class="info">
+                <span class="t-left modif">Modifer le mail</span>
+                <span class="t-rigth modif"><a href="{{ path('fos_user_profile_edit') }}" class="btn btn-danger btn-sm">Mail</a></span>
+            </div>
+            <div class="info">
+                <span class="t-left modif">Modifer le mot de passe</span>
+                <span class="t-rigth modif"><a href="{{ path('fos_user_change_password') }}" class="btn btn-danger btn-sm">MDP</a></span>
+            </div>
         </div>
     </div>
-
+</main>
 {% endblock %}

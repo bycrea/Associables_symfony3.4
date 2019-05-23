@@ -1,29 +1,33 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="login">
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<main>
+    <div class="container">
+        <div class="login mb-4">
+            {% if error %}
+                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-    <form action="{{ path("fos_user_security_check") }}" method="post">
-        {% if csrf_token %}
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-        {% endif %}
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+                {% if csrf_token %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                {% endif %}
 
-        <label for="username" class="mb-2 mt-3">{{ 'security.login.username'|trans }}</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
+                <label for="username" class="mb-2 mt-3">{{ 'security.login.username'|trans }}</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
 
-        <label for="password" class="mb-2 mt-3">{{ 'security.login.password'|trans }}</label>
-        <input type="password" id="password" name="_password" required="required" autocomplete="current-password" />
+                <label for="password" class="mb-2 mt-3">{{ 'security.login.password'|trans }}</label>
+                <input type="password" id="password" name="_password" required="required" autocomplete="current-password" />
 
-        <div>
-            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-            <label for="remember_me" class="mb-2 mt-3">{{ 'security.login.remember_me'|trans }}</label>
+                <div>
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                    <label for="remember_me" class="mb-2 mt-3">{{ 'security.login.remember_me'|trans }}</label>
+                </div>
+
+                <div class="btn-login mb-2 mt-3">
+                    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-info" />
+                    <a href="{{ path('fos_user_registration_register') }}" class="btn btn-info">S'inscrire</a>
+                </div>
+            </form>
         </div>
-
-        <div class="btn-login mb-2 mt-3">
-            <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-info" />
-            <a href="{{ path('fos_user_registration_register') }}" class="btn btn-info">S'inscrire</a>
-        </div>
-    </form>
-</div>
+    </div>
+</main>
