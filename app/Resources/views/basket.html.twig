@@ -36,7 +36,7 @@
 
                         {# ----------------- modifier / supprimer un don ----------------- #}
                         <div class="don-asso-basket">
-                            <p style="font-size: small; margin-bottom: 0px;">montant unitaire</p>
+                            <p style="font-size: small; margin-bottom: 0;">montant unitaire</p>
                             <div class="don-asso">
                                 <select name="donation_{{ donation.id }}" class="donation-select custom-select" data-association-id="{{ donation.assos.id }}">
                                     {% for amount in array_amount %}
@@ -66,7 +66,7 @@
             {# ----------------- Total / Paiement ----------------- #}
             <div class="total-amount mt-3 mr-3" id="total-amount">
                 <div class="text-amount mr-3">
-                    <p style="font-size: medium; margin-bottom: 0px;">
+                    <p style="font-size: medium; margin-bottom: 0;">
                         <b>Montant total :
                         <span id="amount" data-total-amount="{{ total_amount }}">{{ total_amount }}</span>€</b>
                     </p>
@@ -90,6 +90,9 @@
 
     {# On attend que la page est fini de charger #}
     $(document).ready(function() {
+
+        {# appel la fonction calc() #}
+        calc()
 
         {# Récupère data-basket-quantity pour afficher ou cacher la bulle Panier (basket-tick) #}
         if($('.basket-tick').data('basket-quantity') > 0)
@@ -146,8 +149,12 @@
 
                             $('.basket-tick').addClass('d-none')
                         }
+                        {# Rafraichi le montant total #}
                         $('#amount').text(response.amount)
                         $('#flash-ajax p').text('')
+
+                        {# Recalcul le montant après réduction #}
+                        calc(response.amount)
                     }
                     else if(response.status === false)
                     {
@@ -157,7 +164,7 @@
                 },
                 {# Type de réponse attendu #}
                 dataType: 'json'
-            });
+            })
         })
 
         {# On écoute l'évènement 'click' sur le lien delete #}
@@ -193,6 +200,7 @@
                         {
                             $('.basket-tick').removeClass('d-none')
                             $('.basket-tick').text(response.quantity)
+                            $('#submit').prop('disabled', false)
 
                         } else {
 
@@ -200,8 +208,12 @@
                             $('.basket-tick').addClass('d-none')
                             $('#submit').prop('disabled', true)
                         }
+                        {# Rafraichi le montant total #}
                         $('#amount').text(response.amount)
                         $('#flash-ajax p').text('')
+
+                        {# Recalcul le montant après réduction #}
+                        calc(response.amount)
                     }
                     else if(response.status === false)
                     {
@@ -211,7 +223,7 @@
                 },
                 {# Type de réponse attendu #}
                 dataType: 'json'
-            });
+            })
         })
 
         {# cache la modal loading-modal après le chargement AJAX #}
@@ -220,13 +232,16 @@
         });
 
 
-        calc()
-
-        function calc() {
-            var amount = $('#amount').data('total-amount')
+        {# Fonction de calcul du montant total après réduction #}
+        function calc(amount = null) {
+            if(amount === null)
+            {
+                amount = $('#amount').data('total-amount')
+            }
             var result = amount - (amount * 75 / 100)
 
             $('#result').text(result + '€')
+            console.log(amount)
         }
     })
 </script>
