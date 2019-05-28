@@ -44,9 +44,12 @@
 
                         } else {
 
+                            {# si le panier ne contient aucun article #}
                             $('.basket-tick').addClass('d-none')
                         }
-                        $('#flash-ajax p').text('')
+                        {# message de confirmation #}
+                        $('#add-basket').removeClass('d-none')
+                        setTimeout(function() { $('#add-basket').addClass('d-none'); }, 3000)
                     }
                     else if(response.status === false)
                     {

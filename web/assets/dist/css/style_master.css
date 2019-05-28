@@ -22,6 +22,26 @@
   animation: spin 1s infinite linear;
 }
 
+/* ADD BASKET */
+#add-basket {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+#add-basket p {
+  padding: 20px;
+  text-align: center;
+  color: white;
+  font-size: large;
+  border-radius: 5px;
+  text-shadow: 3px 3px 5px black;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
 /* DELETE */
 .message-delete {
   position: relative;
