@@ -32,7 +32,7 @@
             {# Filtre Asso #}
             <label hidden for="asso">Associations</label>
             <select name="asso" id="asso" class="asso custom-select">
-                <option value="null">Associations</option>
+                <option value="">Associations</option>
                 {% for asso in allAsso %}
                     <option {{ (asso.id in getAsso) ? 'selected' : ''  }} value="{{ asso.id }}">{{ asso.name }}</option>
                 {% endfor %}
@@ -41,7 +41,7 @@
             {# Filtre User #}
             <label hidden for="user">Utilisateurs</label>
             <select name="user" id="user" class="user custom-select">
-                <option value="null">Utilisateurs</option>
+                <option value="">Utilisateurs</option>
                 {% for user in allUser %}
                     <option {{ (user.id in getUser) ? 'selected' : ''  }} value="{{ user.id }}">{{ user.username }}</option>
                 {% endfor %}
@@ -50,7 +50,7 @@
             {# Filtre paymentStatus #}
             <label hidden for="status">Paiement Status</label>
             <select name="status" id="status" class="status custom-select">
-                <option {{ (getStatus is null) ? 'selected' : ''  }} value="null">Att./Trans.</option>
+                <option {{ (getStatus is null) ? 'selected' : ''  }} value="">Att./Trans.</option>
                 <option {{ (4 in getStatus) ? 'selected' : ''  }} value="4">En attente</option>
                 <option {{ (5 in getStatus) ? 'selected' : ''  }} value="5">Transférés</option>
                 <option {{ (0 in getStatus) ? 'selected' : ''  }} value="0">En panier</option>

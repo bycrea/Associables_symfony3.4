@@ -28,7 +28,6 @@ class DonationsController extends Controller
         $allAssos = $this->getDoctrine()->getRepository(Assos::class)
             ->findAll();
 
-
         // Récupère le filtre des associations $asso
         if(null != $request->query->get('asso'))
         {
