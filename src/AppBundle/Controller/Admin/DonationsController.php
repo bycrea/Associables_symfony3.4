@@ -42,8 +42,13 @@ class DonationsController extends Controller
             $user = $this->getDoctrine()->getRepository(User::class)
                 ->find($request->query->get('user'));
 
+        } elseif($request->query->get('user') == '~') {
+
+            $user = '~';
+
         } else { $user = null; }
 
+        
         // Récupère le filtre des paiement $paymentStatus
         switch ($request->query->get('status'))
         {
