@@ -53,9 +53,9 @@
                         {# message de confirmation modal add-basket #}
                         $('#add-basket').removeClass('d-none')
                         setTimeout(function() {
-                            $('#add-basket').fadeOut(500, function ()
+                            $('#add-basket').fadeOut(400, function ()
                                 {
-                                    $('#add-basket').addClass('d-none')
+                                    $('#add-basket').addClass('d-none').fadeIn(10);
                                 })
                             }, 1500)
                     }
