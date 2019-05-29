@@ -2,6 +2,9 @@
 {#  Script de rajout des dons au paniers depuis l'onglet 'Associations'  #}
 
 <script>
+    {# Reset les messages d'erreur #}
+    $('#flash-ajax p').text('')
+
     {# On attend que la page est fini de charger #}
     $(document).ready(function() {
 
@@ -47,9 +50,14 @@
                             {# si le panier ne contient aucun article #}
                             $('.basket-tick').addClass('d-none')
                         }
-                        {# message de confirmation #}
+                        {# message de confirmation modal add-basket #}
                         $('#add-basket').removeClass('d-none')
-                        setTimeout(function() { $('#add-basket').addClass('d-none'); }, 3000)
+                        setTimeout(function() {
+                            $('#add-basket').fadeOut(500, function ()
+                                {
+                                    $('#add-basket').addClass('d-none')
+                                })
+                            }, 1500)
                     }
                     else if(response.status === false)
                     {
@@ -59,7 +67,7 @@
                 },
                 {# Type de réponse attendu #}
                 dataType: 'json'
-            });
+            })
         })
 
         {# cache la modal loading-modal après le chargement AJAX #}
