@@ -42,10 +42,6 @@ class DonationsController extends Controller
             $user = $this->getDoctrine()->getRepository(User::class)
                 ->find($request->query->get('user'));
 
-        } elseif($request->query->get('user') == '~') {
-
-            $user = '~';
-
         } else { $user = null; }
 
         
@@ -78,11 +74,11 @@ class DonationsController extends Controller
         return $this->render('admin/donations/admin_donations_index.html.twig', [
             'title' => 'Donations Admin',
 
-            // Variables de Filtration
+            // Variables des Filtres
             'allUser' => $allUser,
             'allAsso' => $allAssos,
 
-            // Variables de Résultat
+            // Variables des Résultats
             'donations' => $donations,
             'paymentStatus' => Donation::PAYEMENT_STATUS,
             'totalAmount' => $totalAmount

@@ -14,9 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Review
 {
-    // On défini la date à l'intant T ou l'on crée notre notre nouvelle Donation
+    // Importe la propriété 'createdAt' du trait 'CreatedAtTrait'
     use CreatedAtTrait;
 
+    // Variable constante pour les notes (mark)
     const MARK = [5 => 5, 4 => 4, 3 => 3, 2 => 2, 1 => 1];
 
     /**

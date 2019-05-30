@@ -1,5 +1,9 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-{% include "@FOSUser/Resetting/request_content.html.twig" %}
+    <main>
+        <div class="container">
+        {% include "@FOSUser/Resetting/request_content.html.twig" %}
+        </div>
+    </main>
 {% endblock content %}

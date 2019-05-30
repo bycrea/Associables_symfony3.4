@@ -9,15 +9,17 @@
 {% block content %}
 <main id="dashboard">
     <div class="container mb-5">
+
         <div class="form-asso">
             {{ form_start(form) }}
             {{ form_widget(form) }}
             <div class="btn-login">
                 <button type="submit" class="btn btn-warning btn-sm">Valider</button>
                 <a href="{{ path('admin_associations') }}" class="btn btn-danger btn-sm">Annuler</a>
-                {{ form_end(form) }}
             </div>
+            {{ form_end(form) }}
         </div>
+
     </div>
 </main>
 {% endblock %}

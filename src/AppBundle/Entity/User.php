@@ -20,9 +20,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User extends BaseUser
 {
-    // On défini la date à l'intant T ou l'on crée notre notre nouvelle Donation
+    // Importe la propriété 'createdAt' du trait 'CreatedAtTrait'
     use CreatedAtTrait;
 
+    // Constantes de civilité
     const GENDER_MAN = 0;
     const GENDER_FEM = 1;
     const GENDER_OTHER = 2;

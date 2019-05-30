@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Assos
 {
-    // On défini la date à l'intant T ou l'on crée notre notre nouvelle Donation
+    // Importe la propriété 'createdAt' du trait 'CreatedAtTrait'
     use CreatedAtTrait;
 
     /**

@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Payment
 {
-    // On défini la date à l'intant T ou l'on crée notre notre nouvelle Donation
+    // Importe la propriété 'createdAt' du trait 'CreatedAtTrait'
     use CreatedAtTrait;
 
     // Constantes des status de paiement des transferts aux associations

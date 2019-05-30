@@ -142,8 +142,19 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
     /**
      * @return array
      *
-     * Retourne l'entity Assos et le total dons en attente de transfert (amount)
-     * Groupé par nom d'association et trié par date d'ancienneté (DESC)
+     * Retourne l'entity Assos et le total dons en attente de transfert
+     * Groupé par id Assos et trié du plus grand au plus petit total de dons
+     * (amount DESC)
+     *
+     *
+     * * Equivalent de la requête en SQL
+     *
+     * SELECT *, SUM(don.amount) AS amount
+     * FROM assos AS a
+     * LEFT JOIN donation AS don ON a.id = don.assos_id
+     * WHERE don.payment_status IN (4)
+     * GROUP BY a.id
+     * ORDER BY amount DESC;
      */
     public function findAwaitingPayments()
     {
