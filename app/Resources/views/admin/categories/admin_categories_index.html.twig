@@ -15,6 +15,7 @@
         <div class="message-delete">
             <div>Etes vous sûr de vouloir supprimer la catégorie <b><span class="name"></span></b> ?</div>
             <div>
+                {#<a href="#" id="validate" class="btn btn-danger btn-sm">Valider</a>#}
                 <button id="validate" class="btn btn-danger btn-sm">Valider</button>
                 <button id="cancel" class="btn btn-info btn-sm">Annuler</button>
             </div>
@@ -38,15 +39,15 @@
 
                     <div class="btn-catg">
                         {# Editer une categorie #}
-                        {# On écoute le bouton en jQuery pour modifier et non ajouter une catégorie #}
+                        {# On écoute le bouton en jQuery pour modifier et non plus ajouter une catégorie #}
                         <a href="" class="edit btn btn-info btn-sm"
                            data-id-catg="{{ category.id }}" data-name-catg="{{ category.name }}">
                             <i class="far fa-edit"></i>
                         </a>
                         {# Supprimer une categorie #}
                         <a href="" class="delete btn btn-danger btn-sm"
-                           data-delete-id="{{ category.id }}" data-delete-name="{{ category.name }}"
-                           data-delete-path="{{ path('admin_ajax_categories_delete') }}">
+                           data-delete-name="{{ category.name }}"
+                           data-delete-path="{{ path('admin_categories_delete', {id: category.id}) }}">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>
@@ -64,8 +65,7 @@
 {% block scripts %}
 
     {#   Modification, Ajout et Suppression des catégories sur la même page grâce au jQuery   #}
-
-    {% include 'includes/js_ajax_delete.html.twig' %}
+    {% include 'includes/js_path_delete.html.twig' %}
 
     <script>
         $(document).ready(function () {

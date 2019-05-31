@@ -1,0 +1,37 @@
+
+{#          Script de la Modal de suppression           #}
+
+<script>
+    {# On attend que la page est fini de charger #}
+    $(document).ready( function () {
+
+        {# Ecoute le click sur l'icone delete #}
+        $('.delete').on('click', function (e) {
+            e.preventDefault()
+
+            {# Récupère le nom et la route de l'entité a supprimer #}
+            var name = $(this).data('delete-name')
+            var path_action = window.location.origin + $(this).data('delete-path')
+
+            {# Affiche la modal de suppression et injecte le nom de l'entité #}
+            $('#validate-modal').removeClass('d-none').find('span').text(name)
+
+            {# Ecoute le click sur tout la page (document) #}
+            $('#validate-modal').on('click', function (e) {
+                e.preventDefault()
+
+                {# Si le click est à l'extérieur de la modal ou sur le bouton 'annuler' #}
+                if($('#validate-modal').is(e.target) || $('#cancel').is(e.target))
+                {
+                    {#      Referme la modal      #}
+                    $('#validate-modal').addClass('d-none')
+
+                } else if ($('#validate').is(e.target)) {
+
+                    {# Si le 'click' est sur le bouton 'valider', on redirige vers le 'path_action' #}
+                    window.location.href = path_action;
+                }
+            })
+        })
+    })
+</script>

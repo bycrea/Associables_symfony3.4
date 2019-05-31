@@ -63,21 +63,23 @@ class CategoriesController extends Controller
 
 
     /**
-     * @Route("/delete", name="admin_ajax_categories_delete")
+     * @Route("/delete/{id}", name="admin_categories_delete")
      */
-    public function _ajaxDeleteAction(Request $request)
+    public function deleteAction($id)
     {
-        $catg_id = $request->request->get('id');
-        $category = $this->getDoctrine()->getRepository(Category::class)->find($catg_id);
+        // Récupère la catégorie correspondante à l'id en paramètre POST venant de l'Ajax
+        // $catg_id = $request->request->get('id');
+        $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
 
+        // Supprime la catégorie
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($category);
         $entityManager->flush();
 
+        // Prépare le message 'success' correspondant
         $this->addFlash('success', 'La categorie a bien été supprimé.');
-        return $this->json([
-            'status' => true,
-            'url' => $this->generateUrl('admin_categories')
-        ]);
+
+        // Redirige vers indexAction
+        return $this->redirectToRoute('admin_categories');
     }
 }
