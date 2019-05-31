@@ -16,42 +16,37 @@ class BasketController extends Controller
      * @Route("/basket", name="basket")
      *
      * Récupère et Affiche les donations d'un utilisateur ou d'une machine dans le panier
-     * Affiche le montant Total des donations
+     * Affiche aussi le montant Total des dons en panier
      */
     public function basketAction(Request $request)
     {
-        // Initialise la variable null
-        $donations = null;
-        $totalAmount = 0;
-
-        // Récupère l'utilisateur et le cookie
+        // On utlise les méthode de symfony pour savoir si un User est connecté
+        // Ou si le cookie 'associables_basket' existe
         $user = $this->getUser();
         $cookieId = $request->cookies->get('associables_basket');
 
-        // Si l'utilisateur existe :
+        // Récupère le repository de l'entity donation
+        $repo = $this->getDoctrine()->getRepository(Donation::class);
+
         if (is_object($user))
         {
-            // On récupère ses donations
-            $donations = $this->getDoctrine()->getRepository(Donation::class)
-                ->findBy(['user' => $user, 'paymentStatus' => Donation::PAY_BASKET]);
+            // Récupère les donations de l'utilisateur s'il existe
+            $donations = $repo->findBy(['user' => $user, 'paymentStatus' => Donation::PAY_BASKET]);
 
         } elseif ($cookieId != null) {
 
-            // Sinon on récupère les donations liées au cookie
-            $donations = $this->getDoctrine()->getRepository(Donation::class)
-                ->findBy(['cookieId' => $cookieId, 'paymentStatus' => Donation::PAY_BASKET]);
-        }
+            // Sinon on récupère les donations liées au cookieId
+            $donations = $repo->findBy(['cookieId' => $cookieId, 'paymentStatus' => Donation::PAY_BASKET]);
 
-        // Récupère le montant total des donations
-        foreach ($donations as $donation)
-        {
-            $totalAmount += $donation->getAmount();
+        } else {
+
+            // Si pour une raison obscure il n'y a pas ni user, ni cookieId
+            $donations = null;
         }
 
         return $this->render('basket.html.twig', [
             'title' => 'panier',
-            'donations' => $donations,
-            'total_amount' => $totalAmount
+            'donations' => $donations
         ]);
     }
 
@@ -75,14 +70,14 @@ class BasketController extends Controller
         // et ainsi de transmettre un message en Front (return false or true)
         try {
 
-            // On utlise la méthode 'getUser' de symfony pour savoir si un utilisateur est connecté
-            // et ainsi initialiser les variables $id_user et $id_cookie
             if ($this->getUser())
             {
                 // Si l'utilisateur est connecté on récupère son Id
                 $id_user = $this->getUser()->getId();
                 $id_cookie = null;
+
             } else {
+
                 // Sinon on utilise la valeur du coockie enregistré
                 $id_cookie = $request->cookies->get('associables_basket');
                 $id_user = null;
@@ -90,39 +85,34 @@ class BasketController extends Controller
 
             // On verifie que le don n'existe pas déjà grace à la méthode
             // 'existingBasketDonation' du 'DonationRepository'
-            // '$donationExists' enregistre le résultat de la requête
             $donationExists = $this->getDoctrine()->getRepository(Donation::class)
                 ->existingBasketDonation($id_asso, $id_user, $id_cookie);
 
             if ($donationExists)
             {
-                // Si le don existe déjà, on enregistre le nouveau montant (celui-ci peut être le même)
-                $donationExists->setAmount($amount);
-                $donationExists->setCreatedAt(new DateTime());
+                // Si le don existe déjà, on enregistre le nouveau montant et on actualise le DateTime
+                $donationExists->setAmount($amount)->setCreatedAt(new DateTime());
                 $entityManager->persist($donationExists);
 
             } else {
 
-                // Si le don n'existe pas, on enregistre celui-ci
-                // On récupère l'objet $association
-                $association = $this->getDoctrine()->getRepository(Assos::class)->find($id_asso);
-
-                // On récupère l'objet $user
-                // OU avec la méthode doctrine grace à l'id_user récupéré plus haut
-                // $user = $this->getDoctrine()->getRepository(User::class)->find($id_user);
-                // OU avec la méthode symfony 'getUser'
-                $user = $this->getUser();
-
-                // On crée une nouvelle donation
+                // Si le don n'existe pas, on instancie une nouvelle donation
                 $newDonation = new Donation();
 
-                // On établi les paramètres de cette donation
-                $newDonation
-                    ->setAmount($amount)
-                    ->setAssos($association);
-                if ($this->getUser()) {
+                // On récupère l'objet $association concerné
+                $association = $this->getDoctrine()->getRepository(Assos::class)->find($id_asso);
+
+                // On établi les propriétés de cette donation
+                $newDonation->setAmount($amount)->setAssos($association);
+
+                if ($user = $this->getUser()) {
+
+                    // Si un utilisateur est connecté on transmet a notre donation
                     $newDonation->setUser($user);
+
                 } else {
+
+                    // Sinon on transmet l'id du cookie
                     $newDonation->setCookieId($id_cookie);
                 }
 
@@ -134,16 +124,15 @@ class BasketController extends Controller
 
         } catch (Exception $e) {
 
-            // Si une erreur est détecté on retourne 'false' au paramètre SUCCESS de l'AJAX
+            // Si une erreur est détecté on retourne 'false' en paramètre de Ajax::success
             return $this->json(['status' => false]);
         }
 
-        // Récupère le total des dons et leur somme dans le panier de l'utilisateur grace à la méthode
-        // 'getBasketTotal' crée en amont dans 'DonationRepository' pour les transmettre en Front
+        // Récupère le nombre de dons et la somme total dans le panier
         $basketTotal = $this->getDoctrine()->getRepository(Donation::class)
             ->getBasketTotal($id_user, $id_cookie);
 
-        // Retourne un objet JSON au paramètre SUCCESS de l'AJAX
+        // Retourne un objet JSON en paramètre de Ajax::success
         return $this->json([
             'status' => true,
             'quantity' => $basketTotal['quantity'],
@@ -160,10 +149,8 @@ class BasketController extends Controller
      */
     public function _ajaxDeleteFromBasketAction(Request $request)
     {
-        // Recupère l'id de la donation envoyé en AJAX
+        // Recupère les variables $_POST envoyé en AJAX
         $id_don = $request->request->get('id_don');
-
-        // Recupère l'id de l'association envoyé en AJAX
         $id_asso = $request->request->get('id_asso');
 
         // Initialise les variables transmisent aux méthodes 'DonationRepository'
@@ -173,12 +160,13 @@ class BasketController extends Controller
         // Initialise l'EntityManager de Doctrine
         $entityManager = $this->getDoctrine()->getManager();
 
-        // On utlise la méthode 'getUser' de symfony pour savoir si un utilisateur est connecté
         if ($this->getUser())
         {
             // Si l'utilisateur est connecté on récupère son Id
             $id_user = $this->getUser()->getId();
+
         } else {
+
             // Sinon on utilise la valeur du coockie enregistré
             $id_cookie = $request->cookies->get('associables_basket');
         }
@@ -200,12 +188,11 @@ class BasketController extends Controller
             return $this->json(['status' => false]);
         }
 
-        // Récupère le total des dons et leur somme dans le panier de l'utilisateur grace à la méthode
-        // 'getBasketTotal' crée en amont dans 'DonationRepository' pour les transmettre en Front
+        // Récupère le nombre de dons et la somme total dans le panier
         $basketTotal = $this->getDoctrine()->getRepository(Donation::class)
             ->getBasketTotal($id_user, $id_cookie);
 
-        // Retourne un objet JSON au paramètre SUCCESS de l'AJAX
+        // Retourne un objet JSON en paramètre de Ajax::success
         return $this->json([
             'status' => true,
             'quantity' => $basketTotal['quantity'],

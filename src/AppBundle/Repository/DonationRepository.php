@@ -63,8 +63,7 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
      * @return array
      *
      * Compte le nombre de dons associés au Panier d'un Utilisateur (id_user ou id_cookie)
-     * ET
-     * La somme total de tous ces dons.
+     * ET La somme total de tous ces dons.
      */
     public function getBasketTotal($id_user = null, $id_cookie = null)
     {
@@ -72,8 +71,9 @@ class DonationRepository extends \Doctrine\ORM\EntityRepository
         $queryBuilder = $this->createQueryBuilder('don');
 
         $queryBuilder
-            // On utilise la fonction SQL count() pour retourner le nombre d'id donation
-            ->select('count(don.id) as quantity, SUM(don.amount) as amount')
+            // On utilise la fonction SQL COUNT() pour retourner le nombre de donations
+            // Et la fonction SUM() pour retourner le montant total des donations
+            ->select('COUNT(don.id) as quantity, SUM(don.amount) as amount')
             // là OU le status de paiement est égal à la constante PAY_BASKET(=0)
             ->where('don.paymentStatus = :status')
             ->setParameter('status', Donation::PAY_BASKET);

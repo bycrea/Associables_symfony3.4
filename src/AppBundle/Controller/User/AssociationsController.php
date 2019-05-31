@@ -17,13 +17,12 @@ class AssociationsController extends Controller
         $user = $this->getUser();
 
         // Récupère les associations auquelles l'utilisateur à donné
-        // et le montant total par asso retoune array(asso, amount)
-        $associations = $this->getDoctrine()->getRepository(Assos::class)
-            ->findUserAssos($user);
+        $assoUserAndAmount = $this->getDoctrine()->getRepository(Assos::class)
+            ->findUserAssosAndAmount($user);
 
         return $this->render('user/associations.dashboard.html.twig', [
             'title' => 'Mon compte - Mes Assos',
-            'associations' => $associations
+            'assoUserAndAmount' => $assoUserAndAmount
         ]);
     }
 }

@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 class RequestEventListener
 {
-
     /**
      * Pour pouvoir ajouter des dons au panier sans être connecté en tant qu'utilisateur,
      * nous devons créer un cookie afin de mémoriser à qu'elle machine appartiennent les dons
