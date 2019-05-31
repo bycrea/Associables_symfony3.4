@@ -377,4 +377,29 @@ class Assos
     {
         return $this->image;
     }
+
+    /**
+     * @return int
+     *
+     * On crée un getter personnalisé qui retourne le montant total des dons
+     * pour l'entité traité (Accessible avec Twig via association.(get)totalAmount)
+     */
+    public function getTotalAmount()
+    {
+        $amount = 0;
+
+        if($this->getDonations()->count() > 0)
+        {
+            foreach ($this->getDonations() as $don)
+            {
+                if($don->getPaymentStatus() == Donation::PAY_IN_TRANSFER
+                    || $don->getPaymentStatus() == Donation::PAY_PROCESSED)
+                {
+                    $amount += $don->getAmount();
+                }
+            }
+        }
+
+        return $amount;
+    }
 }

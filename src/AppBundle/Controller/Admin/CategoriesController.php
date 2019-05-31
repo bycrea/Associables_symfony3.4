@@ -3,7 +3,6 @@
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Category;
-use AppBundle\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -82,4 +81,5 @@ class CategoriesController extends Controller
         // Redirige vers indexAction
         return $this->redirectToRoute('admin_categories');
     }
+
 }

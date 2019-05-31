@@ -16,19 +16,32 @@ use Symfony\Component\Routing\Annotation\Route;
 class AssociationsController extends Controller
 {
     /**
+     * @param $entity
+     * @return \Doctrine\Common\Persistence\ObjectRepository
+     *
+     * Function getRepo() permet de simplifier le code pour accéder à un repository
+     */
+    public function getRepo($entity)
+    {
+        return $this->getDoctrine()->getRepository($entity);
+    }
+
+
+    /**
+     * ******** READ *********
+     *
      * @Route("/associations/{getCategory}", name="admin_associations", defaults={"getCategory": ""})
      */
     public function indexAction($getCategory)
     {
         // Récupère toutes les catégories pour les afficher dans le menu déroulant
-        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        $categories = $this->getRepo(Category::class)->findAll();
 
         // Si une catégorie est entrée en paramètre $_GET de l'url
         if($getCategory)
         {
             // Récupère les associations lié a la catégorie grâce à la méthode créé dans 'AssosRepository'
-            $associations = $this->getDoctrine()->getRepository(Assos::class)
-                ->findByCategory($getCategory);
+            $associations = $this->getRepo(Assos::class)->findByCategory($getCategory);
 
             // Si la catégorie n'existe pas ou qu'aucunes associations n'est lié à celle-ci
             // la collection d'objet retourné sera vide
@@ -42,28 +55,75 @@ class AssociationsController extends Controller
         } else {
 
             // Récupère toutes les associations, toutes catégories confondues
-            $associations = $this->getDoctrine()->getRepository(Assos::class)
-                ->findBy([],['name' => 'ASC']);
+            $associations = $this->getRepo(Assos::class)->findBy([],['name' => 'ASC']);
         }
-
-        // Récupère les montants et Renvoi un tableau [objet 'Assos', total des dons]
-        $assosAmount = $this->getAmountInAssos($associations);
 
         return $this->render('admin/associations/admin_associations_index.html.twig', [
             'title' => 'Associations Admin',
             'categories' => $categories,
-            'assosAmount' => $assosAmount
+            'associations' => $associations
         ]);
     }
 
 
     /**
+     * ******** CREATE *********
+     *
+     * @Route("create/associations", name="admin_associations_create")
+     */
+    public function associationCreateAction(Request $request)
+    {
+
+        $association = new Assos();
+        $form = $this->createForm(AssociationType::class, $association);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $image = $association->getImage();
+
+            if($image)
+            {
+                $imageName = uniqid().'.'.$image->guessExtension();
+
+                try {
+
+                    $image->move($this->getParameter('images_dir'), $imageName);
+
+                } catch (FileException $e) {
+
+                    $this->addFlash('danger', 'Erreur de téléchargement');
+                    return $this->redirectToRoute('admin_associations_create');
+                }
+
+                $association->setImage($imageName);
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($association);
+            $entityManager->flush();
+
+            $this->addFlash('success', $association->getName().' à bien été ajouté.');
+            return $this->redirectToRoute('admin_associations');
+        }
+
+        return $this->render('admin/associations/admin_associations_edit.html.twig', [
+            'title' => 'Creation Asso Admin',
+            'form' => $form->createView()
+        ]);
+    }
+
+
+    /**
+     * ******** EDIT *********
+     *
      * @Route("/edit/associations/{id}", name="admin_associations_edit")
      */
     public function associationEditAction(Request $request, $id)
     {
 
-        $association = $this->getDoctrine()->getRepository(Assos::class)->find($id);
+        $association = $this->getRepo(Assos::class)->find($id);
 
         $oldImage = $association->getImage();
         $association->setImage(null);
@@ -80,6 +140,7 @@ class AssociationsController extends Controller
                 $imageName = uniqid().'.'.$image->guessExtension();
 
                 try {
+
                     $path = $this->getParameter('images_dir');
 
                     $image->move($path, $imageName);
@@ -109,67 +170,24 @@ class AssociationsController extends Controller
         }
 
         return $this->render('admin/associations/admin_associations_edit.html.twig', [
-            'title' => 'Edition Asso Admin',
+            'title' => 'Edition Assos Admin',
             'form' => $form->createView()
         ]);
     }
 
 
     /**
-     * @Route("create/associations", name="admin_associations_create")
-     */
-    public function associationCreateAction(Request $request)
-    {
-
-        $association = new Assos();
-        $form = $this->createForm(AssociationType::class, $association);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $image = $association->getImage();
-
-            if($image)
-            {
-                $imageName = uniqid().'.'.$image->guessExtension();
-
-                try {
-                    $image->move(
-                        $this->getParameter('images_dir'),
-                        $imageName
-                    );
-                } catch (FileException $e) {
-
-                    $this->addFlash('danger', 'Erreur de téléchargement');
-                    return $this->redirectToRoute('admin_associations_create');
-                }
-
-                $association->setImage($imageName);
-            }
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($association);
-            $entityManager->flush();
-
-            $this->addFlash('success', $association->getName().' à bien été ajouté.');
-            return $this->redirectToRoute('admin_associations');
-        }
-
-        return $this->render('admin/associations/admin_associations_edit.html.twig', [
-            'title' => 'Creation Asso Admin',
-            'form' => $form->createView()
-        ]);
-    }
-
-
-    /**
+     * ******** DELETE AJAX *********
+     *
      * @Route("_ajax/delete/associations", name="admin_ajax_associations_delete")
      */
     public function _ajaxDeleteAction(Request $request)
     {
+        $this->addFlash('success', 'je passe par ajax delete');
+        return $this->redirectToRoute('admin_associations');
+
         $id = $request->request->get('id');
-        $association = $this->getDoctrine()->getRepository(Assos::class)->find($id);
+        $association = $this->getRepo(Assos::class)->find($id);
 
         try {
 
@@ -194,11 +212,13 @@ class AssociationsController extends Controller
 
 
     /**
+     * ******** DELETE *********
+     *
      * @Route("/delete/associations/{id}", name="admin_associations_delete")
      */
     public function deleteAction($id)
     {
-        $association = $this->getDoctrine()->getRepository(Assos::class)->find($id);
+        $association = $this->getRepo(Assos::class)->find($id);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($association);
@@ -210,55 +230,22 @@ class AssociationsController extends Controller
 
 
     /**
+     * ******** RECHERCHE EN AJAX *********
+     *
      * @Route("/_ajax/search/associations", name="admin_ajax_search")
      *
      * Retourne, sous forme de vue, les associations qui contiennent
-     * les caractères entrés en POST 'Request' via la barre de recherche
+     * les caractères entrés en POST Ajax 'Request' via la barre de recherche
      */
     public function _ajaxSearchAction(Request $request)
     {
         $search = $request->request->get('search');
         $catg = intval($request->request->get('catg'));
 
-        $associations = $this->getDoctrine()->getRepository(Assos::class)
-            ->findBySearchBar($search, $catg);
-
-        // Récupère les montants et Renvoi un tableau [objet 'Assos', total des dons]
-        $assosAmount = $this->getAmountInAssos($associations);
+        $associations = $this->getRepo(Assos::class)->findBySearchBar($search, $catg);
 
         return $this->render('ajax/admin_associations_search.html.twig', [
-            'associations' => $associations,
-            'assosAmount' => $assosAmount
+            'associations' => $associations
         ]);
-    }
-
-
-    /**
-     * La méthode 'getAmountInAssos' calcul le montant total des dons,
-     * pour chaque associations entrées en paramètre.
-     * Retounne un Tableau (multidimentionnel) [assos, amount]
-     */
-    public function getAmountInAssos($associations)
-    {
-        if(!empty($associations))
-        {
-            $assosAmount = [];
-            foreach ($associations as $association)
-            {
-                $amount = $this->getDoctrine()->getRepository(Assos::class)
-                    ->getGivenAmount($association);
-
-                if($amount == null) { $amount = 0; }
-
-                // Renvoi un tableau multidimensionnel [objet 'Assos', total des dons]
-                $assosAmount[] = [$association, $amount];
-            }
-
-        } else {
-
-            return $assosAmount = [];
-        }
-
-        return $assosAmount;
     }
 }
