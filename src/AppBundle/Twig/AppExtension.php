@@ -43,7 +43,7 @@ class AppExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('getBasketTotal', [$this, 'getBasketTotal']),
+            new TwigFunction('getBasketQuantity', [$this, 'getBasketQuantity']),
             new TwigFunction('textSlice', [$this, 'textSlice'])
         ];
     }
@@ -56,7 +56,7 @@ class AppExtension extends AbstractExtension
      * Fonctions Twig personalisée,
      * Récupère le nombre de dons dans le panier
      */
-    public function getBasketTotal (Request $request)
+    public function getBasketQuantity(Request $request)
     {
         // Initialise les variables
         $id_cookie = null;
@@ -68,6 +68,7 @@ class AppExtension extends AbstractExtension
 
         if(\is_object($user))
         {
+            // Récupère l'id user
             $id_user = $user->getId();
         } else {
             // Récupère l'id_cookie grâce à la requête HTTP injecté en paramètre

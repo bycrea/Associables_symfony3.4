@@ -74,31 +74,29 @@
             $('.edit').on('click', function (e) {
                 e.preventDefault()
 
-                {# Récupère les datas concernées par la modification #}
+                {# Récupère les datas concernées par la modification (id, name) #}
                 var id = $(this).data('id-catg')
                 var name = $(this).data('name-catg')
 
-                {# Balise Input ID type hidden rajouté en cas de modification #}
-                var hidden = $('.hidden-id').val()
-
-                {# Transmet la valeur de la catégorie au Input type Text #}
+                {# Transmet la valeur de la catégorie au input type Text #}
                 $('#appbundle_category_name').val(name)
                 {# Modifie le bouton Ajouter => Modifier #}
                 $('.submit').text('Modifier')
 
+                {# Récupère la valeur de l'input hidden-id s'il existe #}
+                var hidden = $('.hidden-id').val()
+
                 if(hidden)
                 {
-                    {# Si l'Input ID existe déjà #}
+                    {# Si l'input hidden-id existe déjà on transmet la nouvelle valeur #}
                     $('.hidden-id').val(id)
-
                 } else {
-
-                    {# Sinon on rajoute l'Input ID hidden à la balise Form avec la valeur de id-catg sélectionné #}
+                    {# Sinon on rajoute l'input hidden-id à la balise Form avec la valeur de id sélectionné #}
                     $('.form-catg').append("<input hidden name='edit-id' class='hidden-id' type='number' value='"+ id +"'/>")
                 }
             })
 
-            {# On écoute l'input' dans le champ Text #}
+            {# On écoute les changement sur l'input type Text #}
             $('#appbundle_category_name').on('input', function () {
 
                 {# Récupère la valeur du champ à chaque changement #}
@@ -106,12 +104,13 @@
 
                 if(!isEmpty)
                 {
-                    {# Si il est vide, On supprime l'Input ID rajouté #}
+                    {# Si il est vide, On supprime l'input hidden-id rajouté #}
                     $('.hidden-id').remove()
                     {# On modifie le bouton Modifier => Ajouter #}
                     $('.submit').text('Ajouter')
                 }
             })
+
         })
     </script>
 {% endblock %}

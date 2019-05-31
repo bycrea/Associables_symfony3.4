@@ -25,11 +25,11 @@
             <li class="nav-item {{ ('basket' in route) ? 'active' : '' }}">
                 <a class="nav-link" id="basket-link" href="{{ path('basket') }}">Panier
 
-                {# Appel la fonction Twig 'getBasketTotal' de la class AppExtention.php #}
+                {# Appel la fonction Twig 'getBasketQuantity' de la class AppExtention.php #}
                 {# elle prend en paramètre 'app.request' afin de pouvoir récupérer la requête HTTP #}
                     {# On n'affiche le résultat uniquement s'il est supérieur à zéro #}
-                    <span class="basket-tick" data-basket-quantity="{{ getBasketTotal( app.request ) }}">
-                       {{ getBasketTotal( app.request ) }}
+                    <span class="basket-tick" data-basket-quantity="{{ getBasketQuantity( app.request ) }}">
+                       {{ getBasketQuantity( app.request ) }}
                     </span>
                 </a>
             </li>

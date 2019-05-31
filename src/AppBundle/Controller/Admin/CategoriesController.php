@@ -25,7 +25,7 @@ class CategoriesController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // Si le formulaire d'ajout ou de modification est 'Submit'
+        // Si le formulaire d'ajout ou de modification est soumis
         if (!empty($request->request->get('submit'))) {
 
             // Si un 'edit-id' est transmit, il s'agit d'une modification
@@ -43,7 +43,7 @@ class CategoriesController extends Controller
                 $this->addFlash('success', 'La categorie a bien été ajouté.');
             }
 
-            // Fixe le nom de la catégorie
+            // Implémente le nom de la catégorie
             $category->setName($request->request->get('name'));
 
             $entityManager = $this->getDoctrine()->getManager();

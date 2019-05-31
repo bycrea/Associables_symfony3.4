@@ -48,7 +48,7 @@
             <label hidden for="search">Recherche</label>
             <input type="text" id="search" data-search-url="{{ path('admin_ajax_search') }}" placeholder="rechercher">
 
-            {# ----------------- Ajouter une Suppression asso ----------------- #}
+            {# ----------------- Ajouter une association ----------------- #}
             <div class="ml-3">
                 <a href="{{ path('admin_associations_create') }}" class="btn btn-info btn-sm pl-2 pr-2">
                     Ajouter une association <i class="fas fa-plus-circle"></i>
@@ -81,7 +81,7 @@
 
                     {# ----------------- stats pour cette association ----------------- #}
                     <div class="stat-asso box">
-                        Total des dons: <b>{{ association.totalAmount }}€</b>
+                        Total des dons: <b>{{ association.totalGiven }}€</b>
                     </div>
 
                     <div class="form-don box">
@@ -93,9 +93,8 @@
 
                         {# Supprimer une categorie #}
                         <a href="" class="delete btn btn-danger btn-sm m-1"
-                           data-delete-id="{{ association.id }}" data-delete-name="{{ association.name }}"
-                            {# Envoi le nom du chemin à suivre (path) de la fonction AJAX afin de mutualiser les scripts #}
-                            data-delete-path="{{ path('admin_ajax_associations_delete') }}">
+                            data-delete-name="{{ association.name }}"
+                            data-delete-path="{{ path('admin_associations_delete', {id: association.id}) }}">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>
@@ -111,6 +110,6 @@
 {% endblock %}
 
 {% block scripts %}
-    {% include 'includes/js_ajax_delete.html.twig' %}
+    {% include 'includes/js_path_delete.html.twig' %}
     {% include 'includes/js_ajax_search.html.twig' %}
 {% endblock %}

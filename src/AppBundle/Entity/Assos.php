@@ -384,7 +384,7 @@ class Assos
      * On crée un getter personnalisé qui retourne le montant total des dons
      * pour l'entité traité (Accessible avec Twig via association.(get)totalAmount)
      */
-    public function getTotalAmount()
+    public function getTotalGiven()
     {
         $amount = 0;
 

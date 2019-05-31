@@ -34,11 +34,9 @@
                 <i class="far fa-edit"></i>
             </a>
 
-            {# Supprimer une categorie #}
-            <a href="" class="delete btn btn-danger btn-sm m-1"
-               data-delete-id="{{ association.id }}" data-delete-name="{{ association.name }}"
-                {# Envoi le nom du chemin à suivre (path) de la fonction AJAX afin de mutualiser les scripts #}
-               data-delete-path="{{ path('admin_ajax_associations_delete') }}">
+            {# Supprimer une categorie sans validation #}
+            <a href="{{ path('admin_associations_delete', {id: association.id}) }}"
+               class="delete btn btn-danger btn-sm m-1">
                 <i class="fas fa-trash-alt"></i>
             </a>
         </div>

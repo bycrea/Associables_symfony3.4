@@ -15,7 +15,7 @@ class DonationsController extends Controller
      * @param $entity
      * @return \Doctrine\Common\Persistence\ObjectRepository
      *
-     * Function getRepo() permet de simplifier le code pour accéder à un repository
+     * Function getRepo() permet de simplifier le code pour accéder au repository d'une entité
      */
     public function getRepo($entity)
     {

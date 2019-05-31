@@ -91,22 +91,19 @@ class AssosRepository extends \Doctrine\ORM\EntityRepository
      * @return array
      *
      * Retourne les associtations auquelles un utilisateur à donné
-     * paymentStatus = en attente de transfert OU transféré
-     * Et le montant des dons pour chaque association
+     * OU paymentStatus = en attente de transfert OU transféré
      */
-    public function findUserAssosAndAmount($user)
+    public function findUserAssos($user)
     {
         $queryBuilder = $this->createQueryBuilder('a');
 
         $queryBuilder
             ->leftJoin('a.donations', 'don')
-            ->addSelect('SUM(don.amount) AS amount')
             ->where('don.user = :user')
             ->setParameter('user', $user)
             ->andWhere('don.paymentStatus IN (:status)')
             ->setParameter('status', [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED])
-            ->groupBy('a.id')
-            ->orderBy('amount', 'DESC');
+            ->orderBy('a.name', 'ASC');
 
         return $queryBuilder->getQuery()->getResult();
     }
