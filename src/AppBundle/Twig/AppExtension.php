@@ -94,7 +94,7 @@ class AppExtension extends AbstractExtension
         // Si la taille du $text est supérieur à $length
         if(strlen($text) > $length)
         {
-            // On limite la taille du $text à $length
+            // On limite la taille du $text à $length + ...
             $sliceText = substr($text, 0, $length).'...';
 
         } else {

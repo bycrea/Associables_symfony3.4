@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Simplification de la Route pour les méthodes du controller
- * en ajoutant le commentaire ci-dessous pour éviter de nommer les routes
+ * en ajoutant l'annotation ci-dessous pour éviter de nommer les routes
  * en commencant par '/categories'/... à chaque fois
  *
  * @Route("/categories")
@@ -19,24 +19,32 @@ class CategoriesController extends Controller
 {
 
     /**
+     * Grâce au jQuery, on peut ajouter ou modifier des catégories dans la même page
+     * voir : 'admin/categories/admin_categories_index.html.twig'
+     *
      * @Route("/", name="admin_categories")
      */
     public function indexAction(Request $request)
     {
+        // Si le formulaire d'ajout ou de modification est 'Submit'
         if (!empty($request->request->get('submit'))) {
 
-            if(!empty($id = $request->request->get('id')))
+            // Si un 'edit-id' est transmit, il s'agit d'une modification
+            if(!empty($id = $request->request->get('edit-id')))
             {
+                // Récupère la catégorie concerné par l'id et on prépare la réponse 'success' correspondante
                 $category = $this->getDoctrine()->getRepository(Category::class)
                     ->find($id);
                 $this->addFlash('success', 'La categorie a bien été modifié.');
 
             } else {
 
+                // Sinon on crée une nouvelle catégorie et on prépare la réponse 'success' correspondante
                 $category = new Category();
                 $this->addFlash('success', 'La categorie a bien été ajouté.');
             }
 
+            // Fixe le nom de la catégorie
             $category->setName($request->request->get('name'));
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -44,38 +52,12 @@ class CategoriesController extends Controller
             $entityManager->flush();
         }
 
+        // Récupère toutes les catégories existantes
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
         return $this->render('admin/categories/admin_categories_index.html.twig', [
-            'title' => 'Categories',
-            'categories' => $categories,
-        ]);
-    }
-
-
-    /**
-     * @Route("/update/{id}", name="admin_categories_update")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
-        $form = $this->createForm(CategoryType::class, $category);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($category);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'La categorie a bien été modifié.');
-            return $this->redirectToRoute('admin_categories');
-        }
-
-        return $this->render('admin/categories/admin_categories_edit.html.twig', [
-            'title' => 'Edition categorie',
-            'form' => $form->createView()
+            'title' => 'Categories Admin',
+            'categories' => $categories
         ]);
     }
 

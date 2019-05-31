@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Admin;
 use AppBundle\Entity\Assos;
 use AppBundle\Entity\Category;
 use AppBundle\Form\AssociationType;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -182,7 +183,7 @@ class AssociationsController extends Controller
                 'url' => $this->generateUrl('admin_associations')
             ]);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
 
             return $this->json([
             'status' => false,
@@ -233,8 +234,8 @@ class AssociationsController extends Controller
 
 
     /**
-     * La méthode 'getAmountInAssos' ajoute le montant donné pour chaque associations
-     * entrées en paramètre.
+     * La méthode 'getAmountInAssos' calcul le montant total des dons,
+     * pour chaque associations entrées en paramètre.
      * Retounne un Tableau (multidimentionnel) [assos, amount]
      */
     public function getAmountInAssos($associations)

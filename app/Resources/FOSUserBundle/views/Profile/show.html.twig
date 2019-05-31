@@ -1,5 +1,30 @@
 {% extends '::base.html.twig' %}
 
+{% block header %}
+    {# ----------------- Menu dashboard ----------------- #}
+    {% include 'includes/menu_user_dashboard.html.twig' %}
+    <h5 class="title-page mb-5">Mes informations</h5>
+{% endblock %}
+
 {% block content %}
-{% include "@FOSUser/Profile/show_content.html.twig" %}
+
+    <main id="dashboard">
+
+        <div class="title-page mt-5 mb-4">
+            {% include "@FOSUser/Profile/show_content.html.twig" %}
+        </div>
+
+    </main>
+
 {% endblock content %}
+
+{% block scripts %}
+    {# Permet de rediriger vers /users/redirect après un delay de 5000ms (5s) #}
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                window.location = '/user/infos';
+            }, 5000)
+        })
+    </script>
+{% endblock %}

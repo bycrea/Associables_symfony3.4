@@ -120,8 +120,8 @@
             {# On recupère l'id de l'association passé en paramètre data-attribute #}
             var id = $(this).data('association-id')
 
-            {# On recherche le montant selectionné dans la div parente au 'button' #}
-            {# Soit this(button) -> parent(div) -> option selectionné et récupère sa valeur #}
+            {# On recherche le montant selectionné dans les options de la balise select #}
+            {# Soit this(select) -> find(option selectionné) et récupère sa valeur #}
             var amount = $(this).find('option:selected').val()
 
             {# fontion AJAX méthode POST #}
@@ -134,12 +134,13 @@
                     id: id,
                     amount: amount
                 },
-                {# fontion à excécuter en cas de success #}
+                {# fontion à excécuter une fois la requête terminé #}
                 success: function (response)
                 {
+                    {# En cas de success #}
                     if(response.status === true)
                     {
-                        {# raffraichi le nombre de dons en cas de succès #}
+                        {# raffraichi le nombre de dons #}
                         if(response.quantity > 0)
                         {
                             $('.basket-tick').removeClass('d-none')
@@ -147,6 +148,7 @@
 
                         } else {
 
+                            {# Si le nombre de don = 0 on efface la bulle du panier #}
                             $('.basket-tick').addClass('d-none')
                         }
                         {# Rafraichi le montant total #}
@@ -156,9 +158,10 @@
                         {# Recalcul le montant après réduction #}
                         calc(response.amount)
                     }
+                    {# En cas d'échec #}
                     else if(response.status === false)
                     {
-                        {# Affiche un message d'erreur en cas d'échec #}
+                        {# Affiche un message d'erreur #}
                         $('#flash-ajax p').text('une erreur est survenue, veuillez réessayer.')
                     }
                 },
@@ -187,24 +190,24 @@
                     id_don: id_don,
                     id_asso: id_asso
                 },
-                {# fontion à excécuter en cas de success #}
+                {# fontion à excécuter une fois la requête terminé #}
                 success: function (response)
                 {
+                    {# En cas de success #}
                     if(response.status === true)
                     {
                         {# Retire la donation correspondant à l'id #}
                         $('#' + id_don).remove()
 
-                        {# raffraichi le nombre de dons en cas de succès #}
+                        {# raffraichi le nombre de dons #}
                         if(response.quantity > 0)
                         {
                             $('.basket-tick').removeClass('d-none')
                             $('.basket-tick').text(response.quantity)
-                            $('#submit').prop('disabled', false)
 
                         } else {
 
-                            {# Désactive le bouton 'payer' si le montant est <= 0 #}
+                            {# Désactive le bouton 'payer' si don = 0 #}
                             $('.basket-tick').addClass('d-none')
                             $('#submit').prop('disabled', true)
                         }
@@ -215,9 +218,10 @@
                         {# Recalcul le montant après réduction #}
                         calc(response.amount)
                     }
+                    {# En cas d'échec #}
                     else if(response.status === false)
                     {
-                        {# Affiche un message d'erreur en cas d'échec #}
+                        {# Affiche un message d'erreur #}
                         $('#flash-ajax p').text('une erreur est survenue, veuillez réessayer.')
                     }
                 },
@@ -230,7 +234,6 @@
         $(document).ajaxStop(function(){
             $('#loading-modal').addClass('d-none')
         });
-
 
         {# Fonction de calcul du montant total après réduction #}
         function calc(amount = null) {

@@ -14,7 +14,7 @@ class LoginListener
      * nous devons créer un cookie afin de mémoriser à qu'elle machine appartiennent les dons
      * (Entity/Donation/cookieId)
      * Si l'utilisateur se connecte après avoir ajouté des dons à son panier, il faut pouvoir
-     * identifier ces dons à l'utilisateur et non plus au cookie
+     * identifier ces dons avec l'utilisateur et non plus avec le cookie
      * On crée pour cela un service qui va écouter l'évènement 'security.interactive_login'
      * (ou l'authentification d'un uttilisateur)
      * 'onLogin' va ainsi déclencher la méthode 'fromCookieToUser' qui elle se chargera de

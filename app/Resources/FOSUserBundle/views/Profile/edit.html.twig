@@ -12,6 +12,11 @@
 
 {% block scripts %}
     <script>
-        $('#fos_user_profile_form_username').prop( "disabled", true );
+        {# empèche l'username d'être changé #}
+        var username = $('#fos_user_profile_form_username').val()
+
+        $('#fos_user_profile_form_username').on('change', function () {
+            $(this).val(username)
+        })
     </script>
 {% endblock %}

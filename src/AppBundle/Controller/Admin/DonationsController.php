@@ -12,6 +12,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class DonationsController extends Controller
 {
     /**
+     * @param $entity
+     * @return \Doctrine\Common\Persistence\ObjectRepository
+     *
+     * Function getRepo() permet de simplifier le code pour accéder à un repository
+     */
+    public function getRepo($entity)
+    {
+        return $this->getDoctrine()->getRepository($entity);
+    }
+
+
+    /**
      * @Route("/donations", name="admin_donations")
      */
     public function indexAction(Request $request)
@@ -21,30 +33,25 @@ class DonationsController extends Controller
         if(empty($year)) {$year = 2019;}
 
         // Affichage de tous les utilisateurs
-        $allUser = $this->getDoctrine()->getRepository(User::class)
-            ->findAll();
+        $allUser = $this->getRepo(User::class)->findAll();
 
         // Affichage de toutes les Associations
-        $allAssos = $this->getDoctrine()->getRepository(Assos::class)
-            ->findAll();
+        $allAssos = $this->getRepo(Assos::class)->findAll();
 
         // Récupère le filtre des associations $asso
         if(null != $request->query->get('asso'))
         {
-            $asso = $this->getDoctrine()->getRepository(Assos::class)
-                ->find($request->query->get('asso'));
+            $asso = $this->getRepo(Assos::class)->find($request->query->get('asso'));
 
         } else { $asso = null; }
 
         // Récupère le filtre des utilisateurs $user
         if(null != $request->query->get('user'))
         {
-            $user = $this->getDoctrine()->getRepository(User::class)
-                ->find($request->query->get('user'));
+            $user = $this->getRepo(User::class)->find($request->query->get('user'));
 
         } else { $user = null; }
 
-        
         // Récupère le filtre des paiement $paymentStatus
         switch ($request->query->get('status'))
         {
@@ -62,12 +69,12 @@ class DonationsController extends Controller
         }
 
 
-        // Récupère les donations par $year/$user/$paymentStatus avec la méthode 'findDonationsByYear'
-        $donations = $this->getDoctrine()->getRepository(Donation::class)
+        // Récupère les donations par $year/$asso/$user/$paymentStatus avec la méthode 'findDonationsByYear'
+        $donations = $this->getRepo(Donation::class)
             ->adminDonationsFilter($year, $asso, $user, $paymentStatus);
 
         // Récupère le montant total de ces donations grâce à la méthode 'getDonationsTotalAmount'
-        $totalAmount = $this->getDoctrine()->getRepository(Donation::class)
+        $totalAmount = $this->getRepo(Donation::class)
             ->getDonationsTotalAmount($donations);
 
 
