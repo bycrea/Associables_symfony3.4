@@ -22,32 +22,27 @@ class PaymentController extends Controller
      */
     public function paymentAction(Service $service)
     {
-        // Récupère l'utilisateur
-        $user = $this->getUser();
-
-        // Récupère les donations liées à l'utilisateur
+        // Récupère les donations en Panier, liées à l'utilisateur connecté
         $donations = $this->getDoctrine()->getRepository(Donation::class)
-            ->findBy(['user' => $user, 'paymentStatus' => Donation::PAY_BASKET]);
+            ->findBy(['user' => $this->getUser(), 'paymentStatus' => Donation::PAY_BASKET]);
 
-        // Récupère le montant total
+        // Récupère le montant total pour la transaction
         $totalAmount = $this->getDoctrine()->getRepository(Donation::class)
-            ->getBasketTotal($user->getId());
+            ->getBasketTotal($this->getUser()->getId());
 
-        // Verifie que le montant soit supérieur à zéro avant de lancer une transaction
-        if ($totalAmount != null && $totalAmount > 0)
+        // Verifie que le montant et la quantité soit suppérieur à zéro pour lancer la transaction
+        if ($totalAmount['amount'] > 0 && $totalAmount['quantity'] > 0)
         {
             // Création d'une nouvelle entity Transaction
             $transaction = new Transaction($totalAmount['amount']);
-
         } else {
 
-            // Redirection vers la panier
+            // Sinon redirection vers le Panier
             $this->addFlash('danger', 'Votre panier est vide.');
             return $this->redirectToRoute('basket');
         }
 
-        // 'setDonations' est une méthode crée dans l'entity Transaction pour
-        // transmettre les détails de la transaction à PayPal via le Bundle
+        // 'setDonations' transmet les détails de la transaction à PayPal via le Bundle
         $transaction->setDonations($donations);
 
         try {
@@ -56,12 +51,14 @@ class PaymentController extends Controller
             $this->getDoctrine()->getManager()->persist($transaction);
             $this->getDoctrine()->getManager()->flush();
 
-            // Redirige vers l'url de PayPal généré par le Service
+            // Redirige vers l'url de PayPal généré par la dépendance 'Service'
             return $this->redirect($response->getRedirectUrl());
 
         } catch (Exception $e) {
 
-            throw new HttpException(503, 'Erreur de paiement', $e);
+            //throw new HttpException(503, 'Erreur de paiement', $e);
+            $this->addFlash('danger', 'Une erreur s\'est produite, veuillez nous excuser.');
+            return $this->redirectToRoute('basket');
         }
     }
 
@@ -107,12 +104,9 @@ class PaymentController extends Controller
             throw $this->createNotFoundException(sprintf('Transaction with token %s not found.', $token));
         }
 
-        // Récupère l'utilisateur
-        $user = $this->getUser();
-
         // Récupère les donations liées à l'utilisateur
         $donations = $this->getDoctrine()->getRepository(Donation::class)
-            ->findBy(['user' => $user, 'paymentStatus' => Donation::PAY_BASKET]);
+            ->findBy(['user' => $this->getUser(), 'paymentStatus' => Donation::PAY_BASKET]);
 
         // Transmettre les détails de la transaction pour getItems
         $transaction->setDonations($donations);

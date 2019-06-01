@@ -89,6 +89,8 @@
 
 {% block scripts_basket %}
 <script>
+    {# Reset les messages d'erreur #}
+    $('#flash-ajax p').text('')
 
     {# On attend que la page est fini de charger #}
     $(document).ready(function() {
@@ -155,7 +157,6 @@
                         }
                         {# Rafraichi le montant total #}
                         $('#amount').text(response.amount)
-                        $('#flash-ajax p').text('')
 
                         {# Recalcul le montant après réduction #}
                         calc(response.amount)
@@ -217,7 +218,6 @@
                         }
                         {# Rafraichi le montant total #}
                         $('#amount').text(response.amount)
-                        $('#flash-ajax p').text('')
 
                         {# Recalcul le montant après réduction #}
                         calc(response.amount)

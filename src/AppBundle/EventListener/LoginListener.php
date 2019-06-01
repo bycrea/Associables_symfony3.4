@@ -6,6 +6,7 @@ use AppBundle\Entity\Donation;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use DateTime;
 
 class LoginListener
 {
@@ -36,6 +37,7 @@ class LoginListener
     /**
      * LoginListener constructor.
      * @param RegistryInterface $entityManager
+     * Injection de la dépendance 'RegistryInterface'
      */
     public function __construct(RegistryInterface $entityManager)
     {
@@ -46,6 +48,7 @@ class LoginListener
     /**
      * @param InteractiveLoginEvent $event
      * @throws \Exception
+     * Injection de la dépendance 'InteractiveLoginEvent'
      */
     public function onLogin(InteractiveLoginEvent $event)
     {
@@ -54,13 +57,13 @@ class LoginListener
         $id_cookie = $event->getRequest()->cookies->get('associables_basket');
 
         $this->fromCookieToUser($user, $id_cookie);
-
     }
 
 
     /**
      * @param FilterUserResponseEvent $event
      * @throws \Exception
+     * Injection de la dépendance 'FilterUserResponseEvent'
      */
     public function onRegistration(FilterUserResponseEvent $event)
     {
@@ -76,46 +79,40 @@ class LoginListener
      * @param $user
      * @param $id_cookie
      * @throws \Exception
+     *
+     * Remplace le cookieId par un identifiant Utilisateur pour chaque donations au Panier
      */
     private function fromCookieToUser($user, $id_cookie)
     {
-        // Récupère les donations liées au cookie
+        // Recherche d'éventuelles donations en Panier, liées au cookieId
         $donsCookieBasket = $this->entityManager->getRepository(Donation::class)
             ->findBy(['cookieId' => $id_cookie, 'paymentStatus' => Donation::PAY_BASKET]);
 
         if(!empty($donsCookieBasket))
         {
+            // Pour chaque donations trouvées
             foreach($donsCookieBasket as $donationCookie)
             {
-                // Récupère une donation liée à l'utilisateur maintenant connecté
-                // et l'association de la 'donationCookie' concernée dans la boucle
+                // Verifie que l'utilisateur n'est pas déjà une donation pour la même association en Panier
                 $donationUser = $this->entityManager->getRepository(Donation::class)
-                    ->findOneBy([
-                        'user' => $user,
-                        'assos' => $donationCookie->getAssos(),
-                        'paymentStatus' => Donation::PAY_BASKET
-                    ]);
+                    ->existingBasketDonation($donationCookie->getAssos(),$user);
 
-                // Si une telle 'donationUser' existe :
+                // Si une telle 'donationUser' existe
                 if($donationUser)
                 {
-                    // On remplace le montant par celui de la 'donationCookie' + new DateTime
-                    $donationUser->setAmount($donationCookie->getAmount());
-                    $donationCookie->setCreatedAt(new \DateTime());
+                    // Remplace le montant par celui de 'donationCookie' et actualise le DateTime
+                    $donationUser->setAmount($donationCookie->getAmount())->setCreatedAt(new DateTime());
                     $this->entityManager->getManager()->persist($donationUser);
 
-                    // On supprime la 'donationCookie'
+                    // Supprime la 'donationCookie'
                     $this->entityManager->getManager()->remove($donationCookie);
+
                 } else {
-                    // Sinon on efface le 'cookieId' de la 'donationCookie'
-                    // qui devient une 'donationUser' + new DateTime
-                    $donationCookie->setUser($user);
-                    $donationCookie->setCookieId(null);
-                    $donationCookie->setCreatedAt(new \DateTime());
+                    // Sinon, 'donationCookie' hérite de l'entité '$user' ($cookieId devient null)
+                    $donationCookie->setUser($user)->setCookieId(null)->setCreatedAt(new DateTime());
                     $this->entityManager->getManager()->persist($donationCookie);
                 }
             }
-
             $this->entityManager->getManager()->flush();
         }
     }

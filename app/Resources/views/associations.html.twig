@@ -8,6 +8,7 @@
 
     <div class="container mb-5">
         <div class="filters input-group mb-3">
+
             {# ----------------- Menu déroulant des Catégories + Search bar ----------------- #}
             {#    La méthode JS 'onchange="window.location.href' = this.value"
             permet de recharger la page en dès la sélection d'une l'option    #}
@@ -83,6 +84,7 @@
                         <button class="donation-button btn btn-info btn-sm mt-2"
                                 data-association-id="{{ association.id }}">Donner</button>
                     </div>
+
                 </div>
             {% else %}
                 <div class="no-infos">

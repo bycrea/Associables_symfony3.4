@@ -215,7 +215,7 @@ class AssociationsController extends Controller
         } catch (Exception $e) {
 
             // Retourne un message d'erreur en cas d'échec
-            $this->addFlash('danger', 'L\'association n\'a pas pu supprimé.');
+            $this->addFlash('danger', 'L\'association n\'a pas pu être supprimé.');
             return $this->redirectToRoute('admin_associations');
         }
     }

@@ -1,78 +1,74 @@
 
-{#  Script de rajout des dons au paniers depuis l'onglet 'Associations'  #}
+    {#  Script de rajout des dons au Panier depuis les boutons 'donation-button'  #}
 
-<script>
-    {# Reset les messages d'erreur #}
-    $('#flash-ajax p').text('')
+    <script>
+        {# Reset les messages d'erreur #}
+        $('#flash-ajax p').text('')
+        {# On attend que la page est fini de charger #}
+        $(document).ready(function() {
 
-    {# On attend que la page est fini de charger #}
-    $(document).ready(function() {
+            {# Affiche la modal loading-modal pendant le chargement AJAX #}
+            $(document).ajaxStart(function(){
+                $('#loading-modal').removeClass('d-none')
+            })
 
-        {# affiche la modal loading-modal pendant le chargement AJAX #}
-        $(document).ajaxStart(function(){
-            $('#loading-modal').removeClass('d-none')
-        })
+            {# Ecoute l'évènement 'click' sur le bouton donation-button #}
+            $('.donation-button').on('click', function (e) {
+                e.preventDefault()
 
-        {# On écoute l'évènement 'click' sur le bouton donation #}
-        $('.donation-button').on('click', function (e) {
-            e.preventDefault()
+                {# Récupère l'id_association passé en paramètre data-attribute du bouton #}
+                var id = $(this).data('association-id')
 
-            {# On recupère l'id de l'association passé en paramètre data-attribute #}
-            var id = $(this).data('association-id')
+                {# Recherche le montant selectionné dans la div parente au bouton #}
+                {#  this(button) -> parent(div) -> recherche l'option selectionné #}
+                var amount = $(this).parent().find('option:selected').val()
 
-            {# On recherche le montant selectionné dans la div parente au 'button' #}
-            {# Soit this(button) -> parent(div) -> option selectionné et récupère sa valeur #}
-            var amount = $(this).parent().find('option:selected').val()
-
-            {# fontion AJAX méthode POST #}
-            $.ajax({
-                type: "POST",
-                {# chemin vers la route controller qui va traiter les datas #}
-                url: '{{ path('_ajax_add_to_basket') }}',
-                {# Data a envoyer en POST #}
-                data: {
-                    id: id,
-                    amount: amount
-                },
-                {# fontion à excécuter en cas de success #}
-                success: function (response)
-                {
-                    if(response.status === true)
+                {# fontion AJAX méthode POST #}
+                $.ajax({
+                    type: "POST",
+                    {# Chemin vers le controller qui va traiter la requête #}
+                    url: '{{ path('_ajax_add_to_basket') }}',
+                    {# Data envoyé en POST #}
+                    data: {
+                        id: id,
+                        amount: amount
+                    },
+                    success: function (response)
                     {
-                        {# raffraichi le nombre de dons en cas de succès #}
-                        if(response.quantity > 0)
+                        if(response.status === true)
                         {
-                            $('.basket-tick').removeClass('d-none')
-                            $('.basket-tick').text(response.quantity)
-
-                        } else {
-
-                            {# si le panier ne contient aucun article #}
-                            $('.basket-tick').addClass('d-none')
-                        }
-                        {# message de confirmation modal add-basket #}
-                        $('#add-basket').removeClass('d-none')
-                        setTimeout(function() {
-                            $('#add-basket').fadeOut(400, function ()
-                                {
+                            {# En cas de success : Raffraichi le nombre de dons en cas de succès #}
+                            if(response.quantity > 0)
+                            {
+                                {# Affiche la bulle du menu Panier et le nombre de dons #}
+                                $('.basket-tick').removeClass('d-none')
+                                $('.basket-tick').text(response.quantity)
+                            } else {
+                                {# Retire la bulle du menu Panier #}
+                                $('.basket-tick').addClass('d-none')
+                            }
+                            {# Message de confirmation modal add-basket #}
+                            $('#add-basket').removeClass('d-none')
+                            setTimeout(function() {
+                                $('#add-basket').fadeOut(400, function (){
                                     $('#add-basket').addClass('d-none').fadeIn(10);
                                 })
                             }, 1500)
-                    }
-                    else if(response.status === false)
-                    {
-                        {# affiche un message d'erreur en cas d'échec #}
-                        $('#flash-ajax p').text('une erreur est survenue, veuillez réessayer.')
-                    }
-                },
-                {# Type de réponse attendu #}
-                dataType: 'json'
+                        }
+                        else if(response.status === false)
+                        {
+                            {# En cas d'échec : Affiche un message d'erreur en cas d'échec #}
+                            $('#flash-ajax p').text('une erreur est survenue, veuillez réessayer.')
+                        }
+                    },
+                    {# Type de réponse attendu #}
+                    dataType: 'json'
+                })
+            })
+
+            {# cache la modal loading-modal après le chargement AJAX #}
+            $(document).ajaxStop(function(){
+                $('#loading-modal').addClass('d-none')
             })
         })
-
-        {# cache la modal loading-modal après le chargement AJAX #}
-        $(document).ajaxStop(function(){
-            $('#loading-modal').addClass('d-none')
-        })
-    })
-</script>
+    </script>

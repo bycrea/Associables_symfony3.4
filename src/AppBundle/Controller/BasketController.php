@@ -20,32 +20,29 @@ class BasketController extends Controller
      */
     public function basketAction(Request $request)
     {
-        // On utlise les méthode de symfony pour savoir si un User est connecté
-        // Ou si le cookie 'associables_basket' existe
+        // Récupère l'utilisateur connecté et/ou le cookie 'associables_basket'
         $user = $this->getUser();
         $cookieId = $request->cookies->get('associables_basket');
 
-        // Récupère le repository de l'entity donation
-        $repo = $this->getDoctrine()->getRepository(Donation::class);
-
         if (is_object($user))
         {
-            // Récupère les donations de l'utilisateur s'il existe
-            $donations = $repo->findBy(['user' => $user, 'paymentStatus' => Donation::PAY_BASKET]);
-
-        } elseif ($cookieId != null) {
-
-            // Sinon on récupère les donations liées au cookieId
-            $donations = $repo->findBy(['cookieId' => $cookieId, 'paymentStatus' => Donation::PAY_BASKET]);
+            // Si un utilisateur est connecté, on recherche les donations par $user
+            $findBy = ['user' => $user, 'paymentStatus' => Donation::PAY_BASKET];
+            // Récupère les donations en Panier
+            $donations = $this->getDoctrine()->getRepository(Donation::class)
+                ->findBy($findBy, ['createdAt' => 'DESC']);
 
         } else {
 
-            // Si pour une raison obscure il n'y a pas ni user, ni cookieId
-            $donations = null;
+            // Sinon on recherche les donations avec l'id du cookie
+            $findBy = ['cookieId' => $cookieId, 'paymentStatus' => Donation::PAY_BASKET];
+            // Récupère les donations en Panier
+            $donations = $this->getDoctrine()->getRepository(Donation::class)
+                ->findBy($findBy, ['createdAt' => 'DESC']);
         }
 
         return $this->render('basket.html.twig', [
-            'title' => 'panier',
+            'title' => 'Panier',
             'donations' => $donations
         ]);
     }
@@ -54,8 +51,7 @@ class BasketController extends Controller
     /**
      * @Route("/_ajax/add_to_basket", name="_ajax_add_to_basket")
      *
-     * AJAX
-     * Create ou Update d'une donation transmise en AJAX
+     * AJAX: Create/Update une donation transmise en AJAX
      */
     public function _ajaxAddToBasketAction(Request $request)
     {
@@ -66,10 +62,9 @@ class BasketController extends Controller
         // Initialise l'EntityManager de Doctrine
         $entityManager = $this->getDoctrine()->getManager();
 
-        // Un try/catch permettra de détecter d'éventuelles erreurs dans le déroulement du code
-        // et ainsi de transmettre un message en Front (return false or true)
         try {
-
+            // Un try/catch permettra de détecter d'éventuelles erreurs dans le déroulement du code
+            // et ainsi de transmettre un message en Front (return false or true)
             if ($this->getUser())
             {
                 // Si l'utilisateur est connecté on récupère son Id
@@ -77,14 +72,12 @@ class BasketController extends Controller
                 $id_cookie = null;
 
             } else {
-
                 // Sinon on utilise la valeur du coockie enregistré
                 $id_cookie = $request->cookies->get('associables_basket');
                 $id_user = null;
             }
 
-            // On verifie que le don n'existe pas déjà grace à la méthode
-            // 'existingBasketDonation' du 'DonationRepository'
+            // On verifie que le don n'existe pas déjà grace à la méthode 'existingBasketDonation'
             $donationExists = $this->getDoctrine()->getRepository(Donation::class)
                 ->existingBasketDonation($id_asso, $id_user, $id_cookie);
 
