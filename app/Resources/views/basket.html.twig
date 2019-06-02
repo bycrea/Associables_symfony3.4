@@ -63,7 +63,6 @@
                 {% endfor %}
             </div>
 
-            {# ----------------- Total / Paiement ----------------- #}
             {#        On appel la méthode Twig 'getBasketInfos()' de la class AppExtention.php       #}
             {# elle prend en paramètre 'app.request' afin de pouvoir récupérer l'User ou le cookieId #}
             {% set total_amount = getBasketInfos( app.request ).amount %}
