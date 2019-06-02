@@ -104,7 +104,7 @@ class PaymentController extends Controller
             throw $this->createNotFoundException(sprintf('Transaction with token %s not found.', $token));
         }
 
-        // Récupère les donations liées à l'utilisateur
+        // Récupère les donations liées à l'utilisateur en Panier
         $donations = $this->getDoctrine()->getRepository(Donation::class)
             ->findBy(['user' => $this->getUser(), 'paymentStatus' => Donation::PAY_BASKET]);
 
@@ -115,7 +115,7 @@ class PaymentController extends Controller
         $service->setTransaction($transaction)->complete();
         $entityManager->flush();
 
-        // Si la transcation est défini comme 'différent de isOk' (soit refusé par PayPal)
+        // Si la transcation est défini comme différent de 'isOk' (soit erronée)
         if (!$transaction->isOk())
         {
             // On selectionne le status refusé (paymentStatus = 2)

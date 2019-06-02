@@ -15,12 +15,13 @@
 </head>
 <body>
     <header>
+        {# on inclus le _header principal pour toutes les pages du site #}
         {% include 'includes/_header.html.twig' %}
+
         {% block header %}
         {% endblock %}
 
-        {# Permet d'affciher les messages envoyé avec la méthode symfony 'addFlash()' et contenu dans app.flashes
-            doc : https://symfony.com/doc/3.4/controller.html#flash-messages #}
+        {# Permet d'affciher les messages envoyé avec la méthode symfony 'addFlash()' #}
         {% for key, messages in app.flashes %}
             {% for message in messages %}
                 <div class="alert alert-{{ key }}" role="alert">
