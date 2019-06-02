@@ -112,8 +112,8 @@
 }*/
 .nav-logo {
   position: absolute;
-  left: 0px;
-  width: 13%;
+  left: 2px;
+  width: 5%;
 }
 
 .btn-group {
@@ -169,7 +169,7 @@
 }
 .infos .t-left {
   width: 50%;
-  color: #5690B6;
+  color: #615f9c;
   text-align: left;
 }
 .infos .t-rigth {
@@ -259,7 +259,7 @@
   padding: 10px;
 }
 .associations .asso-asso .link-asso {
-  color: #4b7196;
+  color: #478996;
 }
 .associations .asso-asso .link-asso:hover {
   color: #FAC715;
@@ -315,7 +315,7 @@
   padding: 10px;
 }
 .associations-dash .asso-asso .link-asso {
-  color: #4b7196;
+  color: #478996;
 }
 .associations-dash .asso-asso .link-asso:hover {
   color: #FAC715;
@@ -362,7 +362,7 @@
   width: 15%;
 }
 .association_id .descript .link-asso {
-  color: #4b7196;
+  color: #478996;
 }
 .association_id .descript .link-asso:hover {
   color: #FAC715;
@@ -392,11 +392,11 @@
   color: #FAC715;
 }
 .association_id .empty-star {
-  color: #4b7196;
+  color: #478996;
 }
 .association_id .sign {
   font-size: 0.9em;
-  color: #4b7196;
+  color: #478996;
 }
 
 /*  Formulaire association  */
@@ -491,7 +491,7 @@
   padding: 10px;
   margin-bottom: 5px;
   box-shadow: 1px 1px 2px #b7b8b8;
-  border-bottom: 1px solid #5690B6;
+  border-bottom: 1px solid #615f9c;
 }
 .basket .image-asso-basket {
   width: 15%;
@@ -520,7 +520,7 @@
   width: 100%;
 }
 .basket .link-asso {
-  color: #4b7196;
+  color: #478996;
 }
 .basket .link-asso:hover {
   color: #FAC715;
@@ -552,7 +552,7 @@
 }
 .home-reviews .review-asso .link-asso {
   font-size: 1.2em;
-  color: #4b7196;
+  color: #478996;
 }
 .home-reviews .review-asso .link-asso:hover {
   color: #FAC715;
@@ -562,11 +562,11 @@
   color: #FAC715;
 }
 .home-reviews .review-asso .empty-star {
-  color: #4b7196;
+  color: #478996;
 }
 .home-reviews .review-asso .sign {
   font-size: 0.8em;
-  color: #4b7196;
+  color: #478996;
 }
 
 /*  reviews user */
@@ -595,7 +595,7 @@
 }
 .home-reviews .review-dash .link-asso {
   font-size: 1.2em;
-  color: #4b7196;
+  color: #478996;
 }
 .home-reviews .review-dash .link-asso:hover {
   color: #FAC715;
@@ -605,11 +605,11 @@
   color: #FAC715;
 }
 .home-reviews .review-dash .empty-star {
-  color: #4b7196;
+  color: #478996;
 }
 .home-reviews .review-dash .sign {
   font-size: 0.8em;
-  color: #4b7196;
+  color: #478996;
 }
 
 /*  reviews asso_id & edit */
@@ -726,7 +726,7 @@ main {
 
 /*  Links  */
 .link-asso {
-  color: #4b7196;
+  color: #478996;
 }
 .link-asso:hover {
   color: #FAC715;
@@ -735,7 +735,7 @@ main {
 
 /*  boutons  */
 .btn-info {
-  background-color: #5690B6;
+  background-color: #615f9c;
 }
 .btn-info:hover {
   background-color: #FAC715;
