@@ -36,10 +36,11 @@ class RegistrationFormType extends AbstractType
             ->add('birthdayAt',DateType::Class, array(
                 'widget' => 'choice',
                 'label' => 'Date de naissance',
-                'years' => range(date('Y')-12, date('Y')-100),
+                'years' => range(date('Y')-18, date('Y')-100),
                 'months' => range(1, 12),
                 'days' => range(1, 31),
-                'placeholder' => array('year' => 'année', 'month' => 'mois', 'day' => 'jour')
+                'placeholder' => array('year' => 'année', 'month' => 'mois', 'day' => 'jour'),
+                'format' => 'dd MM yyyy'
             ))
             ->add('gender', ChoiceType::class, array(
                 'choices' => array_flip(User::GENDERS),
