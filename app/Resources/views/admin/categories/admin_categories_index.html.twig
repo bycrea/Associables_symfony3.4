@@ -72,27 +72,27 @@
 
             {# On écoute le 'click' sur les boutons Edit #}
             $('.edit').on('click', function (e) {
-                e.preventDefault()
+                e.preventDefault();
 
                 {# Récupère les datas concernées par la modification (id, name) #}
-                var id = $(this).data('id-catg')
-                var name = $(this).data('name-catg')
+                var id = $(this).data('id-catg');
+                var name = $(this).data('name-catg');
 
                 {# Transmet la valeur de la catégorie au input type Text #}
-                $('#appbundle_category_name').val(name)
+                $('#appbundle_category_name').val(name);
                 {# Modifie le bouton Ajouter => Modifier #}
-                $('.submit').text('Modifier')
+                $('.submit').text('Modifier');
 
                 {# Récupère la valeur de l'input hidden-id s'il existe #}
-                var hidden = $('.hidden-id').val()
+                var hidden = $('.hidden-id').val();
 
                 if(hidden)
                 {
                     {# Si l'input hidden-id existe déjà on transmet la nouvelle valeur #}
-                    $('.hidden-id').val(id)
+                    $('.hidden-id').val(id);
                 } else {
                     {# Sinon on rajoute l'input hidden-id à la balise Form avec la valeur de id sélectionné #}
-                    $('.form-catg').append("<input hidden name='edit-id' class='hidden-id' type='number' value='"+ id +"'/>")
+                    $('.form-catg').append("<input hidden name='edit-id' class='hidden-id' type='number' value='"+ id +"'/>");
                 }
             })
 
@@ -100,14 +100,14 @@
             $('#appbundle_category_name').on('input', function () {
 
                 {# Récupère la valeur du champ à chaque changement #}
-                var isEmpty = $(this).val()
+                var isFilled = $(this).val();
 
-                if(!isEmpty)
+                if(!isFilled)
                 {
                     {# Si il est vide, On supprime l'input hidden-id rajouté #}
-                    $('.hidden-id').remove()
+                    $('.hidden-id').remove();
                     {# On modifie le bouton Modifier => Ajouter #}
-                    $('.submit').text('Ajouter')
+                    $('.submit').text('Ajouter');
                 }
             })
 
