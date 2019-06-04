@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Exception;
 
@@ -30,6 +31,8 @@ class AssociationsController extends Controller
      * ******** READ *********
      *
      * @Route("/associations/{getCategory}", name="admin_associations", defaults={"getCategory": ""})
+     * @param $getCategory
+     * @return Response
      */
     public function indexAction($getCategory)
     {
