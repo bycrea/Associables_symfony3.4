@@ -112,6 +112,8 @@ fos_user:
     registration:
         form:
             type: AppBundle\Form\RegistrationFormType
+        #confirmation:
+            #enabled: true
 
 # Config du Bundle PayPal
 beelab_paypal:
