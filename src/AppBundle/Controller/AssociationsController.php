@@ -16,33 +16,44 @@ use Exception;
 class AssociationsController extends Controller
 {
     /**
+     * @param $entity
+     * @return \Doctrine\Common\Persistence\ObjectRepository
+     *
+     * Function getRepo() permet de simplifier le code pour accéder au repository d'une entité
+     */
+    public function getRepo($entity)
+    {
+        return $this->getDoctrine()->getRepository($entity);
+    }
+
+
+    /**
      * @Route("/associations/{getCategory}", name="associations", defaults={"getCategory": ""})
      */
     public function associationsAction($getCategory)
     {
         // Récupère toutes les catégories pour les afficher dans le menu déroulant
-        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        $categories = $this->getRepo(Category::class)->findAll();
 
         // Si une catégorie est entrée en paramètre $_GET de l'url
         if($getCategory)
         {
             // Récupère les associations lié a la catégorie grâce à la méthode créé dans 'AssosRepository'
-            $associations = $this->getDoctrine()->getRepository(Assos::class)
+            $associations = $this->getRepo(Assos::class)
                 ->findByCategory($getCategory);
 
             // Si la catégorie n'existe pas ou qu'aucunes associations n'est lié à celle-ci
             // la collection d'objet retourné sera vide
-            if(empty($associations))
+            /*if(!$associations)
             {
                 // On redirige sur la page des associations sans le paramètre $getCategory (soit = null)
                 $this->addFlash('danger', 'Aucune association n\'est lié à cette catégorie.');
                 return $this->redirectToRoute('associations');
-            }
+            }*/
 
         } else {
 
-            // Récupère toutes les associations, toutes catégories confondues
-            $associations = $this->getDoctrine()->getRepository(Assos::class)
+            $associations = $this->getRepo(Assos::class)
                 ->findBy([],['name' => 'ASC']);
         }
 
@@ -61,7 +72,7 @@ class AssociationsController extends Controller
     public function associationIdAction(Request $request, $id)
     {
         // Récupère l'association via l'id en paramètre
-        $association = $this->getDoctrine()->getRepository(Assos::class)->find($id);
+        $association = $this->getRepo(Assos::class)->find($id);
 
         // Création du formulaire de 'Review' (les avis utilisateur)
         $review = new Review();
@@ -109,7 +120,7 @@ class AssociationsController extends Controller
 
         // la méthode 'findBySearchBar' du répository va chercher les assciations
         // de la catégorie commencent par '$serch'
-        $associations = $this->getDoctrine()->getRepository(Assos::class)
+        $associations = $this->getRepo(Assos::class)
             ->findBySearchBar($search, $catg);
 
         // Retourne une vue html à la fonction success de la méthode AJAX
@@ -155,7 +166,7 @@ class AssociationsController extends Controller
                 $entityManager = $this->getDoctrine()->getManager();
 
                 // Vérifi si un donation existe dans le panier pour le même utilisateur et la même asso.
-                $donationExists = $this->getDoctrine()->getRepository(Donation::class)
+                $donationExists = $this->getRepo(Donation::class)
                     ->existingBasketDonation($id_asso, $id_user, $id_cookie);
 
 
@@ -174,7 +185,7 @@ class AssociationsController extends Controller
                     $donation = new Donation();
 
                     // Récupère l'objet Assos lié à l'Id de association envoyé en POST['submit']
-                    $asso = $this->getDoctrine()->getRepository(Assos::class)
+                    $asso = $this->getRepo(Assos::class)
                         ->find($request->request->get('submit'));
 
                     // Défini les propriétées de la nouvelle '$donation'

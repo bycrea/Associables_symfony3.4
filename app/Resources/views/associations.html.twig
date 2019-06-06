@@ -20,7 +20,7 @@
                 <option value="{{ path('associations', {getCategory: null}) }}">Catégories</option>
                 {% for category in categories %}
                     <option
-                        {{ (category.id in getCategory) ? 'selected' : '' }}
+                        {{ (category.id in getCategory) ? 'selected' }}
                         data-catg="{{ category.id }}"
                         value="{{ path('associations', {getCategory: category.id}) }}">{{ category.name }}
                     </option>

@@ -25,8 +25,8 @@
             <label hidden for="year">années</label>
             {# Filtre années #}
             <select name="year" id="year" class="years custom-select">
-                <option {{ ('2019' in getYear) ? 'selected' : ''  }} value="2019">2019</option>
-                <option {{ ('2018' in getYear) ? 'selected' : ''  }} value="2018">2018</option>
+                <option {{ ('2019' in getYear) ? 'selected' }} value="2019">2019</option>
+                <option {{ ('2018' in getYear) ? 'selected' }} value="2018">2018</option>
             </select>
 
             {# Filtre Asso #}
@@ -34,7 +34,7 @@
             <select name="asso" id="asso" class="asso custom-select">
                 <option value="">Associations</option>
                 {% for asso in allAsso %}
-                    <option {{ (asso.id in getAsso) ? 'selected' : ''  }} value="{{ asso.id }}">{{ asso.name }}</option>
+                    <option {{ (asso.id in getAsso) ? 'selected' }} value="{{ asso.id }}">{{ asso.name }}</option>
                 {% endfor %}
             </select>
 
@@ -43,18 +43,18 @@
             <select name="user" id="user" class="user custom-select">
                 <option value="">Utilisateurs</option>
                 {% for user in allUser %}
-                    <option {{ (user.id in getUser) ? 'selected' : ''  }} value="{{ user.id }}">{{ user.username }}</option>
+                    <option {{ (user.id in getUser) ? 'selected' }} value="{{ user.id }}">{{ user.username }}</option>
                 {% endfor %}
             </select>
 
             {# Filtre paymentStatus #}
             <label hidden for="status">Paiement Status</label>
             <select name="status" id="status" class="status custom-select">
-                <option {{ (getStatus is null) ? 'selected' : ''  }} value="">Att./Trans.</option>
-                <option {{ (4 in getStatus) ? 'selected' : ''  }} value="4">En attente</option>
-                <option {{ (5 in getStatus) ? 'selected' : ''  }} value="5">Transférés</option>
-                <option {{ (0 in getStatus) ? 'selected' : ''  }} value="0">En panier</option>
-                <option {{ (3 in getStatus) ? 'selected' : ''  }} value="3">Annulés</option>
+                <option {{ (getStatus is null) ? 'selected' }} value="">Att./Trans.</option>
+                <option {{ (4 in getStatus) ? 'selected' }} value="4">En attente</option>
+                <option {{ (5 in getStatus) ? 'selected' }} value="5">Transférés</option>
+                <option {{ (0 in getStatus) ? 'selected' }} value="0">En panier</option>
+                <option {{ (3 in getStatus) ? 'selected' }} value="3">Annulés</option>
             </select>
 
             <button type="submit" class="btn btn-info btn-sm">Filtrer</button>

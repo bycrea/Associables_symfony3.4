@@ -5,7 +5,13 @@
 /*    Infos User    */
 
 .infos {
-  width: 40%;
+  width: 50%;
+  @media screen and (max-width: $tablet) {
+    width: 70%;
+  }
+  @media screen and (max-width: $mobile) {
+    width: 100%;
+  }
   padding: 2%;
   margin: auto;
 

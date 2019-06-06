@@ -5,10 +5,12 @@ namespace AppBundle\Controller\Admin;
 use AppBundle\Entity\Assos;
 use AppBundle\Entity\Category;
 use AppBundle\Form\AssociationType;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Exception;
 
@@ -16,9 +18,10 @@ class AssociationsController extends Controller
 {
     /**
      * @param $entity
-     * @return \Doctrine\Common\Persistence\ObjectRepository
+     * @return ObjectRepository
      *
-     * Function getRepo() permet de simplifier le code pour accéder au repository d'une entité
+     * Function getRepo() permet de simplifier le
+     * code pour accéder au repository d'une entité
      */
     public function getRepo($entity)
     {
@@ -30,6 +33,8 @@ class AssociationsController extends Controller
      * ******** READ *********
      *
      * @Route("/associations/{getCategory}", name="admin_associations", defaults={"getCategory": ""})
+     * @param $getCategory
+     * @return Response
      */
     public function indexAction($getCategory)
     {
