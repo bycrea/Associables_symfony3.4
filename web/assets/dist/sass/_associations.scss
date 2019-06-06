@@ -3,6 +3,9 @@
 
 .filters {
   width: 80%;
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
 
   display: flex;
   justify-content: space-around;
@@ -11,6 +14,9 @@
 
 #search {
   width: 50%;
+  @media screen and (max-width: $bettween) {
+    width: 30%;
+  }
 }
 
 #search-btn {
@@ -25,6 +31,9 @@
 
 .associations {
   width: 80%;
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
   margin: auto;
 
   .asso-asso {
@@ -90,6 +99,9 @@
 
 .associations-dash {
   width: 80%;
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
   margin: auto;
 
   .asso-asso {

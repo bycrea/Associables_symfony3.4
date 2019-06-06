@@ -23,8 +23,7 @@
 
     <div class="container mb-5">
         {# ----------------- Paiement en attente ----------------- #}
-        <div class="await-payments">
-            <form action="{{ path('admin_payments') }}" method="POST">
+        <div class="await-payments" data-path-url="{{ path('admin_payments') }}">
             <table class="table table-responsive-sm">
                 <thead>
                 <tr>
@@ -47,16 +46,13 @@
                             </td>
                             <td>{{ pay.amount }}€</td>
                             <td>
-                                <label hidden for="mode">mode de paiement</label>
-                                <select name="mode" id="mode" class="custom-select">
+                                <select class="select_{{ pay.0.id }}" id="mode" class="custom-select">
                                     {% for key, mode in paymentMode %}
                                         <option
-                                            {{ ( key == 3 )? 'selected' : '' }} value="{{ key }}">{{ mode }}
+                                            {{ ( key == 3 )? 'selected'}} value="{{ key }}">{{ mode }}
                                         </option>
                                     {% endfor %}
                                 </select>
-                                <input type="hidden" name="id_asso" value="{{ pay.0.id }}">
-                                <input type="hidden" name="amount" value="{{ pay.amount }}">
                             </td>
                             <td>
                                 <a href="" class="arrow btn btn-info btn-sm"
@@ -67,7 +63,7 @@
                             </td>
                             <td>
                                 <button type="submit" name="submit"
-                                    class="btn btn-danger btn-sm" value="submit">Payer
+                                    class="pay-submit btn btn-danger btn-sm" data-pay-amount="{{ pay.amount }}" value="{{ pay.0.id }}">Payer
                                 </button>
                             </td>
                         </tr>
@@ -104,7 +100,6 @@
                     {% endif %}
                 </tbody>
             </table>
-            </form>
         </div>
 
         {# ----------------- Historique des paiement ----------------- #}
@@ -192,23 +187,62 @@
     <script>
         $(document).ready(function () {
 
+            {# Envoye à <input amount (hidden)> le montant du paiement en fonction du pay.0.id sélectionné #}
+            $('.pay-submit').on('click', function (e) {
+                e.preventDefault();
+
+                var asso_id = $(this).val();
+                var amount = $(this).data('pay-amount');
+                var mode = $('.select_' + asso_id).find('option:selected').val();
+                var path_url = $('.await-payments').data('path-url');
+
+                console.log(asso_id, amount, mode, path_url);
+                $.ajax({
+                    type: "POST",
+                    {# chemin vers la route controller qui va traiter les datas #}
+                    url: path_url,
+                    {# Data a envoyer en POST #}
+                    data: {
+                        submit: asso_id,
+                        amount: amount,
+                        mode: mode
+                    },
+                    {# fontion à excécuter en cas d'échec #}
+                    success: function (response) {
+
+                        if(response.status === true)
+                        {
+                            {#   Success redirect vers l'url passé en paramètre   #}
+                            window.location.href = response.url;
+                        } else {
+
+                            {#   Affiche un message d'erreur en cas d'échec   #}
+                            $('#flash-ajax p').text(response.message)
+                        }
+                    },
+                    {# Type de réponse attendu #}
+                    dataType: 'json'
+                });
+
+            })
+
             {# Permet d'ouvrir ou de fermer les modals de donations #}
             $('.arrow').on('click', function (e) {
-                e.preventDefault()
+                e.preventDefault();
 
-                var id = $(this).data('btn')
-                var display = $(this).data('display')
-                var aim_class = $(this).data('class')
+                var id = $(this).data('btn');
+                var display = $(this).data('display');
+                var aim_class = $(this).data('class');
 
                 if (!display) {
 
-                    $(aim_class + id).removeClass('d-none')
-                    $(this).data('display', true)
+                    $(aim_class + id).removeClass('d-none');
+                    $(this).data('display', true);
 
                 } else {
 
-                    $(aim_class + id).addClass('d-none')
-                    $(this).data('display', false)
+                    $(aim_class + id).addClass('d-none');
+                    $(this).data('display', false);
 
                 }
             })

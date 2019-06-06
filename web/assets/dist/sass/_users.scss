@@ -5,11 +5,17 @@
 
   .users {
     width: 90%;
+    @media screen and (max-width: $tablet) {
+      width: 100%;
+    }
     margin: auto;
   }
 
   .filters-users {
     width: 40%;
+    @media screen and (max-width: $tablet) {
+      width: 80%;
+    }
 
     display: flex;
     justify-content: space-around;

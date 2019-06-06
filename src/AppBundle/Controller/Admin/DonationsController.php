@@ -30,13 +30,7 @@ class DonationsController extends Controller
     {
         // Recupère le filtre des années $year
         $year = $request->query->get('year');
-        if(empty($year)) {$year = 2019;}
-
-        // Affichage de tous les utilisateurs
-        $allUser = $this->getRepo(User::class)->findAll();
-
-        // Affichage de toutes les Associations
-        $allAssos = $this->getRepo(Assos::class)->findAll();
+        if(empty($year)) {$year = 2019;} //N.C. = 2019
 
         // Récupère le filtre des associations $asso
         if(null != $request->query->get('asso'))
@@ -56,20 +50,14 @@ class DonationsController extends Controller
         switch ($request->query->get('status'))
         {
             case null: $paymentStatus = [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED]; break;
-
-            case 0: $paymentStatus = [Donation::PAY_BASKET]; break;
-
-            case 3: $paymentStatus = [Donation::PAY_ERROR, Donation::PAY_REFUSED, Donation::PAY_CANCEL]; break;
-
-            case 4: $paymentStatus = [Donation::PAY_IN_TRANSFER]; break;
-
-            case 5: $paymentStatus = [Donation::PAY_PROCESSED]; break;
-
-            default: $paymentStatus = [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED];
+            case 0:    $paymentStatus = [Donation::PAY_BASKET]; break;
+            case 3:    $paymentStatus = [Donation::PAY_ERROR, Donation::PAY_REFUSED, Donation::PAY_CANCEL]; break;
+            case 4:    $paymentStatus = [Donation::PAY_IN_TRANSFER]; break;
+            case 5:    $paymentStatus = [Donation::PAY_PROCESSED]; break;
+            default:   $paymentStatus = [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED];
         }
 
-
-        // Récupère les donations par $year/$asso/$user/$paymentStatus avec la méthode 'findDonationsByYear'
+        // Récupère les donations triées avec la méthode 'adminDonationsFilter'
         $donations = $this->getRepo(Donation::class)
             ->adminDonationsFilter($year, $asso, $user, $paymentStatus);
 
@@ -77,17 +65,18 @@ class DonationsController extends Controller
         $totalAmount = $this->getRepo(Donation::class)
             ->getDonationsTotalAmount($donations);
 
-
         return $this->render('admin/donations/admin_donations_index.html.twig', [
             'title' => 'Donations Admin',
 
-            // Variables des Filtres
-            'allUser' => $allUser,
-            'allAsso' => $allAssos,
+            // Affichage de tous les User & Assos (filtre)
+            'allUser' => $this->getRepo(User::class)->findAll(),
+            'allAsso' => $this->getRepo(Assos::class)->findAll(),
 
-            // Variables des Résultats
-            'donations' => $donations,
+            // Variable de paymentStatus
             'paymentStatus' => Donation::PAYEMENT_STATUS,
+
+            // Affichage des Résultats
+            'donations' => $donations,
             'totalAmount' => $totalAmount
         ]);
     }

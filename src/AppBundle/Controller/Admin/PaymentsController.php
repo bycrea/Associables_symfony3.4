@@ -32,7 +32,7 @@ class PaymentsController extends Controller
 
             // Récupère l'association concerné par le Payment
             $asso = $this->getDoctrine()->getRepository(Assos::class)
-                ->find($request->request->get('id_asso'));
+                ->find($request->request->get('submit'));
 
             // Set les propriétés du Payment
             $payment->setAmount($request->request->get('amount'));
@@ -57,8 +57,11 @@ class PaymentsController extends Controller
                 $entityManager->flush();
             }
 
-            $this->addFlash('success', 'Le paiement a été ajouté.');
-            return $this->redirectToRoute('admin_payments');
+            $this->addFlash('danger', 'Le paiement a bien été Ajouté.');
+            return $this->json([
+                'status' => true,
+                'url' => $this->generateUrl('admin_payments')
+            ]);
         }
 
 

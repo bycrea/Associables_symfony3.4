@@ -3,6 +3,9 @@
 
 .association_id {
   width: 80%;
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
   margin: auto;
 
   .descript {
@@ -88,6 +91,9 @@
 
 .form-asso {
   width: 80%;
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
   margin: auto;
   padding: 20px;
 

@@ -5,6 +5,10 @@
   background-color: $info_op !important;
 }*/
 
+.small-nav {
+  display: none;
+}
+
 .nav-logo {
   position: absolute;
   left: 2px;
@@ -29,4 +33,46 @@
   font-size: 0.8em;
   color: darkslategrey;
   background-color: $warning;
+}
+
+
+
+/*-------- @MEDIA MOBILE --------*/
+
+@media screen and (max-width: $mobile) {
+
+  .large-nav {
+    display: none;
+  }
+  .small-nav {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    right: 0;
+    top: 0;
+
+    padding: 5px 10px;
+    z-index: 2000;
+    width: 100%;
+
+    background-color: #F8F9FA;
+
+    .nav-logo {
+      position: relative;
+      display: block;
+      width: 45%;
+    }
+
+    .btn-small-nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      width: 55%;
+
+      #basket-link {
+        color: $info;
+      }
+    }
+  }
 }

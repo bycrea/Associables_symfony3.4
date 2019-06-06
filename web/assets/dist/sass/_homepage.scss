@@ -8,6 +8,10 @@
   align-items: center;
 
   width: 80%;
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
+
   margin: auto;
   text-align: center;
 
@@ -27,5 +31,13 @@
   align-items: center;
 }
 
+
+/*-------- @MEDIA MOBILE --------*/
+
+@media screen and (max-width: 575px) {
+  .main-logo {
+    display: none;
+  }
+}
 
 

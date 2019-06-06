@@ -110,6 +110,10 @@
 /*.navbar {
   background-color: $info_op !important;
 }*/
+.small-nav {
+  display: none;
+}
+
 .nav-logo {
   position: absolute;
   left: 2px;
@@ -134,12 +138,49 @@
   background-color: #FAC715;
 }
 
+/*-------- @MEDIA MOBILE --------*/
+@media screen and (max-width: 575px) {
+  .large-nav {
+    display: none;
+  }
+
+  .small-nav {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    right: 0;
+    top: 0;
+    padding: 5px 10px;
+    z-index: 2000;
+    width: 100%;
+    background-color: #F8F9FA;
+  }
+  .small-nav .nav-logo {
+    position: relative;
+    display: block;
+    width: 45%;
+  }
+  .small-nav .btn-small-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 55%;
+  }
+  .small-nav .btn-small-nav #basket-link {
+    color: #615f9c;
+  }
+}
 .login {
   width: 40%;
   margin: auto;
   padding: 10px 25px;
   box-shadow: 1px 1px 5px #b7b8b8;
   background-color: white;
+}
+@media screen and (max-width: 990px) {
+  .login {
+    width: 60%;
+  }
 }
 .login form {
   display: flex;
@@ -154,11 +195,21 @@
 
 /*    Infos User    */
 .infos {
-  width: 40%;
+  width: 50%;
   padding: 2%;
   margin: auto;
   box-shadow: 1px 1px 5px #b7b8b8;
   background-color: white;
+}
+@media screen and (max-width: 990px) {
+  .infos {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 575px) {
+  .infos {
+    width: 100%;
+  }
 }
 .infos .info {
   display: flex;
@@ -192,6 +243,11 @@
   margin: auto;
   text-align: center;
 }
+@media screen and (max-width: 990px) {
+  .welcome {
+    width: 100%;
+  }
+}
 .welcome .donation {
   max-width: 100px;
 }
@@ -207,15 +263,31 @@
   align-items: center;
 }
 
+/*-------- @MEDIA MOBILE --------*/
+@media screen and (max-width: 575px) {
+  .main-logo {
+    display: none;
+  }
+}
 .filters {
   width: 80%;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
+@media screen and (max-width: 990px) {
+  .filters {
+    width: 100%;
+  }
+}
 
 #search {
   width: 50%;
+}
+@media screen and (max-width: 720px) {
+  #search {
+    width: 30%;
+  }
 }
 
 #search-btn {
@@ -229,6 +301,11 @@
 .associations {
   width: 80%;
   margin: auto;
+}
+@media screen and (max-width: 990px) {
+  .associations {
+    width: 100%;
+  }
 }
 .associations .asso-asso {
   display: flex;
@@ -282,6 +359,11 @@
 .associations-dash {
   width: 80%;
   margin: auto;
+}
+@media screen and (max-width: 990px) {
+  .associations-dash {
+    width: 100%;
+  }
 }
 .associations-dash .asso-asso {
   display: flex;
@@ -337,6 +419,11 @@
 .association_id {
   width: 80%;
   margin: auto;
+}
+@media screen and (max-width: 990px) {
+  .association_id {
+    width: 100%;
+  }
 }
 .association_id .descript {
   display: flex;
@@ -407,6 +494,11 @@
   box-shadow: 1px 1px 5px #b7b8b8;
   background-color: white;
 }
+@media screen and (max-width: 990px) {
+  .form-asso {
+    width: 100%;
+  }
+}
 .form-asso textarea {
   min-height: 150px;
 }
@@ -435,6 +527,11 @@
   width: 80%;
   margin: auto;
 }
+@media screen and (max-width: 990px) {
+  #dashboard .donations {
+    width: 100%;
+  }
+}
 #dashboard .donations .table td, #dashboard .donations .table th {
   padding: 0.5em;
   text-align: center;
@@ -454,12 +551,17 @@
 }
 #dashboard .categories {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
   width: 80%;
   margin: auto;
+}
+@media screen and (max-width: 990px) {
+  #dashboard .categories {
+    width: 100%;
+  }
 }
 #dashboard .catg-box {
   display: flex;
@@ -472,6 +574,11 @@
   box-shadow: 1px 1px 5px #b7b8b8;
   background-color: white;
 }
+@media screen and (max-width: 720px) {
+  #dashboard .catg-box {
+    width: calc(100% / 2 - 30px);
+  }
+}
 
 .basket {
   width: 60vw;
@@ -481,6 +588,11 @@
   overflow: scroll;
   border: 1px solid #b7b8b8;
   background-color: white;
+}
+@media screen and (max-width: 990px) {
+  .basket {
+    width: 95vw;
+  }
 }
 .basket .basket-list {
   display: flex;
@@ -496,12 +608,22 @@
 .basket .image-asso-basket {
   width: 15%;
 }
+@media screen and (max-width: 720px) {
+  .basket .image-asso-basket {
+    width: 20%;
+  }
+}
 .basket .image-asso-basket img {
   width: 100%;
 }
 .basket .name-asso-basket {
   text-align: center;
   width: 70%;
+}
+@media screen and (max-width: 720px) {
+  .basket .name-asso-basket {
+    width: 60%;
+  }
 }
 .basket .name-asso-basket .mid-text {
   display: block;
@@ -512,6 +634,11 @@
   justify-content: center;
   align-items: center;
   width: 15%;
+}
+@media screen and (max-width: 720px) {
+  .basket .don-asso-basket {
+    width: 20%;
+  }
 }
 .basket .don-asso-basket .don-asso {
   display: flex;
@@ -540,6 +667,11 @@
   justify-content: space-around;
   width: 80%;
   margin: auto;
+}
+@media screen and (max-width: 990px) {
+  .home-reviews {
+    width: 100%;
+  }
 }
 .home-reviews .review-asso {
   padding: 10px;
@@ -570,10 +702,6 @@
 }
 
 /*  reviews user */
-.home-reviews {
-  width: 80%;
-  margin: auto;
-}
 .home-reviews .review-dash {
   display: flex;
   justify-content: space-between;
@@ -616,6 +744,11 @@
 .review-edit {
   width: 80%;
 }
+@media screen and (max-width: 990px) {
+  .review-edit {
+    width: 100%;
+  }
+}
 .review-edit .review-add, .review-edit .reviews {
   width: 100%;
   padding: 1em;
@@ -633,11 +766,21 @@
   width: 90%;
   margin: auto;
 }
+@media screen and (max-width: 990px) {
+  #dashboard .users {
+    width: 100%;
+  }
+}
 #dashboard .filters-users {
   width: 40%;
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+@media screen and (max-width: 990px) {
+  #dashboard .filters-users {
+    width: 80%;
+  }
 }
 #dashboard .table td, #dashboard .table th {
   padding: 0.5em;
@@ -652,6 +795,11 @@
 #dashboard .await-payments, #dashboard .old-payments {
   width: 80%;
   margin: auto;
+}
+@media screen and (max-width: 990px) {
+  #dashboard .await-payments, #dashboard .old-payments {
+    width: 100%;
+  }
 }
 #dashboard .await-payments .table td, #dashboard .await-payments .table th, #dashboard .old-payments .table td, #dashboard .old-payments .table th {
   padding: 0.5em;
@@ -694,6 +842,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-width: 100%;
 }
 
 .nav-user, .nav-admin {
