@@ -28,8 +28,10 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             // Sélectionne les colonnes nécéssaires (entity User/SUM des dons/COUNT des dons)
             // Là ou les dons sont égale à 'paymentStatus' = PAY_IN_TRANSFER ou PAY_PROCESSED sinon = 0
             ->select('user, 
-                            CASE WHEN d.paymentStatus IN (:status) THEN SUM(d.amount) ELSE 0 END AS amount, 
-                            CASE WHEN d.paymentStatus IN (:status) THEN COUNT(d.id) ELSE 0 END AS nb')
+                            CASE WHEN d.paymentStatus IN (:status) THEN SUM(d.amount) 
+                                 ELSE 0 END AS amount, 
+                            CASE WHEN d.paymentStatus IN (:status) THEN COUNT(d.id) 
+                                 ELSE 0 END AS nb')
 
             ->setParameter('status', [Donation::PAY_IN_TRANSFER, Donation::PAY_PROCESSED])
             // Jointure de la l'entity Donnation AS d
